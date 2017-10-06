@@ -1,0 +1,11 @@
+# Set the default CRLF behavior
+* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.Rmd       text
+*.R         text
+*.py        text
+
+# Declare files that will always have CRLF line endings on checkout.
+*.sh text eol=lf
