@@ -20,14 +20,14 @@ source "../settings/settings_default.sh"
 # Create the role and attach the trust policy that enables EC2 to assume this role.
 aws iam create-role \
     --role-name $LAMBDA_ROLE_NAME \
-    --assume-role-policy-document file://$LAMBDA_ROLE_TRUST_FILE \
+    --assume-role-policy-document file://../doc/$LAMBDA_ROLE_TRUST_FILE \
     --output table
 
 # Attach inline policy to role
 aws iam put-role-policy \
     --role-name $LAMBDA_ROLE_NAME  \
     --policy-name $POLICY_NAME \
-    --policy-document file://$LAMBDA_ROLE_POLICY_FILE
+    --policy-document file://../doc/$LAMBDA_ROLE_POLICY_FILE
 
 LAMBDA_ROLE_ARN="$(aws iam get-role \
     --role-name $LAMBDA_ROLE_NAME \
@@ -56,7 +56,7 @@ echo -e "$INFO Creating lambda function."
 aws lambda create-function \
     --region ${AWS_REGION} \
     --function-name ${LAMBDA_AUTHORIZER_NAME} \
-    --zip-file fileb://index.zip \
+    --zip-file fileb://../doc/index.zip \
     --role ${LAMBDA_ROLE_ARN} \
     --handler index.handler \
     --runtime nodejs6.10 \

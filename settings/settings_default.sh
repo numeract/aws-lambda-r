@@ -21,7 +21,7 @@ PRJ_BRANCH="dev"
 AWS_PRFL="--profile default"
 
 # AWS ec2, s3, lambda and API gateway region. eu-central-1 is Frankfurt.
-AWS_REGION="eu-central-1"
+AWS_REGION="eu-west-1"
 
 
 # AWS EC2 ----------------------------------------------------------------------
@@ -91,3 +91,33 @@ CP_VERBOSE=" "
 # do not use commas or quotes, leave spaces before and after each package name
 R_PACKAGES=( purrr signal pracma geosphere DBI RMySQL jsonlite digest )
 
+# Settings for setup  ---------------------------------------------------------
+
+# The name of role assigned to lambda function
+LAMBDA_ROLE_NAME="${PRJ_NAME}-lambda-role"
+
+# The name of the file containing trust policy
+LAMBDA_ROLE_TRUST_FILE="lambda_role_trust.json"
+
+# The name of the file containing role policy
+LAMBDA_ROLE_POLICY_FILE="lambda_role_policy.json"
+
+# The name of policy assigned to lambda role
+POLICY_NAME="${PRJ_NAME}-lambda-policy"
+
+# The name of the Lambda authorizer function
+LAMBDA_AUTHORIZER_NAME="${PRJ_NAME}-LambdaAuthorizer"
+
+#The name of the S3 Bucket 
+S3_BUCKET="${PRJ_NAME}-bucket"
+
+# API Gateway Name
+API_GATEWAY_NAME="${PRJ_NAME}-API"
+
+# Name of resource under API root resource 
+API_RESOURCE_NAME="${PRJ_NAME}_res"
+
+# Name of API custom authorizer
+AUTHORIZER_NAME="Authorizer"
+
+ 
