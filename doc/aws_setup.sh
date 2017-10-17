@@ -13,7 +13,7 @@ LAMBDA_AUTHORIZER_NAME="${PRJ_NAME}-LambdaAuthorizer"
 S3_BUCKET="${PRJ_NAME}-bucket"
 API_GATEWAY_NAME="${PRJ_NAME}-API"
 API_RESOURCE_NAME="${PRJ_NAME}_res"
-AUTHORIZER_NAME="{PRJ_NAME}_Authorizer"
+AUTHORIZER_NAME="Authorizer"
 
 #API_ROLE_NAME="tutorial_api_role"
 
@@ -25,7 +25,7 @@ aws iam create-role \
     --role-name $LAMBDA_ROLE_NAME \
     --assume-role-policy-document file://$LAMBDA_ROLE_TRUST_FILE
 
-# Put inline policy to role
+# Attach inline policy to role
 aws iam put-role-policy \
     --role-name $LAMBDA_ROLE_NAME  \
     --policy-name $POLICY_NAME \
@@ -36,23 +36,24 @@ LAMBDA_ROLE_ARN="$(aws iam get-role \
     --query Role.Arn \
     --output text)"
 
-    
-    echo -e "Lambda role ARN is: ${LAMBDA_ROLE_ARN}"
+
+echo -e "Lambda role ARN is: ${LAMBDA_ROLE_ARN}"
 
 # Creating role for API 
 API_ROLE_NAME="${PRJ_NAME}-api-role"
 
 
 API_ROLE_ARN=""
+
 # Creating S3 Bucket
 aws s3api create-bucket --bucket ${S3_BUCKET} \
                         --region ${AWS_REGION} \
                         --create-bucket-configuration LocationConstraint=${AWS_REGION}
 
-# Zipping lambda authorizer file
-#zip -qr9 /index.zip index.js
 
-# Creating Lambda Authozizer Function 
+
+# Creating Lambda Authozizer Function
+ 
 sleep 10
 echo -e "$INFO Creating lambda function."
 aws lambda create-function \
@@ -64,7 +65,8 @@ aws lambda create-function \
     --runtime nodejs6.10 \
     --output table
 
- # Extracting the lambda function ARN
+# Extracting the lambda function ARN
+
 LAMBDA_AUTHORIZER_ARN="$(aws lambda list-functions \
     --query "Functions[?FunctionName==\`${LAMBDA_AUTHORIZER_NAME}\`].FunctionArn" \
     --output text \
@@ -81,42 +83,55 @@ API_ID="$(aws apigateway get-rest-apis \
         --output text)"
 
 echo "API ID is ${API_ID}"
+
 # Getting API root resource id
 
-ROOT_RESOURCE_ID="$(aws apigateway get-resources \ 
+ROOT_RESOURCE_ID="$(aws apigateway get-resources \
                     --rest-api-id ${API_ID} \
                     --query "items[?path==\`/\`].id" \
                     --output text)"
-aws
+                    
 echo "API ROOT_RESOURCE_ID is ${ROOT_RESOURCE_ID}"
+
 # Creating Resource
 
 aws apigateway create-resource \
-                --rest-api-id ${API_ID} \ 
-                --parent-id ${ROOT_RESOURCE_ID} \
-                --path-part ${API_RESOURCE_NAME}
+            --rest-api-id ${API_ID} \
+            --parent-id ${ROOT_RESOURCE_ID} \
+            --path-part ${API_RESOURCE_NAME}
 
-API_RESOURCE_ID ="$(aws apigateway get-resources \ 
-                    --rest-api-id ${API_ID} \
-                    --query "items[?path==\`/${API_RESOURCE_NAME}\`].id" \
-                    --output text)"
+API_RESOURCE_ID="$(aws apigateway get-resources \
+                --rest-api-id ${API_ID} \
+                --query "items[?path==\`${API_RESOURCE_NAME}\`].id" \
+                --output text)"
 
 
 
 # Creating Authorizer
 aws apigateway create-authorizer --rest-api-id ${API_ID} \
-                                 --name '${AUTHORIZER_NAME}' \
-                                 --type TOKEN --authorizer-uri 'arn:aws:apigateway:${AWS_REGION}:lambda:path/2015-03-31/functions/${LAMBDA_AUTHORIZER_ARN}/invocations' \
+                                 --name ${AUTHORIZER_NAME} \
+                                 --type TOKEN --authorizer-uri 'arn:aws:apigateway:'${AWS_REGION}':lambda:path/2015-03-31/functions/'${LAMBDA_AUTHORIZER_ARN}'/invocations' \
                                  --identity-source 'method.request.header.Auth' \
                                  --authorizer-result-ttl-in-seconds 300
                                  
 
-
- AUTHORIZER_ID="$(aws apigateway get-authorizers \
+AUTHORIZER_ID="$(aws apigateway get-authorizers \
                    --rest-api-id ${API_ID} \
                    --query "items[?name==\`${AUTHORIZER_NAME}\`].id" \
                    --output text)"                              
-             
+
+API_ARN=$(echo ${LAMBDA_AUTHORIZER_ARN} | \
+    sed -e 's/lambda/execute-api/' \
+    -e "s/function:${LAMBDA_AUTHORIZER_NAME}/${API_ID}/")
+ 
+# Adding permissions for authorizer invocation 
+aws lambda add-permission \
+           --function-name ${LAMBDA_AUTHORIZER_ARN} \
+           --source-arn ${API_ARN}/authorizers/${AUTHORIZER_ID} \
+           --principal apigateway.amazonaws.com \
+           --statement-id ${PRJ_NAME}_stmt \
+           --action lambda:InvokeFunction
+           
 # Adding permissions for  logging
 
 
