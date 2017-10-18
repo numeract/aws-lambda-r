@@ -99,7 +99,7 @@ aws apigateway create-resource \
 
 API_RESOURCE_ID="$(aws apigateway get-resources \
                 --rest-api-id ${API_ID} \
-                --query "items[?path==\`${API_RESOURCE_NAME}\`].id" \
+                --query "items[?path==\`/${API_RESOURCE_NAME}\`].id" \
                 --output text)"
 
 
