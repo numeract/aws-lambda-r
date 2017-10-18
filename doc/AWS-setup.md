@@ -66,29 +66,44 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
         [2](http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html)
 
 
-## VPC [automate ?]
+## VPC
 
-1. Create dedicate VPC 
-2. Create subnet
-3. Create security group
+# Create dedicate VPC 
+
+1. Go to AWS Console
+2. Select VPC from Services menu
+3. From VPC Dashboard,Virtual Private Cloud section, select "Your VPC's"
+4. Click on "Create VPC" button
+5. Fill name and IPv4 CIDR block in order to define IP range of VPC. 
+6. Click on "Yes,Create" button
+
+# Create subnet
+
+1. Go to AWS Console
+2. Select VPC from Services menu
+3. From VPC Dashboard,Virtual Private Cloud section, select "Subnets"
+4. Click on "Create Subnet" button
+5. Fill name and IPv4 CIDR block in order to define IP range of Subnet. 
+6. Click on "Yes,Create" button
+
+# Create security group
 
 
-## LAMBDA [automate ?]
+## LAMBDA
 
-1. Create Lambda Authorizer function 
+# Create Lambda Authorizer function (automated,see `aws_setup.sh` script)
 
 
-##  S3 BUCKET [automate ?]
-
-1. Create S3 bucket
+##  S3 BUCKET
+# Create S3 bucket (automated,see `aws_setup.sh` script)
 
 
 ## API GATEWAY
 
-1. Create API
-2. Create resources
-3. Create authorizer
-4. Create stages
+1. Create API (automated,see `aws_setup.sh` script)
+2. Create resources (automated,see `aws_setup.sh` script)
+3. Create authorizer (automated,see `aws_setup.sh` script)
+4. Create stages  
 5. Attach role for CloudWatch logging to API
 6. Enable CloudWatch Logging on stages
 
@@ -98,6 +113,63 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 1. Go to AWS web console and select Frankfurt / eu-central-1 region
 2. To to EC2 > Instances
 3. Select all running instance > Actions button > Instance State > Terminate
+
+## DELETE SERVICES
+
+# VPC
+1. Go to AWS Console
+2. Select VPC from Services menu
+3. From VPC Dashboard,Virtual Private Cloud section, select "Your VPC's"
+4. Select the VPC you want to delete
+5. Click on "Actions" button 
+6. Select "Delete VPC" option
+
+# Subnet
+1. Go to AWS Console
+2. Select VPC from Services menu
+3. From VPC Dashboard,Virtual Private Cloud section, select "Subnets"
+4. Select the subnet you want to delete
+5. Click on "Actions" button 
+6. Select "Delete Subnet" option
+
+# Service Role
+1. Go to AWS Console
+2. Select IAM from Services menu
+3. From IAM Dashboard, select "Roles"
+4. Select the role you want to delete 
+5. Click on "Delete role" button
+
+# Lambda Function
+1. Go to AWS Console
+2. Select Lambda from Services menu
+3. Select "Functions" from AWS Lambda menu
+4. Select the function you want to delete 
+5. Click on "Delete" button
+
+# S3 Bucket
+1. Go to AWS Console
+2. Select S3 from Services menu
+3. Select the bucket you want to delete
+4. Click the "Delete bucket" button
+
+# API
+1. Go to AWS Console
+2. Select API Gateway from Services menu
+3. Select the API you want to delete
+4. Click the "Actions" button
+5. Select "Delete API" option
+
+# API Rescources
+1. Go to the API that contains the resource you want to delete
+2. Select the resource you eant to delete
+4. Click the "Actions" button
+5. Select "Delete Resource" option
+
+# API Authorizers
+1. Go to the API that contains the authorizer you want to delete
+2. Select "Authorizers" from the API's menu
+3. Click on "Delete Authorizer" button placed in the right corner of 
+authorizer description section 
 
 ## Create Custom Settings file
 
