@@ -73,11 +73,17 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 1. Go to AWS Console
 2. Select VPC from Services menu
 3. From VPC Dashboard,Virtual Private Cloud section, select "Your VPC's"
+
 ![VPC Dashboard](vpc-01-create.PNG)
+
 4. Click on "Create VPC" button
+
 !["Create VPC" button](vpc-02-create.PNG)
+
 5. Fill name and IPv4 CIDR block in order to define IP range of VPC. 
+
 ![Edit fields](vpc-03-create.PNG)
+
 6. Click the "Yes,Create" button
 
 ### Create subnet
@@ -87,10 +93,12 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 3. From VPC Dashboard,Virtual Private Cloud section, select "Subnets"
 4. Click on "Create Subnet" button
 5. Fill name and IPv4 CIDR block in order to define IP range of Subnet. 
+
 ![Create Subnet](subnet-01-create.PNG)
+
 6. Click on "Yes,Create" button
 
-##Create security group
+## Create security group
 
 
 ## LAMBDA
@@ -126,7 +134,9 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 3. From VPC Dashboard,Virtual Private Cloud section, select "Your VPC's"
 4. Select the VPC you want to delete
 5. Click the "Actions" button 
+
 ![Delete VPC](vpc-delete.PNG)
+
 6. Select "Delete VPC" option
 
 ## Subnet
@@ -135,16 +145,22 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 3. From VPC Dashboard,Virtual Private Cloud section, select "Subnets"
 4. Select the subnet you want to delete
 5. Click on "Actions" button 
+
 ![Delete Subnet](subnet-delete.PNG)
+
 6. Select "Delete Subnet" option
 
 ## Service Role
 1. Go to AWS Console
 2. Select IAM from Services menu
 3. From IAM Dashboard, select "Roles"
+
 ![IAM Dashboard](role-01-delete.PNG)
+
 4. Select the role you want to delete 
+
 ![IAM Roles](role-02-delete.PNG)
+
 5. Click on "Delete role" button
 
 ## Lambda Function
@@ -152,14 +168,18 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 2. Select Lambda from Services menu
 3. Select "Functions" from AWS Lambda menu
 4. Select the function you want to delete 
+
 ![Lambda Functions](delete_lambda.PNG)
+
 5. Click on "Delete" button
 
 ## S3 Bucket
 1. Go to AWS Console
 2. Select S3 from Services menu
 3. Select the bucket you want to delete
+
 ![S3 Buckets](S3-delete.PNG)
+
 4. Click the "Delete bucket" button
 
 ## API
@@ -168,6 +188,7 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 3. Select the API you want to delete
 4. Click the "Actions" button
 5. Select "Delete API" option
+
 ![Delete API](delete_api.PNG)
 
 ## API Rescources
@@ -175,14 +196,18 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 2. Select the resource you eant to delete
 4. Click the "Actions" button
 5. Select "Delete Resource" option
+
 ![Delete API resource](delete_resources.PNG)
 
 ## API Authorizers
 1. Go to the API that contains the authorizer you want to delete
 2. Select "Authorizers" from the API's menu
+
 ![API menu](delete_authorizer1.PNG)
+
 3. Click on "Delete Authorizer" button placed in the right corner of 
 authorizer description section 
+
 ![Delete authorizer](delete_authorizer2.PNG)
 
 
