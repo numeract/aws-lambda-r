@@ -29,7 +29,7 @@ AWS_REGION="eu-west-1"
 # The id of the Amazon Machine Image which is the template for the EC2 instance.
 # AWS > amazon-linux-ami > Amazon Linux AMI IDs
 # EC2_AMI_ID="ami-657bd20a"
-EC2_AMI_ID="ami-82be18ed"
+EC2_AMI_ID="ami-acd005d5"
 
 # The type/size of the instance 
 # AWS > EC2 > instance-types
