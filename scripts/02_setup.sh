@@ -80,9 +80,11 @@ echo -e "$INFO Loading default settings and secrets"
 
 SETTINGS_DEFAULT_PATH="$SET_DIR/settings_default.sh"
 SECRETS_DEFAULT_PATH="$SET_DIR/secrets_default.sh"
+DEFAULT_SETUP_PATH="$SET_DIR/default_setup.sh"
 SECRETS_USER_PATH="$SET_DIR/$USER_SECRETS_FILE"
 
 source $SETTINGS_DEFAULT_PATH
+source $DEFAULT_SETUP_PATH
 source $SECRETS_DEFAULT_PATH
 
 if [[ -f $SECRETS_USER_PATH ]]; then
@@ -90,6 +92,15 @@ if [[ -f $SECRETS_USER_PATH ]]; then
     source $SECRETS_USER_PATH
 else
     echo -e "$ERROR User specific secrets file $(FY $SECRETS_USER_PATH)" \
+        "not found. Aborting."
+    exit 1
+fi
+
+if [[ -f $DEFAULT_SETUP_PATH ]]; then
+    echo -e "$INFO Loading user specific setup settings from $(FY $DEFAULT_SETUP_PATH)"
+    source $DEFAULT_SETUP_PATH
+else
+    echo -e "$ERROR User specific setup settings file $(FY $DEFAULT_SETUP_PATH)" \
         "not found. Aborting."
     exit 1
 fi
@@ -141,11 +152,10 @@ LAMBDA_FUNCTION_NAME="${PRJ_NAME}-${PRJ_BRANCH}-${API_STAGE}-${API_RESOURCE_NAME
 
 # EC2 scripts to be pushed to the server
 EC2_SCR_11="$SCR_DIR/11_install_packages.sh"
-
 EC2_SET_1="$SETTINGS_DEFAULT_PATH"
 EC2_SET_2="$SECRETS_DEFAULT_PATH"
 EC2_SET_3="$SECRETS_USER_PATH"
-
+EC2_SET_4="$DEFAULT_SETUP_PATH"
 EC2_SCR_12="$SCR_DIR/12_configure_ec2.sh"
 EC2_SCR_13="$SCR_DIR/13_create_deployment_package.sh"
 EC2_SCR_14="$SCR_DIR/14_create_lambda_api_method.sh"

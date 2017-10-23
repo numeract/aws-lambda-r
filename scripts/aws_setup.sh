@@ -101,7 +101,18 @@ API_RESOURCE_ID="$(aws apigateway get-resources \
                 --rest-api-id ${API_ID} \
                 --query "items[?path==\`/${API_RESOURCE_NAME}\`].id" \
                 --output text)"
+                
+# Creating alias resource
+aws apigateway create-resource \
+            --rest-api-id ${API_ID} \
+            --parent-id ${ROOT_RESOURCE_ID} \
+            --path-part ${API_ALIAS_RESOURCE_NAME} \
+            --output table
 
+API_ALIAS_RESOURCE_ID="$(aws apigateway get-resources \
+                --rest-api-id ${API_ID} \
+                --query "items[?path==\`/${API_ALIAS_RESOURCE_NAME}\`].id" \
+                --output text)"
 
 
 # Creating Authorizer
@@ -133,14 +144,17 @@ aws lambda add-permission \
 # Adding permissions for API logging
 
 # Writing variables in default_setup.sh
-echo -en "IAM_LAMBDA_FUNCTION_ROLE=${LAMBDA_ROLE_ARN}\nAPI_ID=" \
-         "${API_ID}\nAPI_AUTHORIZER_ID=${AUTHORIZER_ID}\n" \
-         "API_ARN=${API_ARN}\nAPI_RESOURCE_ID=${API_RESOURCE_ID}"|  tee ../settings/default_setup.sh
+echo -en "IAM_LAMBDA_FUNCTION_ROLE=${LAMBDA_ROLE_ARN}\nAPI_ID=${API_ID}" \
+         "\nAPI_AUTHORIZER_ID=${AUTHORIZER_ID}\n" \
+         "API_ARN=${API_ARN}\nAPI_RESOURCE_ID=${API_RESOURCE_ID}"\
+         "\nAPI_ALIAS_RESOURCE_ID=${API_ALIAS_RESOURCE_ID}"\
+         "\nS3_BUCKET=${S3_BUCKET}"|  tee ../settings/default_setup.sh
 
 echo -e "$INFO Lambda role ARN is: $(FY $LAMBDA_ROLE_ARN) "
 echo -e "$INFO LAMBDA_AUTHORIZER_ARN is: $(FY $LAMBDA_AUTHORIZER_ARN)"
 echo -e "$INFO API ID is: $(FY $API_ID)"
 echo -e "$INFO API ROOT_RESOURCE_ID is: $(FY $ROOT_RESOURCE_ID)"
 echo -e "$INFO API_RESOURCE_ID is: $(FY $API_RESOURCE_ID) "
+echo -e "$INFO API_ALIAS_RESOURCE_ID is: $(FY $API_ALIAS_RESOURCE_ID) "
 echo -e "$INFO AUTHORIZER_ID is: $(FY $AUTHORIZER_ID)"
 echo -e "$INFO API_ARN is: $(FY $API_ARN)"

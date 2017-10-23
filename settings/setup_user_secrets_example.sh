@@ -11,4 +11,4 @@
 # 2. in `setup_user_secrets.sh` edit the line below
 
 
-USER_SECRETS_FILE="<type your secrets filename>.sh"
+USER_SECRETS_FILE="<user_secrets_file_name>.sh"

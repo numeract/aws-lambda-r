@@ -54,7 +54,7 @@ LAMBDA_HANDLER_FUNCTION="handler_post"
 
 # The chosen runtime for lambda function (AWS>LAMBDA>RUNTIME)
 # AWS > Lambda > Functions > Configuration
-LAMBDA_RUNTIME="python2.7"
+LAMBDA_RUNTIME="python3.6"
 
 # The time limit (in seconds) for the lambda function to run
 # AWS > Lambda > Functions > Configuration
@@ -80,8 +80,6 @@ API_AUTHORIZATION_TYPE="CUSTOM"
 
 # testing ----------------------------------------------------------------------
 
-# The session_id from the database 
-SESSION_ID="5575764"
 
 # Option for cp command.
 # Choices: "--verbose" (show the copied files) or " " (copy without showing) 
@@ -116,6 +114,9 @@ API_GATEWAY_NAME="${PRJ_NAME}-API"
 
 # Name of resource under API root resource 
 API_RESOURCE_NAME="${PRJ_NAME}_res"
+
+API_ALIAS_RESOURCE_NAME="${PRJ_NAME}_alias_res"
+
 
 # Name of API custom authorizer
 AUTHORIZER_NAME="Authorizer"
