@@ -72,33 +72,40 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 
 1. Go to AWS Console
 2. Select VPC from Services menu
-3. From VPC Dashboard,Virtual Private Cloud section, select "Your VPC's"
+3. From VPC Dashboard, click "Start VPC Wizard".
 
-![VPC Dashboard](vpc-01-create.PNG)
+![VPC Dashboard](01_create_vpc.PNG)
 
-4. Click on "Create VPC" button
+4. Choose "VPC with a Single Public Subnet" and click the "Select" button.
 
-!["Create VPC" button](vpc-02-create.PNG)
+!["Create VPC" button](02_create_vpc.PNG)
 
-5. Fill name and IPv4 CIDR block in order to define IP range of VPC. 
+5. Fill VPC name and Subnet name fields. 
 
-![Edit fields](vpc-03-create.PNG)
+![Edit fields](03_create_vpc.PNG)
 
-6. Click the "Yes,Create" button
+6. Click the "Create VPC" button.
 
-### Create subnet
+### Edit subnet
 
 1. Go to AWS Console
 2. Select VPC from Services menu
 3. From VPC Dashboard,Virtual Private Cloud section, select "Subnets"
-4. Click on "Create Subnet" button
-5. Fill name and IPv4 CIDR block in order to define IP range of Subnet. 
+4. Select the subnet previously created.
+5. From "Subnet Actions" menu, select "Modify auto-assign IP settings" option.
 
-![Create Subnet](subnet-01-create.PNG)
+![Edit Subnet1](01_edit_subnet.PNG)
 
-6. Click on "Yes,Create" button
+6.Check "Enable auto-assign public IPv4 address".
+
+![Edit Subnet2](02_edit_subnet.PNG)
 
 ## Create security group
+
+1. Go to AWS Console
+2. Select VPC from Services menu
+3. From VPC Dashboard,Virtual Private Cloud section, select "Security Groups".
+4. Click the "Create Security Group" button.
 
 
 ## LAMBDA
