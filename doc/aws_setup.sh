@@ -139,8 +139,12 @@ VPC_ID=$(aws ec2 create-vpc \
         --output text)
         
 aws ec2 modify-vpc-attribute \
-        --vpc-id ${VPC_ID} \
-        --enable-dns-hostnames
+       --vpc-id ${VPC_ID} \
+       --enable-dns-support "{\"Value\":true}"
+
+aws ec2 modify-vpc-attribute \
+       --vpc-id ${VPC_ID} \
+       --enable-dns-hostnames "{\"Value\":true}"
         
 SUBNET1_ID=$(aws ec2 create-subnet \
             --vpc-id  ${VPC_ID} \
@@ -192,11 +196,11 @@ SECURITY_GROUP_ID=$(aws ec2 create-security-group \
                     --output text)
 
 # Writing variables in default_setup.sh
-echo -en "IAM_LAMBDA_FUNCTION_ROLE=${LAMBDA_ROLE_ARN}\nAPI_ID=" \
-         "${API_ID}\nAPI_AUTHORIZER_ID=${AUTHORIZER_ID}\n" \
+echo -en "IAM_LAMBDA_FUNCTION_ROLE=${LAMBDA_ROLE_ARN}\nAPI_ID=${API_ID}\n" \
+         "API_AUTHORIZER_ID=${AUTHORIZER_ID}\n" \
          "API_ARN=${API_ARN}\nAPI_RESOURCE_ID=${API_RESOURCE_ID}\n"\
-         "EC2_SUBNET_ID=${SUBNET1_ID}\nEC2_SECURITY_GROUP_IDS=" \
-         "${SECURITY_GROUP_ID}\nVPC_ID=${VPC_ID}\n"\
+         "EC2_SUBNET_ID=${SUBNET1_ID}\nEC2_SECURITY_GROUP_IDS=${SECURITY_GROUP_ID}\n" \
+         "VPC_ID=${VPC_ID}\n"\
          "S3_BUCKET=${S3_BUCKET}"|  tee ../settings/default_setup.sh
 
 echo -e "$INFO Lambda role ARN is: $(FY $LAMBDA_ROLE_ARN) "
