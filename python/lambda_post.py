@@ -8,7 +8,7 @@ os.environ["R_LIBS"] = os.path.join(os.getcwd(), 'libraries')
 
 for file in os.listdir('lib/external'):
 	file_name='lib/external/' + file
-    ctypes.cdll.LoadLibrary(os.path.join(os.getcwd(), file_name))
+	ctypes.cdll.LoadLibrary(os.path.join(os.getcwd(), file_name))
 
 
 # source R file
