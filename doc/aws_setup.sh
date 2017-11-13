@@ -196,7 +196,8 @@ echo -en "IAM_LAMBDA_FUNCTION_ROLE=${LAMBDA_ROLE_ARN}\nAPI_ID=" \
          "${API_ID}\nAPI_AUTHORIZER_ID=${AUTHORIZER_ID}\n" \
          "API_ARN=${API_ARN}\nAPI_RESOURCE_ID=${API_RESOURCE_ID}\n"\
          "EC2_SUBNET_ID=${SUBNET1_ID}\nEC2_SECURITY_GROUP_IDS=" \
-         "${SECURITY_GROUP_ID}\nVPC_ID=${VPC_ID}"|  tee ../settings/default_setup.sh
+         "${SECURITY_GROUP_ID}\nVPC_ID=${VPC_ID}\n"\
+         "S3_BUCKET=${S3_BUCKET}"|  tee ../settings/default_setup.sh
 
 echo -e "$INFO Lambda role ARN is: $(FY $LAMBDA_ROLE_ARN) "
 echo -e "$INFO LAMBDA_AUTHORIZER_ARN is: $(FY $LAMBDA_AUTHORIZER_ARN)"
