@@ -194,6 +194,12 @@ SECURITY_GROUP_ID=$(aws ec2 create-security-group \
                     --vpc ${VPC_ID} \
                     --query 'GroupId' \
                     --output text)
+                 
+aws ec2 authorize-security-group-ingress \
+         --group-id $(SECURITY_GROUP_ID) \
+         --protocol tcp \
+         --port 22 \
+         --cidr 0.0.0.0/0
 
 # Writing variables in default_setup.sh
 echo -en "IAM_LAMBDA_FUNCTION_ROLE=${LAMBDA_ROLE_ARN}\nAPI_ID=${API_ID}\n" \
