@@ -102,6 +102,7 @@ API_RESOURCE_ID="$(aws apigateway get-resources \
                 --query "items[?path==\`/${API_RESOURCE_NAME}\`].id" \
                 --output text)"
 
+
 # Creating Authorizer
 aws apigateway create-authorizer --rest-api-id ${API_ID} \
                                  --name ${AUTHORIZER_NAME} \
@@ -130,10 +131,72 @@ aws lambda add-permission \
            
 # Adding permissions for API logging
 
+echo -e "$INFO Creating VPC and security group"
+
+VPC_ID=$(aws ec2 create-vpc \
+        --cidr-block 10.0.0.0/16 \
+        --query 'Vpc.VpcId' \
+        --output text)
+        
+aws ec2 modify-vpc-attribute \
+        --vpc-id ${VPC_ID} \
+        --enable-dns-hostnames
+        
+SUBNET1_ID=$(aws ec2 create-subnet \
+            --vpc-id  ${VPC_ID} \
+            --cidr-block 10.0.1.0/24 \
+            --query 'Subnet.SubnetId' \
+            --output text)
+            
+
+SUBNET2_ID=$(aws ec2 create-subnet \
+            --vpc-id  ${VPC_ID} \
+            --cidr-block 10.0.0.0/24 \
+            --query 'Subnet.SubnetId' \
+            --output text)
+            
+GATEWAY_ID=$(aws ec2 create-internet-gateway \
+             --query 'InternetGateway.InternetGatewayId' \
+             --output text)
+
+aws ec2 attach-internet-gateway \
+        --vpc-id ${VPC_ID} \
+        --internet-gateway-id ${GATEWAY_ID}
+
+ROUTE_TABLE_ID=$(aws ec2 create-route-table \
+                --vpc-id ${VPC_ID}\
+                --query 'RouteTable.RouteTableId'\
+                --output text)
+                
+aws ec2 create-route \
+        --route-table-id ${ROUTE_TABLE_ID} \
+        --destination-cidr-block 0.0.0.0/0 \
+        --gateway-id ${GATEWAY_ID}
+        
+        
+ASSOCIATION_ID=$(aws ec2 associate-route-table \
+                --subnet-id ${SUBNET1_ID} \
+                --route-table-id ${ROUTE_TABLE_ID} \
+                --query 'AssociationId' \
+                --output text)   
+                
+aws ec2 modify-subnet-attribute \
+        --subnet-id ${SUBNET1_ID} \
+        --map-public-ip-on-launch        
+        
+SECURITY_GROUP_ID=$(aws ec2 create-security-group \
+                    --group-name EC2access \
+                    --description "Security group for SSH access" \
+                    --vpc ${VPC_ID} \
+                    --query 'GroupId' \
+                    --output text)
+
 # Writing variables in default_setup.sh
 echo -en "IAM_LAMBDA_FUNCTION_ROLE=${LAMBDA_ROLE_ARN}\nAPI_ID=" \
          "${API_ID}\nAPI_AUTHORIZER_ID=${AUTHORIZER_ID}\n" \
-         "API_ARN=${API_ARN}\nAPI_RESOURCE_ID=${API_RESOURCE_ID}"|  tee ../settings/default_setup.sh
+         "API_ARN=${API_ARN}\nAPI_RESOURCE_ID=${API_RESOURCE_ID}\n"\
+         "EC2_SUBNET_ID=${SUBNET1_ID}\nEC2_SECURITY_GROUP_IDS=" \
+         "${SECURITY_GROUP_ID}\nVPC_ID=${VPC_ID}"|  tee ../settings/default_setup.sh
 
 echo -e "$INFO Lambda role ARN is: $(FY $LAMBDA_ROLE_ARN) "
 echo -e "$INFO LAMBDA_AUTHORIZER_ARN is: $(FY $LAMBDA_AUTHORIZER_ARN)"
@@ -142,3 +205,7 @@ echo -e "$INFO API ROOT_RESOURCE_ID is: $(FY $ROOT_RESOURCE_ID)"
 echo -e "$INFO API_RESOURCE_ID is: $(FY $API_RESOURCE_ID) "
 echo -e "$INFO AUTHORIZER_ID is: $(FY $AUTHORIZER_ID)"
 echo -e "$INFO API_ARN is: $(FY $API_ARN)"
+
+echo -e "$INFO VPC id is: $(FY $VPC_ID) "
+echo -e "$INFO SUBNET1_ID is: $(FY $SUBNET1_ID)"
+echo -e "$INFO SECURITY_GROUP_ID is: $(FY $SECURITY_GROUP_ID)"
