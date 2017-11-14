@@ -1,10 +1,11 @@
 import os
+os.environ["R_HOME"] = os.getcwd()
+os.environ["R_LIBS"] = os.path.join(os.getcwd(), 'libraries')
+import rpy2
 import ctypes
 import rpy2.robjects as robjects
 import json
 
-os.environ["R_HOME"] = os.getcwd()
-os.environ["R_LIBS"] = os.path.join(os.getcwd(), 'libraries')
 
 for file in os.listdir('lib/external'):
 	file_name='lib/external/' + file
@@ -23,5 +24,5 @@ def handler_post(event, context):
 	
 	input_json = json.dumps(event)
 	output_json = aws_lambda_r(input_json)
-	
+	print 'Success!'
 	return output_json
