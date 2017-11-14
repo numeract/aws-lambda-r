@@ -24,5 +24,5 @@ def handler_post(event, context):
 	
 	input_json = json.dumps(event)
 	output_json = aws_lambda_r(input_json)
-	print 'Success!'
+	
 	return output_json
