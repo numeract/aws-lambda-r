@@ -126,6 +126,26 @@ else
     exit 1
 fi
 
+# obtain API_ALIAS_RESOURCE_NAME from API_ALIAS_RESOURCE_ID
+# The resource containing the latest version of the lambda function
+if [[ ! $API_ALIAS_RESOURCE_ID  =~ "MISSING" ]]; then
+    # The Name of the resource alias under the API Gateway
+    API_ALIAS_RESOURCE_NAME="$(aws $AWS_PRFL apigateway get-resource \
+        --rest-api-id ${API_ID} \
+        --resource-id ${API_ALIAS_RESOURCE_ID} \
+        --query "pathPart" \
+        --output text)"
+    exit_status=$?
+    if [[ $exit_status -ne 0 ]]; then
+        echo -e "$ERROR Cannot obtain $(FC API_ALIAS_RESOURCE_NAME) for" \
+            "$(FC API_ALIAS_RESOURCE_ID)=\"$API_ALIAS_RESOURCE_ID\""
+        exit 1
+    fi
+else
+    echo -e "$ERROR Variable $(FC API_ALIAS_RESOURCE_ID) is: $API_ALIAS_RESOURCE_ID"
+    exit 1
+fi
+
 
 
 # arbitrary AWS Lambda function name - if you change this line search and replace all

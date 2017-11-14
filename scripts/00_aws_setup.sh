@@ -102,6 +102,17 @@ API_RESOURCE_ID="$(aws apigateway get-resources \
                 --query "items[?path==\`/${API_RESOURCE_NAME}\`].id" \
                 --output text)"
 
+# Creating Alias Resource
+aws apigateway create-resource \
+            --rest-api-id ${API_ID} \
+            --parent-id ${ROOT_RESOURCE_ID} \
+            --path-part ${API_ALIAS_RESOURCE_NAME} \
+            --output table
+
+API_ALIAS_RESOURCE_ID="$(aws apigateway get-resources \
+                --rest-api-id ${API_ID} \
+                --query "items[?path==\`/${API_ALIAS_RESOURCE_NAME}\`].id" \
+                --output text)"
 
 # Creating Authorizer
 aws apigateway create-authorizer --rest-api-id ${API_ID} \
@@ -208,7 +219,7 @@ SECURITY_GROUP_ID=$(aws ec2 create-security-group \
                     
  # Add a rule that allows SSH access from anywhere                
 aws ec2 authorize-security-group-ingress \
-         --group-id $(SECURITY_GROUP_ID) \
+         --group-id $SECURITY_GROUP_ID \
          --protocol tcp \
          --port 22 \
          --cidr 0.0.0.0/0
@@ -217,6 +228,7 @@ aws ec2 authorize-security-group-ingress \
 echo -en "IAM_LAMBDA_FUNCTION_ROLE=${LAMBDA_ROLE_ARN}\nAPI_ID=${API_ID}\n" \
          "API_AUTHORIZER_ID=${AUTHORIZER_ID}\n" \
          "API_ARN=${API_ARN}\nAPI_RESOURCE_ID=${API_RESOURCE_ID}\n"\
+         "API_ALIAS_RESOURCE_ID=${API_ALIAS_RESOURCE_ID}\n"
          "EC2_SUBNET_ID=${SUBNET1_ID}\nEC2_SECURITY_GROUP_IDS=${SECURITY_GROUP_ID}\n" \
          "VPC_ID=${VPC_ID}\n"\
          "S3_BUCKET=${S3_BUCKET}"|  tee ../settings/default_setup.sh
