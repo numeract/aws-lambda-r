@@ -219,7 +219,7 @@ SECURITY_GROUP_ID=$(aws ec2 create-security-group \
                     
  # Add a rule that allows SSH access from anywhere                
 aws ec2 authorize-security-group-ingress \
-         --group-id $(SECURITY_GROUP_ID) \
+         --group-id ${SECURITY_GROUP_ID} \
          --protocol tcp \
          --port 22 \
          --cidr 0.0.0.0/0
