@@ -14,7 +14,7 @@ for file in os.listdir('lib/external'):
 
 # source R file
 # this R file might load libraries and source other files
-robjects.r['source']('../example.R')
+robjects.r['source']('example.R')
 
 # exposing R entry point to python
 aws_lambda_r = robjects.globalenv['aws_lambda_r']
@@ -22,7 +22,8 @@ aws_lambda_r = robjects.globalenv['aws_lambda_r']
 
 def handler_post(event, context):
 
-	output_json = aws_lambda_r(event)
-	
+	input_json = json.dumps(event)
+	output_json = json.loads(aws_lambda_r(input_json))
+	#output_json = input_json
 	return output_json
 
