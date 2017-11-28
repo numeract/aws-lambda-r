@@ -54,7 +54,7 @@ LAMBDA_HANDLER_FUNCTION="handler_post"
 
 # The chosen runtime for lambda function (AWS>LAMBDA>RUNTIME)
 # AWS > Lambda > Functions > Configuration
-LAMBDA_RUNTIME="python2.7"
+LAMBDA_RUNTIME="python3.6"
 
 # The time limit (in seconds) for the lambda function to run
 # AWS > Lambda > Functions > Configuration

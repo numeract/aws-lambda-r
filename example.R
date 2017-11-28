@@ -1,4 +1,4 @@
-# library(jsonlite)
+library(jsonlite)
 
 
 from_json <- function(json) {

@@ -12,8 +12,8 @@ cd ~/${PRJ_NAME}
 
 # Python 3 packages transfer (in case Lambda runtime is going to be python3.6)
 
-# virtualenv -p python3 ~/env && source ~/env/bin/activate 
-# pip3 install rpy2
+#virtualenv -p python3 ~/env && source ~/env/bin/activate 
+#pip3 install rpy2
 # pip3 install jinja2
 # sudo cp -r ${CP_VERBOSE}  $VIRTUAL_ENV/lib/python3.4/dist-packages/* ~/${PRJ_NAME}
 # sudo cp -r ${CP_VERBOSE}  $VIRTUAL_ENV/lib/python3.4/site-packages/* ~/${PRJ_NAME}
@@ -21,33 +21,40 @@ cd ~/${PRJ_NAME}
 # sudo cp -r ${CP_VERBOSE}  $VIRTUAL_ENV/lib64/python3.4/dist-packages/* ~/${PRJ_NAME}
 # deactivate
 
+virtualenv -p python3.6 ~/env
+source ~/env/bin/activate
+
+cd ${PRJ_NAME}
+sudo ~/env/bin/pip3.6 install rpy2 -t ~/env/lib64/python3.6/site-packages
+sudo cp -r ${CP_VERBOSE} ~/env/lib64/python3.6/site-packages/* ~/${PRJ_NAME}
+deactivate
 
 # Python 2 packages transfer (for Lambda runtime python2.7)
-echo -e "$INFO Install and copy rpy2 package+dependencies into project directory"
-virtualenv ~/env && source ~/env/bin/activate
+#echo -e "$INFO Install and copy rpy2 package+dependencies into project directory"
+#virtualenv ~/env && source ~/env/bin/activate
 
-echo
-pip install --upgrade pip
-pip install rpy2==2.8.4
-echo
+#echo
+#pip install --upgrade pip
+#pip install rpy2==2.8.4
+#echo
 
-cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/dist-packages/rpy2* ~/${PRJ_NAME}
-cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/dist-packages/singledispatch* ~/${PRJ_NAME}
-cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/dist-packages/six* ~/${PRJ_NAME}
+#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/dist-packages/rpy2* ~/${PRJ_NAME}
+#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/dist-packages/singledispatch* ~/${PRJ_NAME}
+#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/dist-packages/six* ~/${PRJ_NAME}
 
-cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/site-packages/rpy2* ~/${PRJ_NAME}
-cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/site-packages/singledispatch* ~/${PRJ_NAME}
-cp -vr $VIRTUAL_ENV/lib64/python2.7/site-packages/six* ~/${PRJ_NAME}
+#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/site-packages/rpy2* ~/${PRJ_NAME}
+#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/site-packages/singledispatch* ~/${PRJ_NAME}
+#cp -vr $VIRTUAL_ENV/lib64/python2.7/site-packages/six* ~/${PRJ_NAME}
 
-cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/dist-packages/rpy2* ~/${PRJ_NAME}
-cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/dist-packages/singledispatch* ~/${PRJ_NAME}
-cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/dist-packages/six* ~/${PRJ_NAME}
+#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/dist-packages/rpy2* ~/${PRJ_NAME}
+#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/dist-packages/singledispatch* ~/${PRJ_NAME}
+#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/dist-packages/six* ~/${PRJ_NAME}
 
-cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/site-packages/rpy2* ~/${PRJ_NAME}
-cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/site-packages/singledispatch* ~/${PRJ_NAME}
-cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/site-packages/six* ~/${PRJ_NAME}
+#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/site-packages/rpy2* ~/${PRJ_NAME}
+#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/site-packages/singledispatch* ~/${PRJ_NAME}
+#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/site-packages/six* ~/${PRJ_NAME}
 
-deactivate
+#deactivate
 
 
 # Copy R needed libraries into project directory

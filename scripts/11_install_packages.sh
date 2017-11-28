@@ -13,8 +13,8 @@ sudo yum -y upgrade
 
 
 # install 
-echo -e "$INFO Installing python34 and R."
-sudo yum install -y python34-devel python34-pip gcc gcc-c++ readline-devel libgfortran.x86_64 R.x86_64 wget
+echo -e "$INFO Installing python36 and R."
+sudo yum install -y python36-devel.x86_64 python36-virtualenv.noarch gcc gcc-c++ readline-devel libgfortran.x86_64 R.x86_64 wget
 
 echo -e "$INFO Installing git, mysql, blas, lapack."
 sudo yum install -y git-all mysql-devel blas lapack
