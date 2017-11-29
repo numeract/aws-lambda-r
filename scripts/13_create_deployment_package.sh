@@ -29,6 +29,8 @@ sudo ~/env/bin/pip3.6 install rpy2 -t ~/env/lib64/python3.6/site-packages
 sudo cp -r ${CP_VERBOSE} ~/env/lib64/python3.6/site-packages/* ~/${PRJ_NAME}
 deactivate
 
+sudo cp /usr/lib64/python3.6/lib-dynload/_sqlite3.cpython-36m-x86_64-linux-gnu.so ~/${PRJ_NAME}
+
 # Python 2 packages transfer (for Lambda runtime python2.7)
 #echo -e "$INFO Install and copy rpy2 package+dependencies into project directory"
 #virtualenv ~/env && source ~/env/bin/activate
