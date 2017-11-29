@@ -1,10 +1,7 @@
 import os
 import imp
-import sys
 os.environ["R_HOME"] = os.getcwd()
 os.environ["R_LIBS"] = os.path.join(os.getcwd(), 'libraries')
-sys.modules["sqlite"] = imp.new_module("sqlite")
-sys.modules["sqlite3.dbapi2"] = imp.new_module("sqlite.dbapi2")
 import rpy2
 import ctypes
 import rpy2.robjects as robjects
@@ -25,10 +22,9 @@ aws_lambda_r = robjects.globalenv['aws_lambda_r']
 
 
 def handler_post(event, context):
-
-	input_json = json.dumps(event)
-	output_json = aws_lambda_r(input_json)
-	return output_json
+      input_json = json.dumps(event)
+      output_json = json.loads(str(aws_lambda_r(input_json)))
+      return output_json
 
     
 # print(handler_post({"request_id": "Hey"}, None))
