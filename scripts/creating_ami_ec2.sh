@@ -35,14 +35,6 @@ else
     fi
 fi
 
-
-VOLUME_ID = $(aws ec2 describe-volumes \
-            --filters Name=attachment.instance-id,Values=$EC2_INSTANCE_ID  \
-            --query Volumes[].Attachments[].VolumeId \
-            --output text)
-
-SNAPSHOT_ID = $(aws ec2 create-snapshot \
-                --volume-id $VOLUME_ID \
-                --query SnapshotId --output text)
                 
 
+AMI_ID=$(aws ec2 create-image --instance-id $EC2_INSTANCE_ID --name "Custom AMI" --output text)
