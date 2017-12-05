@@ -10,22 +10,12 @@ cd ~/${PRJ_NAME}
 
 
 
-# Python 3 packages transfer (in case Lambda runtime is going to be python3.6)
-
-#virtualenv -p python3 ~/env && source ~/env/bin/activate 
-#pip3 install rpy2
-# pip3 install jinja2
-# sudo cp -r ${CP_VERBOSE}  $VIRTUAL_ENV/lib/python3.4/dist-packages/* ~/${PRJ_NAME}
-# sudo cp -r ${CP_VERBOSE}  $VIRTUAL_ENV/lib/python3.4/site-packages/* ~/${PRJ_NAME}
-# sudo cp -r ${CP_VERBOSE}  $VIRTUAL_ENV/lib64/python3.4/site-packages/* ~/${PRJ_NAME}
-# sudo cp -r ${CP_VERBOSE}  $VIRTUAL_ENV/lib64/python3.4/dist-packages/* ~/${PRJ_NAME}
-# deactivate
+# Python 3 packages transfer 
 
 virtualenv -p python3.6 ~/env
 source ~/env/bin/activate
 
 cd ${PRJ_NAME}
-sudo ~/env/bin/pip3.6 install rpy2 -t ~/env/lib64/python3.6/site-packages
 sudo cp -r ${CP_VERBOSE} ~/env/lib64/python3.6/site-packages/* ~/${PRJ_NAME}
 deactivate
 
@@ -55,18 +45,7 @@ sudo chmod -R a+w ~/${PRJ_NAME}/library
 echo -e "$INFO changed permissions"
 
 
-# Run R script to install packages in project directory
-function join_by { local IFS="$1"; shift; echo "$*"; }
-
-R_PACKAGES_Q=$(printf "'%s' " "${R_PACKAGES[@]}")
-R_PACK_INSTALL=$(join_by , $R_PACKAGES_Q)
-if [[ "$R_PACK_INSTALL" == "''" ]]; then
-    echo -e "$WARN No R packages found, not installing any R packages."
-else
-    echo -e "$INFO Installing R packages: ${R_PACK_INSTALL}"
-    sudo Rscript -e 'install.packages(c('${R_PACK_INSTALL}'), lib="/home/ec2-user/'${PRJ_NAME}'/library", repos="http://cran.us.r-project.org", quiet=TRUE)'
-    echo -e "$INFO R Packages install finished."
-fi
+sudo cp -r ${CP_VERBOSE} ~/library/* ~/${PRJ_NAME}/library
 
 
 # Organizing libraries for deployment package
