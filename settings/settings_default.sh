@@ -9,7 +9,7 @@
 PRJ_NAME="aws-lambda-r"
 
 # Name of the current Git branch, error if mismatch
-PRJ_BRANCH="dev"
+PRJ_BRANCH="ami-dev"
 
 # set to "skip_commit" to skip commit (unsafe!)
 # DEBUG="false"

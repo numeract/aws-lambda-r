@@ -31,33 +31,6 @@ deactivate
 
 sudo cp /usr/lib64/python3.6/lib-dynload/_sqlite3.cpython-36m-x86_64-linux-gnu.so ~/${PRJ_NAME}
 
-# Python 2 packages transfer (for Lambda runtime python2.7)
-#echo -e "$INFO Install and copy rpy2 package+dependencies into project directory"
-#virtualenv ~/env && source ~/env/bin/activate
-
-#echo
-#pip install --upgrade pip
-#pip install rpy2==2.8.4
-#echo
-
-#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/dist-packages/rpy2* ~/${PRJ_NAME}
-#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/dist-packages/singledispatch* ~/${PRJ_NAME}
-#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/dist-packages/six* ~/${PRJ_NAME}
-
-#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/site-packages/rpy2* ~/${PRJ_NAME}
-#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib64/python2.7/site-packages/singledispatch* ~/${PRJ_NAME}
-#cp -vr $VIRTUAL_ENV/lib64/python2.7/site-packages/six* ~/${PRJ_NAME}
-
-#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/dist-packages/rpy2* ~/${PRJ_NAME}
-#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/dist-packages/singledispatch* ~/${PRJ_NAME}
-#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/dist-packages/six* ~/${PRJ_NAME}
-
-#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/site-packages/rpy2* ~/${PRJ_NAME}
-#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/site-packages/singledispatch* ~/${PRJ_NAME}
-#cp -r ${CP_VERBOSE} $VIRTUAL_ENV/lib/python2.7/site-packages/six* ~/${PRJ_NAME}
-
-#deactivate
-
 
 # Copy R needed libraries into project directory
 echo
