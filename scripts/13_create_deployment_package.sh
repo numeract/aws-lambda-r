@@ -12,7 +12,6 @@ cd ~/${PRJ_NAME}
 
 # Python 3 packages transfer 
 
-virtualenv -p python3.6 ~/env
 source ~/env/bin/activate
 
 cd ${PRJ_NAME}
