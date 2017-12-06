@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# update the EC2 virtual machine (an instance)
+# update the EC2 virtual machine and install packages (an instance)
 
 
 # load local settings if not already loaded 
@@ -9,7 +9,7 @@
 
 
 # connect to the created instance
-cat $EC2_SET_1 $EC2_SET_4  |\
+cat $EC2_SET_1 $EC2_SET_4 $EC2_SCR_11 |\
     ssh -i "$EC2_KEY_FILE" \
         -T "${EC2_USERNAME}@${EC2_DNS_NAME}" \
         'bash -s'

@@ -131,9 +131,11 @@ fi
 # arbitrary AWS Lambda function name - if you change this line search and replace all
 LAMBDA_FUNCTION_NAME="${PRJ_NAME}-${PRJ_BRANCH}-${API_STAGE}-${API_RESOURCE_NAME}"
 
+# script to run on EC2 for AMI
+EC2_SCR_11="$SCR_DIR/11_install_packages.sh"
 
 # EC2 scripts to be pushed to the server
-EC2_SCR_11="$SCR_DIR/11_install_packages.sh"
+
 EC2_SET_1="$SETTINGS_DEFAULT_PATH"
 EC2_SET_2="$SECRETS_DEFAULT_PATH"
 EC2_SET_3="$SECRETS_USER_PATH"
