@@ -4,11 +4,22 @@
 echo -e "$INFO Uploading deployment package on S3"
 aws s3 cp ~/${LAMBDA_ZIP} s3://${S3_BUCKET}/lambda/
 
+PRE_EX_LAMBDA=$(aws lambda get-function-configuration \
+                                --function-name  ${LAMBDA_FUNCTION_NAME} \
+                                --query FunctionName)
+echo -e "${PRE_EX_LAMBDA}"    
+echo -e "\"${LAMBDA_FUNCTION_NAME}\""           
+                    
 # Delete lambda function if already exists
-echo -e "$INFO Deleting pre-existent lambda function"
-aws lambda delete-function \
-    --function-name ${LAMBDA_FUNCTION_NAME} \
-    --output table
+ 
+if [[ "${PRE_EX_LAMBDA}" ==  "\"${LAMBDA_FUNCTION_NAME}\"" ]]; then
+        echo -e "$INFO Deleting pre-existent lambda function"
+        aws lambda delete-function \
+            --function-name ${LAMBDA_FUNCTION_NAME} \
+            --output table
+fi
+    
+
 
 # Create lambda function
 echo -e "$INFO Creating lambda function."
