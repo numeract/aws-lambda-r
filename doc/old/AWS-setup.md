@@ -1,6 +1,6 @@
 # aws-lambda-r - Configure AWS for production deployment
 
-**Note: the detailed instructions are not complete.** If you are familiar with AWS,
+**Note: these instructions are not complete.** If you are already familiar with AWS,
 please review the files in `scripts/` and `settings/`.
 
 These are instructions to be followed before running the scripts. At the end of 
@@ -29,17 +29,19 @@ API_TOKEN=""
 
 IAM manages access to AWS.
 
-1. Create an IAM user account to be used only in conjunction with this app
-  + retain the values of **ACCESS_KEY_ID** and **SECRET_ACCESS_KEY**
+1. Create an IAM user account to be used only in conjunction with these scripts
+    + retain the values of **ACCESS_KEY_ID** and **SECRET_ACCESS_KEY**
 2. Give necessary permissions to this user
-  + [TBD: more automation --> more permissions]
+    + in general more automation requires more permissions
+    + TBD
 3. Create roles and policies 
-  + attach policies to the roles
+    + attach policies to the roles
+    + TBD
 
 
 ## SSH Key
 
-SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instance.
+SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 
 ### Create and save SSH key for EC2 connection
 
@@ -47,19 +49,20 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 2. Go to EC2 Service
 3. Select **Key Pairs** under **NETWORK & SECURITY** menu. 
 
-![Key Pairs menu](ssh-01-key-pairs-menu.png)
+![Key Pairs menu](21-ssh-key-pairs-menu.png)
 
-4. Press "Create Key Pair" button and give it a name. When you press the 
-"Create" button, the browser will start downloading the key automatically.
+4. Press "Create Key Pair" button and give the key a name. When you press the 
+"Create" button, the browser will download the key.
 
-![Enter key pair name](ssh-02-enter-key-pair-name.png)
+![Enter key pair name](22-ssh-enter-key-pair-name)
 
 5. Open the folder containing downloaded key (a `.pem` file having the same name as the created key)
 
 6. Copy the `.pem` file to:
     - on Windows: `C:\Users\<your_user_Name>/.ssh/` folder 
         + in order to show hidden folders go to Folder Menu > View > Check "Hidden items"
-    - on OSX and Linux: `~/.ssh/` Additional commands might be necessary from terminal:
+    - on OSX and Linux: `~/.ssh/` 
+        + Additional commands might be necessary from terminal:
         + `chmod 700 ~/.ssh`
         + `chmod 400 ~/.ssh/<your_key_file>.pem`
         + other instructions: [1](https://unix.stackexchange.com/a/115860) and 
@@ -68,21 +71,21 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 
 ## VPC
 
-### Create dedicate VPC 
+### Create dedicated VPC 
 
 1. Go to AWS Console
 2. Select VPC from Services menu
 3. From VPC Dashboard, click "Start VPC Wizard".
 
-![VPC Dashboard](01_create_vpc.PNG)
+![VPC Dashboard](31-create-vpc.PNG)
 
 4. Choose "VPC with a Single Public Subnet" and click the "Select" button.
 
-!["Create VPC" button](02_create_vpc.PNG)
+!["Create VPC" button](32-create-vpc.PNG)
 
 5. Fill VPC name and Subnet name fields. 
 
-![Edit fields](03_create_vpc.PNG)
+![Edit fields](33-create-vpc.jpg)
 
 6. Click the "Create VPC" button.
 
@@ -90,15 +93,15 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 
 1. Go to AWS Console
 2. Select VPC from Services menu
-3. From VPC Dashboard,Virtual Private Cloud section, select "Subnets"
+3. From VPC Dashboard, Virtual Private Cloud section, select "Subnets"
 4. Select the subnet previously created.
 5. From "Subnet Actions" menu, select "Modify auto-assign IP settings" option.
 
-![Edit Subnet1](01_edit_subnet.PNG)
+![Edit Subnet1](34-edit-subnet.PNG)
 
-6.Check "Enable auto-assign public IPv4 address".
+6. Check "Enable auto-assign public IPv4 address".
 
-![Edit Subnet2](02_edit_subnet.PNG)
+![Edit Subnet2](35-edit-subnet.PNG)
 
 ## Create security group
 
@@ -110,18 +113,19 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 
 ## LAMBDA
 
-### Create Lambda Authorizer function (automated,see `aws_setup.sh` script)
+### Create Lambda Authorizer function (automated, see `aws_setup.sh` script)
 
 
 ##  S3 BUCKET
-### Create S3 bucket (automated,see `aws_setup.sh` script)
+
+### Create S3 bucket (automated, see `aws_setup.sh` script)
 
 
 ## API GATEWAY
 
-1. Create API (automated,see `aws_setup.sh` script)
-2. Create resources (automated,see `aws_setup.sh` script)
-3. Create authorizer (automated,see `aws_setup.sh` script)
+1. Create API (automated, see `aws_setup.sh` script)
+2. Create resources (automated, see `aws_setup.sh` script)
+3. Create authorizer (automated, see `aws_setup.sh` script)
 4. Create stages  
 5. Attach role for CloudWatch logging to API
 6. Enable CloudWatch Logging on stages
@@ -129,13 +133,14 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 
 ## TERMINATE UNUSED INSTANCES
 
-1. Go to AWS web console and select Frankfurt / eu-central-1 region
+1. Go to AWS web console and select a region, e.g., Frankfurt / eu-central-1 region
 2. To to EC2 > Instances
 3. Select all running instance > Actions button > Instance State > Terminate
 
-# DELETE SERVICES
+## DELETE SERVICES
 
-## VPC
+### VPC
+
 1. Go to AWS Console
 2. Select VPC from Services menu
 3. From VPC Dashboard,Virtual Private Cloud section, select "Your VPC's"
@@ -146,10 +151,11 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 
 6. Select "Delete VPC" option
 
-## Subnet
+### Subnet
+
 1. Go to AWS Console
 2. Select VPC from Services menu
-3. From VPC Dashboard,Virtual Private Cloud section, select "Subnets"
+3. From VPC Dashboard, Virtual Private Cloud section, select "Subnets"
 4. Select the subnet you want to delete
 5. Click on "Actions" button 
 
@@ -198,9 +204,9 @@ SSH Keys allows access through an SSH tunnel to a remove / cloud AWS EC2 instanc
 
 ![Delete API](delete_api.PNG)
 
-## API Rescources
+## API Resources
 1. Go to the API that contains the resource you want to delete
-2. Select the resource you eant to delete
+2. Select the resource you want to delete
 4. Click the "Actions" button
 5. Select "Delete Resource" option
 
