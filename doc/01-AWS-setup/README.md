@@ -49,12 +49,12 @@ SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 2. Go to EC2 Service
 3. Select **Key Pairs** under **NETWORK & SECURITY** menu. 
 
-![Key Pairs menu](01-AWS-setup/21-ssh-key-pairs-menu.png)
+![Key Pairs menu](21-ssh-key-pairs-menu.png)
 
 4. Press "Create Key Pair" button and give the key a name. When you press the 
 "Create" button, the browser will download the key.
 
-![Enter key pair name](01-AWS-setup/22-ssh-enter-key-pair-name)
+![Enter key pair name](22-ssh-enter-key-pair-name.png)
 
 5. Open the folder containing downloaded key (a `.pem` file having the same name as the created key)
 

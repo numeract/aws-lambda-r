@@ -2,4 +2,4 @@
 
 Documentation directory
 
-1. [Setup](01-AWS-setup.md)
+1. [AWS Setup](01-AWS-setup/README.md)
