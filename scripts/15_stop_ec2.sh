@@ -37,4 +37,3 @@ while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
         sleep 5
     fi
 done
- 
