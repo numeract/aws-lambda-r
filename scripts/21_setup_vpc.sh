@@ -1,85 +1,11 @@
-#/!bin/bash
+#!/bin/bash
 
-# variable & functions to display messages
-INFO="\e[32mINFO :\e[39m"                               # Green
-WARN="\e[33mWARN :\e[39m"                               # Yellow
-ERROR="\e[31mERROR:\e[39m"                              # Red
-MISSING="\e[95mMISSING\e[39m"                           # Magenta
+# check if VPC exists given the config variables, create it if not
 
-FY () { echo -e "\e[33m$1\e[39m"; }                     # Foreground Yellow
-FC () { echo -e "\e[36m$1\e[39m"; }                     # Foreground Cyan
-BY () { echo -e "\e[43m\e[30m$1\e[39m\e[49m"; }         # Background Yellow
+# load local settings if not already loaded
+[[ $SCR_DIR ]] || SCR_DIR="$(cd "$(dirname "$0")/."; pwd)"
+[[ $PRJ_DIR ]] || source "$SCR_DIR/02_setup.sh"
 
-source "../settings/settings_default.sh"
-
-
-# Settings for setup  ---------------------------------------------------------
-
-# The name of role assigned to lambda function
-LAMBDA_ROLE_NAME="${PRJ_NAME}-lambda-role"
-
-# The name of the file containing trust policy
-LAMBDA_ROLE_TRUST_FILE="lambda_role_trust.json"
-
-# The name of the file containing role policy
-LAMBDA_ROLE_POLICY_FILE="lambda_role_policy.json"
-
-# The name of policy assigned to lambda role
-POLICY_NAME="${PRJ_NAME}-lambda-policy"
-
-# The name of the Lambda authorizer function
-LAMBDA_AUTHORIZER_NAME="${PRJ_NAME}-LambdaAuthorizer"
-
-# The name of the S3 Bucket 
-S3_BUCKET="${PRJ_NAME}-bucket"
-
-# API Gateway Name
-API_GATEWAY_NAME="${PRJ_NAME}-API"
-
-# Name of resource under API root resource 
-API_RESOURCE_NAME="${PRJ_NAME}_res"
-
-API_ALIAS_RESOURCE_NAME="${PRJ_NAME}_alias_res"
-
-# Name of API custom authorizer
-AUTHORIZER_NAME="Authorizer"
-
-
-
-
-
-
-
-
-
-#API_ROLE_NAME="tutorial_api_role"
-
-# TODO: consider colors similar to 02_setup.sh
-
-# Create the role and attach the trust policy that enables EC2 to assume this role.
-aws $AWS_PRFL iam create-role \
-    --role-name $LAMBDA_ROLE_NAME \
-    --assume-role-policy-document file://../doc/$LAMBDA_ROLE_TRUST_FILE \
-    --output table
-
-# Attach inline policy to role
-aws $AWS_PRFL iam put-role-policy \
-    --role-name $LAMBDA_ROLE_NAME  \
-    --policy-name $POLICY_NAME \
-    --policy-document file://../doc/$LAMBDA_ROLE_POLICY_FILE
-
-LAMBDA_ROLE_ARN="$(aws iam get-role \
-    --role-name $LAMBDA_ROLE_NAME \
-    --query Role.Arn \
-    --output text)"
-
-
-
-# Creating role for API 
-API_ROLE_NAME="${PRJ_NAME}-api-role"
-
-
-API_ROLE_ARN=""
 
 # Creating S3 Bucket
 aws $AWS_PRFL s3api create-bucket \
