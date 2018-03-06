@@ -20,16 +20,15 @@ PRJ_BRANCH="ami-dev"
 # profile to use for AWS as in `aws $AWS_PRFL s3 ls`
 AWS_PRFL="--profile default"
 
-# AWS ec2, s3, lambda and API gateway region. eu-central-1 is Frankfurt.
-AWS_REGION="eu-west-1"
+# AWS ec2, s3, lambda and API gateway region. us-east-1 is US East (N. Virginia).
+AWS_REGION="us-east-1"
 
 
 # AWS EC2 ----------------------------------------------------------------------
 
 # The id of the Amazon Machine Image which is the template for the EC2 instance.
 # AWS > amazon-linux-ami > Amazon Linux AMI IDs
-# EC2_AMI_ID="ami-657bd20a"
-# EC2_AMI_ID="ami-acd005d5"
+# EC2_AMI_ID="ami-97785bed"
 
 # The type/size of the instance 
 # AWS > EC2 > instance-types
@@ -44,7 +43,7 @@ EC2_MAX_TESTS=24
 
 ## AWS Lambda ------------------------------------------------------------------
 
-# The name of the python file which contains the lambda function
+# The name of the python file which contains the lambda function (w/o extension)
 # AWS > Lambda > Functions > Configuration
 LAMBDA_PYTHON_HANDLER="lambda_post"
 
@@ -62,7 +61,7 @@ LAMBDA_TIMEOUT="59"
 
 # The amount of memory allocated to the lambda function (max memory --> max CPU)
 # AWS > Lambda > Functions > Configuration
-LAMBDA_MEMORY_SIZE="1536"
+LAMBDA_MEMORY_SIZE="3008"
 
 
 # AWS API Gateway --------------------------------------------------------------
@@ -87,7 +86,8 @@ CP_VERBOSE=" "
 
 # List of R packages to be installed and used by the Lambda function
 # do not use commas or quotes, leave spaces before and after each package name
-R_PACKAGES=( purrr signal pracma geosphere DBI RMySQL jsonlite digest )
+R_PACKAGES=( purrr DBI RMySQL jsonlite digest )
+
 
 # Settings for setup  ---------------------------------------------------------
 
@@ -106,7 +106,7 @@ POLICY_NAME="${PRJ_NAME}-lambda-policy"
 # The name of the Lambda authorizer function
 LAMBDA_AUTHORIZER_NAME="${PRJ_NAME}-LambdaAuthorizer"
 
-#The name of the S3 Bucket 
+# The name of the S3 Bucket 
 S3_BUCKET="${PRJ_NAME}-bucket"
 
 # API Gateway Name
@@ -117,8 +117,5 @@ API_RESOURCE_NAME="${PRJ_NAME}_res"
 
 API_ALIAS_RESOURCE_NAME="${PRJ_NAME}_alias_res"
 
-
 # Name of API custom authorizer
 AUTHORIZER_NAME="Authorizer"
-
- 
