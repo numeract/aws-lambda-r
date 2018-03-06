@@ -2,9 +2,9 @@
 *
 # Except files below
 !.gitignore
-!lambda_files.txt
 !README.md
-!secrets_default.sh
+!lambda_files.txt
 !settings_default.sh
-!settings_example.R
-!setup_user_secrets_example.sh
+!secrets_default.sh
+!setup_auto_example.sh
+!setup_user_example.sh
