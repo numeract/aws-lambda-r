@@ -10,6 +10,7 @@
 # AWS > IAM > Users > Add user
 # using IAM prefix to avoid exporting locally it by mistake
 IAM_ACCESS_KEY_ID="$MISSING"
+
 # Secret Access Key corresponding to Access Key ID
 # Only available when the user has been created
 IAM_SECRET_ACCESS_KEY="$MISSING"
@@ -57,21 +58,21 @@ S3_BUCKET="$MISSING"
 
 # The ID of the API gateway on which the http calls are made 
 # AWS > API Gateway > API's ??
-#API_ID="$MISSING"
+# API_ID="$MISSING"
 
 # The ID of the resource under the API Gateway
 # AWS > API Gateway > APIs > [API NAME] > Resources
-#API_RESOURCE_ID="$MISSING"
+# API_RESOURCE_ID="$MISSING"
 
 
 # The ID of the resource containing the latest version of the API
 # AWS > API Gateway > APIs > [API NAME] > Resources
-#API_ALIAS_RESOURCE_ID="$MISSING"
+# API_ALIAS_RESOURCE_ID="$MISSING"
 
 
 # The ID of the custom authorizer used by the API's http method 
 # AWS > API Gateway > APIs > [API NAME] > Authorizers
-#API_AUTHORIZER_ID="$MISSING"
+# API_AUTHORIZER_ID="$MISSING"
 
 # Authorization token used in order to make API requests
 # AWS> LAMBDA > Lambda authorization function
