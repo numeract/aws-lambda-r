@@ -114,8 +114,10 @@ SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 3. From VPC Dashboard, Virtual Private Cloud section, select "Security Groups".
 4. Look for the VPC ID of the previously created VPC.
 5. If not present, click the "Create Security Group" button.
-6. Make note of the Security Group ID (`EC2_SECURITY_GROUP_IDS`)
-7. Optionally, give it a informative name tag (e.g., `aws-lambda-r-sg`)
+6. Add an Inboud rule to allow SSH
+    + e.g. `SSH  TCP  22  Anywhere (0.0.0.0/0, ::/0)`
+7. Make note of the Security Group ID (`EC2_SECURITY_GROUP_IDS`)
+8. Optionally, give it a informative name tag (e.g., `aws-lambda-r-sg`)
 
 
 ## LAMBDA

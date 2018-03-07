@@ -58,21 +58,20 @@ fi
 # summary of the set variables and secrets
 echo -e '\n------------------------- EC2 INSTANCE ---------------------------\n'
 
-echo -e "You are going to create an EC2 instance with the following characteristics:"
-echo -e "AMI: $(FC $EC2_AMI_ID)"
+echo -e "Source AMI ID: $(FC $EC2_AMI_ID)"
 echo -e "Instance Type: $(FC $EC2_INSTANCE_TYPE)"
 
 if [[ ! $EC2_SUBNET_ID  == "subnet-$MISSING" ]]; then
-    echo -e "Subnet ID is: $(FC $EC2_SUBNET_ID)"
+    echo -e "Subnet ID: $(FC $EC2_SUBNET_ID)"
 else
-    echo -e "$ERROR Subnet ID is: $(FC $EC2_SUBNET_ID). Exiting."
+    echo -e "$ERROR Subnet ID: $(FC $EC2_SUBNET_ID). Exiting."
     exit 1
 fi
 
 if [[ ! $EC2_SECURITY_GROUP_IDS == "sg-$MISSING" ]]; then
-    echo -e "Security group is: $(FC $EC2_SECURITY_GROUP_IDS)"
+    echo -e "Security Group ID: $(FC $EC2_SECURITY_GROUP_IDS)"
 else
-    echo -e "$ERROR Security group is: $(FC $EC2_SECURITY_GROUP_IDS). Exiting."
+    echo -e "$ERROR Security Group ID: $(FC $EC2_SECURITY_GROUP_IDS). Exiting."
     exit 1
 fi
 
@@ -82,8 +81,8 @@ echo -e "EC2 user name: $(FC $EC2_USERNAME)"
 echo -e '\n------------------------- SSH KEY --------------------------------\n'
 
 if [[ ! $EC2_KEY_NAME == "$MISSING" ]]; then
-    echo -e "Your SSH key name is: $(FC $EC2_KEY_NAME)" \
-        "and it is located in: $(FY $EC2_KEY_FILE)"
+    echo -e "Your SSH key name is $(FC $EC2_KEY_NAME)" \
+        "and it is located in $(FY $EC2_KEY_FILE)"
 else
     echo -e "$ERROR EC2_KEY_NAME is $MISSING. Exiting."
     exit 1
@@ -93,40 +92,42 @@ fi
 echo -e '\n------------------------- AWS CREDENTIALS ------------------------\n'
 
 if [[ ! $IAM_ACCESS_KEY_ID == "$MISSING" ]]; then
-    echo -e "Your AWS access key is: $(FC "********$(printf $IAM_ACCESS_KEY_ID | tail -c 4)")"
+    echo -e "Your AWS access key is:" \
+        "$(FC "********$(printf $IAM_ACCESS_KEY_ID | tail -c 4)")"
 else
     echo -e "$ERROR Your AWS access key is: $MISSING. Exiting."
     exit 1
 fi
 
 if [[ ! $IAM_SECRET_ACCESS_KEY == "$MISSING" ]]; then
-    echo -e "Your AWS secret access key is: $(FC "********$(printf $IAM_SECRET_ACCESS_KEY | tail -c 4)")"
+    echo -e "Your AWS secret access key is:" \
+        "$(FC "********$(printf $IAM_SECRET_ACCESS_KEY | tail -c 4)")"
 else
     echo -e "$ERROR Your AWS secret access key is: $MISSING. Exiting."
     exit 1
 fi
 
-echo -e "Selected region: $(FC $AWS_REGION)"
+echo -e "AWS Region: $(FC $AWS_REGION)"
 
 
 echo -e '\n------------------------- S3 BUCKET ------------------------------\n'
 
 if [[ ! $S3_BUCKET == "$MISSING" ]]; then
-    echo -e "S3 Bucket for the deployment package is: $(FC $S3_BUCKET)"
+    echo -e "S3 Bucket for the deployment package: $(FC $S3_BUCKET)"
 else
-    echo -e "$ERROR S3 Bucket for deployment package is: $MISSING. Exiting."
+    echo -e "$ERROR S3 Bucket for deployment package: $MISSING. Exiting."
     exit 1
 fi
 
 
 echo -e '\n------------------------- LAMBDA SETTINGS ------------------------\n'
 
-echo -e "Lambda function name is: $(FC $LAMBDA_FUNCTION_NAME)"
+echo -e "Lambda function name: $(FC $LAMBDA_FUNCTION_NAME)"
 
 if [[ ! $IAM_LAMBDA_FUNCTION_ROLE  == "$MISSING" ]]; then
-    echo -e "IAM Lambda function role is: $(FY $IAM_LAMBDA_FUNCTION_ROLE)"
+    echo -e "IAM Lambda Function Role: $(FY $IAM_LAMBDA_FUNCTION_ROLE)"
 else
-    echo -e "$ERROR Lambda function role is: $MISSING. Exiting."
+    echo -e "$ERROR Lambda Function Role: $MISSING. Exiting."
     exit 1
 fi
 
@@ -190,6 +191,7 @@ if [[ ! "$REPLY" == "$API_STAGE" ]]; then
     echo -e "$ERROR API stage entered does not match. Exiting."
     exit 1
 fi
+
 
 # double-check for 'prod' stage. Ask for confirmation to deploy to prod stage
 if [[ "$API_STAGE" == "prod" ]]; then

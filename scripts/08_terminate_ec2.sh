@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Terminate an Amazon EC2 virtual machine (an instance) 
+# Terminate a known Amazon EC2 Instance
 
 
 # load local settings if not already loaded
@@ -10,15 +10,18 @@
 
 # terminate a known instance
 if [[ -z $EC2_INSTANCE_ID ]]; then
-    echo -e "$ERROR No Instance ID found. Please terminate it using AWS website."
+    echo -e "$ERROR No EC2 Instance ID found." \
+        "Please terminate it using AWS web console."
 else
-    echo -e "$INFO Attempting to terminate Instance $(FC $EC2_INSTANCE_ID)"
-    aws $AWS_PRFL ec2 terminate-instances --instance-ids $EC2_INSTANCE_ID --output table
+    echo -e "$INFO Attempting to terminate EC2 Instance ID $(FC $EC2_INSTANCE_ID) ..."
+    aws $AWS_PRFL ec2 terminate-instances \
+        --instance-ids $EC2_INSTANCE_ID \
+        --output table
     exit_status=$?
     if [[ $exit_status -eq 0 ]]; then
         echo -e "$INFO Instance $(FC $EC2_INSTANCE_ID) is being terminated."
     else
         echo -e "$ERROR Cannot terminate Instance $(FC $EC2_INSTANCE_ID)." \ 
-                "Please terminate it using AWS website console."
+            "Please terminate it using AWS web console."
     fi
 fi
