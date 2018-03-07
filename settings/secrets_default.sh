@@ -62,9 +62,6 @@ API_ID="$MISSING"
 # AWS > API Gateway > APIs > [API NAME] > Resources
 API_RESOURCE_ID="$MISSING"
 
-# Obtained automatically from API_RESOURCE_ID, listed here for reference
-API_RESOURCE_NAME="$MISSING"
-
 # The ID of the resource containing the latest version of the API
 # AWS > API Gateway > APIs > [API NAME] > Resources
 API_ALIAS_RESOURCE_ID="$MISSING"

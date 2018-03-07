@@ -154,21 +154,18 @@ fi
 
 
 if [[ ! $API_ALIAS_RESOURCE_ID  == "$MISSING" ]]; then
-    echo -e "API Alias Resource ID is: $(FC $API_ALIAS_RESOURCE_ID)"
+    echo -e "API Alias Resource ID: $(FC $API_ALIAS_RESOURCE_ID)"
+    # checking if the API resources are the same
+    if [[ $API_ALIAS_RESOURCE_ID  == $API_RESOURCE_ID ]]; then
+        echo -e "$ERROR API Resource and Resource Alias should not" \
+            "be the same. Exiting."
+        exit 1
+    fi
 else
-    echo -e "$ERROR API Alias Resource ID is: $MISSING. Exiting."
-    exit 1
+    echo -e "$WARN API Alias Resource ID: $MISSING. Ignoring it."
 fi
 
 
-# checking if the API resources are the same
-if [[ ! $API_ALIAS_RESOURCE_NAME  == $API_RESOURCE_NAME ]]; then
-    echo -e "API Resource name is: $(FC $API_RESOURCE_NAME)"
-    echo -e "API Alias Resource name is: $(FC $API_ALIAS_RESOURCE_NAME)"
-else
-    echo -e "$ERROR API resource and resource alias should not be the same. Exiting."
-    exit 1
-fi
 
 
 if [[ ! $API_AUTHORIZER_ID  == "$MISSING" ]]; then
