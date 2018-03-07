@@ -8,10 +8,6 @@
 [[ $PRJ_DIR ]] || source "$SCR_DIR/02_setup.sh"
 
 
-echo -e "$INFO Starting an AWS $EC2_INSTANCE_TYPE Instance" \
-    "from AMI ID $(FY $EC2_AMI_ID) ..."
-
-
 source "$SCR_DIR/03_check_settings.sh"
 
 source "$SCR_DIR/04_create_ec2.sh"

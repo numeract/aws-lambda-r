@@ -12,18 +12,20 @@ source "$SCR_DIR/10_connect_to_ec2.sh"
 
 # stop instance
 if [[ -z $EC2_INSTANCE_ID ]]; then
-    echo -e "$ERROR No Instance ID found. Please stop it using AWS website."
+    echo -e "$ERROR No EC2 Instance ID found." \
+        "Please terminate it using AWS web console."
 else
-    echo -e "$INFO Attempting to stop Instance $(FC $EC2_INSTANCE_ID)"
+    echo -e "$INFO Attempting to stop EC2 Instance ID" \
+        "$(FC $EC2_INSTANCE_ID) ..."
     aws $AWS_PRFL ec2 stop-instances \
         --instance-ids $EC2_INSTANCE_ID \
         --output table
     exit_status=$?
     if [[ $exit_status -eq 0 ]]; then
-        echo -e "$INFO Instance $(FC $EC2_INSTANCE_ID) is being stopped."
+        echo -e "$INFO Instance $(FC $EC2_INSTANCE_ID) is being stopped ..."
     else
         echo -e "$ERROR Cannot stop Instance $(FC $EC2_INSTANCE_ID)." \ 
-                "Please stop it using AWS website console."
+            "Please stop it using AWS website console."
     fi
 fi
 
@@ -40,7 +42,7 @@ while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
         OVER=1
     else
         TEST=$(( TEST+1 ))
-        echo -e "$INFO Check # $(FC $TEST). Trying again in 5 seconds. Please wait ..."
+        echo -e "$INFO Check # $(FC $TEST). Trying again in 5 seconds ..."
         sleep 5
     fi
 done
@@ -65,12 +67,12 @@ while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
         OVER=1
     else
         TEST=$(( TEST+1 ))
-        echo -e "$INFO Check # $(FC $TEST). Trying again in 10 seconds. Please wait ..."
-        sleep 10
+        echo -e "$INFO Check # $(FC $TEST). Trying again in 5 seconds ..."
+        sleep 5
     fi
 done
  
 
-echo -en "\nEC2_AMI_ID=${EC2_AMI_ID}" | tee -a ../settings/default_setup.sh
+# echo -en "\nEC2_AMI_ID=${EC2_AMI_ID}" | tee -a ../settings/default_setup.sh
 
 source "$SCR_DIR/08_terminate_ec2.sh"

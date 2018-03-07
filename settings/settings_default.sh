@@ -16,21 +16,27 @@ PRJ_BRANCH="$MISSING"
 
 # AWS --------------------------------------------------------------------------
 
-# we do not set AWS_PROFILE to prevent undesired interactions with AWS CLI
+# We do not set AWS_PROFILE to prevent undesired interactions with AWS CLI
 # profile to use for AWS as in `aws $AWS_PRFL s3 ls`
 AWS_PRFL="--profile default"
 
-# we do not set AWS_DEFAULT_REGION to prevent undesired interactions with AWS CLI
+# We do not set AWS_DEFAULT_REGION to prevent undesired interactions with AWS CLI
 # AWS ec2, s3, lambda and API gateway region. us-east-1 is US East (N. Virginia).
 AWS_REGION="us-east-1"
 
 
 # AWS EC2 ----------------------------------------------------------------------
 
-# The id of the Amazon Machine Image which is the template for the EC2 instance.
+# The ID of the Amazon Machine Image which is the template for the EC2 instance.
 # Find the most recent AMI used by AWS Lambda for your region
 # https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html
-EC2_AMI_ID="ami-4fffc834"
+EC2_DEFAULT_AMI_ID="ami-4fffc834"
+
+# The ID of the cache AMI ($EC2_AMI_ID + update + python + R)
+# If present this ID will be used instead of $EC2_AMI_ID
+# Usually kept private because it is project specific and may contain your keys
+# Added automatically in setup_auto.sh by 
+EC2_CUSTOM_AMI_ID="$MISSING"
 
 # The type/size of the instance 
 # AWS > EC2 > instance-types

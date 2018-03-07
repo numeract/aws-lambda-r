@@ -96,6 +96,14 @@ if [[ $PRJ_BRANCH == "$MISSING" ]]; then
 fi
 
 
+# which AMI ID to use?
+if [[ $EC2_CUSTOM_AMI_ID  == "$MISSING" ]]; then
+    EC2_AMI_ID="$EC2_DEFAULT_AMI_ID"
+else
+    EC2_AMI_ID="$EC2_CUSTOM_AMI_ID"
+fi
+
+
 # arbitrary AWS Lambda function name 
 # if you change this line, search and replace all sh files where it is redefined
 LAMBDA_FUNCTION_NAME="${PRJ_NAME}-${PRJ_BRANCH}-${API_STAGE}"

@@ -58,7 +58,11 @@ fi
 # summary of the set variables and secrets
 echo -e '\n------------------------- EC2 INSTANCE ---------------------------\n'
 
-echo -e "Source AMI ID: $(FC $EC2_AMI_ID)"
+if [[ $EC2_CUSTOM_AMI_ID  == "$MISSING" ]]; then
+    echo -e "No Custom AMI present, using Default AMI: $(FC $EC2_AMI_ID)"
+else
+    echo -e "Found Custom AMI (skip update and install): $(FC $EC2_AMI_ID)"
+fi
 echo -e "Instance Type: $(FC $EC2_INSTANCE_TYPE)"
 
 if [[ ! $EC2_SUBNET_ID  == "subnet-$MISSING" ]]; then
