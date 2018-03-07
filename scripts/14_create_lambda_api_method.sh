@@ -5,7 +5,7 @@ echo -e "$INFO Uploading deployment package on S3"
 aws s3 cp ~/${LAMBDA_ZIP} s3://${S3_BUCKET}/lambda/
 
 PRE_EX_LAMBDA=$(aws lambda get-function-configuration \
-    --function-name  ${LAMBDA_FUNCTION_NAME} \
+    --function-name ${LAMBDA_FUNCTION_NAME} \
     --query FunctionName)      
                     
 # Delete lambda function if already exists
@@ -50,7 +50,8 @@ echo -e "$INFO API_ARN: $(FY $API_ARN)"
 echo
 echo -e "$INFO API method for Resource $(FC $API_RESOURCE_NAME)"
 
-API_METHOD=$(aws apigateway get-method --rest-api-id ${API_ID} \
+API_METHOD=$(aws apigateway get-method \
+    --rest-api-id ${API_ID} \
     --resource-id ${API_RESOURCE_ID} \
     --http-method ${API_HTTP_METHOD} \
     --query httpMethod)

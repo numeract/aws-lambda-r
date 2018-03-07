@@ -59,14 +59,15 @@ if [[ $TEST -lt $EC2_MAX_TESTS ]]; then
     echo -e "$INFO Instance $(FC $EC2_INSTANCE_ID) is running," \
         "its address is $(FY $EC2_DNS_NAME)"
 else
-    echo -e "$ERROR Instance $(FC $EC2_INSTANCE_ID) never got to running state."
+    echo -e "$ERROR Instance $(FC $EC2_INSTANCE_ID) never got to running" \
+        "state. Terminating end exiting ..."
     source "$SCR_DIR/08_terminate_ec2.sh"
     exit 1
 fi  
 
 
 # Wait until SSH server is ready
-echo -e "$INFO Waiting for the SSH Server to start..."
+echo -e "$INFO Waiting for the SSH Server to start ..."
 OVER=0
 while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
     
@@ -89,7 +90,7 @@ if [[ $TEST -lt $EC2_MAX_TESTS ]]; then
     echo -e "$INFO Can connect to $(FY $EC2_DNS_NAME)"
 else
     echo -e "$ERROR Cannot connect to $(FY $EC2_DNS_NAME)." \
-        "Terminating end exiting..."
+        "Terminating end exiting ..."
     source "$SCR_DIR/08_terminate_ec2.sh"
     exit 1
 fi
