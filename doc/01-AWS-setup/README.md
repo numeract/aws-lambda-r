@@ -12,8 +12,8 @@ IAM_SECRET_ACCESS_KEY=""
 IAM_LAMBDA_FUNCTION_ROLE=""
 EC2_KEY_NAME=""
 EC2_KEY_FILE=""
-EC2_SECURITY_GROUP_IDS=""
 EC2_SUBNET_ID=""
+EC2_SECURITY_GROUP_IDS=""
 S3_BUCKET=""
 API_ID=""
 API_RESOURCE_ID=""
@@ -45,7 +45,7 @@ SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 
 ### Create and save SSH key for EC2 connection
 
-1. Log in to AWS Console.
+1. Go to AWS Web Console
 2. Go to EC2 Service
 3. Select **Key Pairs** under **NETWORK & SECURITY** menu. 
 
@@ -73,7 +73,7 @@ SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 
 ### Create dedicated VPC 
 
-1. Go to AWS Console
+1. Go to AWS Web Console
 2. Select VPC from Services menu
 3. From VPC Dashboard, click "Start VPC Wizard".
 
@@ -83,15 +83,18 @@ SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 
 !["Create VPC" button](32-create-vpc.PNG)
 
-5. Fill VPC name and Subnet name fields. 
+5. Optionally, fill in VPC name and Subnet name fields (e.g., `aws-lambda-r-vpc` and `aws-lambda-r-subnet`).
 
 ![Edit fields](33-create-vpc.jpg)
 
 6. Click the "Create VPC" button.
+7. Make note of Subnet ID (`EC2_SUBNET_ID`)
+8. Make note of VPC ID for future reference
+
 
 ### Edit subnet
 
-1. Go to AWS Console
+1. Go to AWS Web Console
 2. Select VPC from Services menu
 3. From VPC Dashboard, Virtual Private Cloud section, select "Subnets"
 4. Select the subnet previously created.
@@ -103,12 +106,16 @@ SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 
 ![Edit Subnet2](35-edit-subnet.PNG)
 
-## Create security group
 
-1. Go to AWS Console
+## Create security group (if not already present)
+
+1. Go to AWS Web Console
 2. Select VPC from Services menu
-3. From VPC Dashboard,Virtual Private Cloud section, select "Security Groups".
-4. Click the "Create Security Group" button.
+3. From VPC Dashboard, Virtual Private Cloud section, select "Security Groups".
+4. Look for the VPC ID of the previously created VPC.
+5. If not present, click the "Create Security Group" button.
+6. Make note of the Security Group ID (`EC2_SECURITY_GROUP_IDS`)
+7. Optionally, give it a informative name tag (e.g., `aws-lambda-r-sg`)
 
 
 ## LAMBDA
@@ -118,7 +125,9 @@ SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 
 ##  S3 BUCKET
 
-### Create S3 bucket (automated, see `aws_setup.sh` script)
+TODO: we cannot automate this as the number of buckets is limited for each 
+account and they are unique across all users 
+(e.g., there is only one `aws-lambda-r-bucket` bucket)
 
 
 ## API GATEWAY

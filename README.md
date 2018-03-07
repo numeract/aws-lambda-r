@@ -41,7 +41,6 @@ AWS Lambda and API Gateway impose several limitations
     + this is the most important limitation as it prevents using large R packages
 - maximum execution time 30 seconds for API Gateway, 5 minutes for AWS Lambda
     + be sure to take allow 1-2 sec for start time
-- other [AWS Lambda limits](https://docs.aws.amazon.com/lambda/latest/dg/limits.html)
 
 
 ### Description
@@ -62,12 +61,23 @@ account (although familiarity with AWS helps a lot) and how to delete the setup 
 
 ### Installation and configuration
 
-1. Be sure that you have AWS CLI properly installed on your machine
-2. Copy directories `lambda/`, `python/`, `scripts/`, `settings/` to your project
-3. [TODO]
+1. Install [AWS CLI](https://aws.amazon.com/cli/) on your local machine
+    + Be sure that you stored your credentials in `~/.aws/` directory
+    + Optionally, create a profile for AWS CLI with [aws configure --profile](https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html)
+    + Check that you can connect to your AWS account using the desired profile
+        + `aws sts get-caller-identity --profile aws-lambda-r`
+2. Prepare your project
+    + Ideally, the project directory name should contain only letters, dashes, and digits, e.g. `aws-lambda-r`
+    + Be sure that git is initialized in the project directory (without git will be almost impossible to keep track of changes, especially in production)
+        + `git status`
+3. Copy directories `lambda/`, `python/`, `scripts/`, `settings/` to your project directory
+4. [TODO]
 
 
 ### References
+
+- [Lambda Execution Environment and Available Libraries](https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html)
+- [AWS Lambda limits](https://docs.aws.amazon.com/lambda/latest/dg/limits.html)
 
 [TODO]
 
