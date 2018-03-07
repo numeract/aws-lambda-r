@@ -76,6 +76,8 @@ account (although familiarity with AWS helps a lot) and how to delete the setup 
 
 ### References
 
+- [Analyzing Genomics Data at Scale using R, AWS Lambda, and Amazon API Gateway](https://aws.amazon.com/blogs/compute/analyzing-genomics-data-at-scale-using-r-aws-lambda-and-amazon-api-gateway/)
+- [Running R on AWS](https://aws.amazon.com/blogs/big-data/running-r-on-aws/)
 - [Lambda Execution Environment and Available Libraries](https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html)
 - [AWS Lambda limits](https://docs.aws.amazon.com/lambda/latest/dg/limits.html)
 
@@ -85,6 +87,8 @@ account (although familiarity with AWS helps a lot) and how to delete the setup 
 
 ### TODO
 
+- use AWS Cloud​Formation to create a template for all AWS config
+    + see "Running R on AWS"
 - script to check AWS CLI is properly installed
 - convert to an R package and execute the scripts from R
 - use `/tmp` folder on AWS Lambda to load large libraries (e.g., `BH`)
