@@ -1,25 +1,26 @@
 #!/bin/bash
 
 # default local and AWS settings, excluding secrets - safe to commit to git
+# be sure that all values are defined in setup_auto.sh or in setup_user.sh
 
 
 # Project ----------------------------------------------------------------------
 
 # name of the project root directory, error if mismatch
-PRJ_NAME="aws-lambda-r"
+# use only letters, dashes, and digits, e.g. aws-lambda-r
+PRJ_NAME="$MISSING"
 
 # Name of the current Git branch, error if mismatch
-PRJ_BRANCH="ami-dev"
-
-# set to "skip_commit" to skip commit (unsafe!)
-# DEBUG="false"
+PRJ_BRANCH="$MISSING"
 
 
 # AWS --------------------------------------------------------------------------
 
+# we do not set AWS_PROFILE to prevent undesired interactions with AWS CLI
 # profile to use for AWS as in `aws $AWS_PRFL s3 ls`
 AWS_PRFL="--profile default"
 
+# we do not set AWS_DEFAULT_REGION to prevent undesired interactions with AWS CLI
 # AWS ec2, s3, lambda and API gateway region. us-east-1 is US East (N. Virginia).
 AWS_REGION="us-east-1"
 
@@ -27,8 +28,9 @@ AWS_REGION="us-east-1"
 # AWS EC2 ----------------------------------------------------------------------
 
 # The id of the Amazon Machine Image which is the template for the EC2 instance.
-# AWS > amazon-linux-ami > Amazon Linux AMI IDs
-# EC2_AMI_ID="ami-97785bed"
+# Find the most recent AMI used by AWS Lambda for your region
+# https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html
+EC2_AMI_ID="ami-4fffc834"
 
 # The type/size of the instance 
 # AWS > EC2 > instance-types
@@ -38,7 +40,7 @@ EC2_INSTANCE_TYPE="t2.micro"
 EC2_USERNAME="ec2-user"
 
 # Maximum number of attempts to check on the EC2. Each attempt takes 5 seconds.
-EC2_MAX_TESTS=24
+EC2_MAX_TESTS=20
 
 
 ## AWS Lambda ------------------------------------------------------------------
@@ -77,45 +79,18 @@ API_HTTP_METHOD="POST"
 API_AUTHORIZATION_TYPE="CUSTOM"
 
 
-# testing ----------------------------------------------------------------------
+# R ----------------------------------------------------------------------------
 
+# List of R packages to be installed and used by the Lambda function
+# do not use commas or quotes, leave spaces before and after each package name
+R_PACKAGES=( jsonlite )
+
+
+# testing ----------------------------------------------------------------------
 
 # Option for cp command.
 # Choices: "--verbose" (show the copied files) or " " (copy without showing) 
 CP_VERBOSE=" "
 
-# List of R packages to be installed and used by the Lambda function
-# do not use commas or quotes, leave spaces before and after each package name
-R_PACKAGES=( purrr DBI RMySQL jsonlite digest )
-
-
-# Settings for setup  ---------------------------------------------------------
-
-# The name of role assigned to lambda function
-LAMBDA_ROLE_NAME="${PRJ_NAME}-lambda-role"
-
-# The name of the file containing trust policy
-LAMBDA_ROLE_TRUST_FILE="lambda_role_trust.json"
-
-# The name of the file containing role policy
-LAMBDA_ROLE_POLICY_FILE="lambda_role_policy.json"
-
-# The name of policy assigned to lambda role
-POLICY_NAME="${PRJ_NAME}-lambda-policy"
-
-# The name of the Lambda authorizer function
-LAMBDA_AUTHORIZER_NAME="${PRJ_NAME}-LambdaAuthorizer"
-
-# The name of the S3 Bucket 
-S3_BUCKET="${PRJ_NAME}-bucket"
-
-# API Gateway Name
-API_GATEWAY_NAME="${PRJ_NAME}-API"
-
-# Name of resource under API root resource 
-API_RESOURCE_NAME="${PRJ_NAME}_res"
-
-API_ALIAS_RESOURCE_NAME="${PRJ_NAME}_alias_res"
-
-# Name of API custom authorizer
-AUTHORIZER_NAME="Authorizer"
+# set to "skip_commit" to skip commit (unsafe!)
+DEBUG="false"
