@@ -9,8 +9,8 @@ import json
 
 
 for file in os.listdir('lib/external'):
-	file_name='lib/external/' + file
-	ctypes.cdll.LoadLibrary(os.path.join(os.getcwd(), file_name))
+    file_name='lib/external/' + file
+    ctypes.cdll.LoadLibrary(os.path.join(os.getcwd(), file_name))
 
 
 # source R file
@@ -22,9 +22,9 @@ aws_lambda_r = robjects.globalenv['aws_lambda_r']
 
 
 def handler_post(event, context):
-      input_json = json.dumps(event)
-      output_json = json.loads(str(aws_lambda_r(input_json)))
-      return output_json
+    input_json = json.dumps(event)
+    output_json = json.loads(str(aws_lambda_r(input_json)))
+    return output_json
 
     
 # print(handler_post({"request_id": "Hey"}, None))
