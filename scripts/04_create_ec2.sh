@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Creates an Amazon EC2 virtual machine (an instance) 
+# Creates one instance of an AWS EC2 virtual machine
 
 
 # load local settings if not already loaded
@@ -14,11 +14,10 @@ EC2_INSTANCE_ID=$(aws $AWS_PRFL ec2 run-instances \
     --image-id $EC2_AMI_ID \
     --instance-type $EC2_INSTANCE_TYPE \
     --key-name $EC2_KEY_NAME \
-    --security-group-ids $EC2_SECURITY_GROUP_IDS \
     --subnet-id $EC2_SUBNET_ID \
-    --query 'Instances[0].InstanceId' --output text)
-
-    # --iam-instance-profile Name=$IAM_INSTANCE_PROFILE_NAME \
+    --security-group-ids $EC2_SECURITY_GROUP_IDS \
+    --query 'Instances[0].InstanceId' \
+    --output text)
 
 exit_status=$?
 if [[ $exit_status -eq 0 ]]; then

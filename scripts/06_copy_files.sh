@@ -23,7 +23,7 @@ do
     fi
 done
 if [[ $exit_status != 0 ]]; then
-    echo -e "$ERROR Cannot copy all files. Aborting."
+    echo -e "$ERROR Cannot copy all files. Exiting."
     exit 1
 fi
 
@@ -36,6 +36,6 @@ scp -i "$EC2_KEY_FILE" \
 
 exit_status=$?
 if [[ $exit_status != 0 ]]; then
-    echo -e "$ERROR Cannot copy lambda files to EC2. Aborting."
+    echo -e "$ERROR Cannot copy lambda files to EC2. Exiting."
     exit 1
 fi
