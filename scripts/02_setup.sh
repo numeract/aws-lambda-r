@@ -108,3 +108,17 @@ fi
 # if you change this line, search and replace all sh files where it is redefined
 LAMBDA_FUNCTION_NAME="${PRJ_NAME}-${PRJ_BRANCH}-${API_STAGE}"
 
+
+# settings to be pushed to the EC2 instance
+EC2_SET_1="$SETTINGS_DEFAULT_PATH"
+EC2_SET_2="$SECRETS_DEFAULT_PATH"
+EC2_SET_3="$SETUP_AUTO_PATH"
+EC2_SET_4="$SETUP_USER_PATH"
+
+# script to run on EC2 to update / create AMI
+EC2_SCR_11="$SCR_DIR/11_install_packages.sh"
+
+# scripts to run on EC2 to deploy & configure lambda + api gateway
+EC2_SCR_12="$SCR_DIR/12_configure_ec2.sh"
+EC2_SCR_13="$SCR_DIR/13_create_deployment_package.sh"
+EC2_SCR_14="$SCR_DIR/14_create_lambda_api_method.sh"

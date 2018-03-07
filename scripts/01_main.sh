@@ -11,15 +11,16 @@
 source "$SCR_DIR/03_check_settings.sh"
 
 source "$SCR_DIR/04_create_ec2.sh"
+
 source "$SCR_DIR/05_update_ec2.sh"
 
-source "$SCR_DIR/06_copy_files.sh"
+# source "$SCR_DIR/06_copy_files.sh"
 
-source "$SCR_DIR/07_deploy_lambda.sh"
+# source "$SCR_DIR/07_deploy_lambda.sh"
 
 source "$SCR_DIR/08_terminate_ec2.sh"
 
-#source "$SCR_DIR/09_test_deployment.sh"
+# source "$SCR_DIR/09_test_deployment.sh"
 
 
 echo -e "$INFO End of $(basename $0) script"

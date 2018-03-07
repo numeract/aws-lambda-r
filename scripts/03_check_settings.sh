@@ -138,19 +138,19 @@ fi
 
 echo -e '\n------------------------- API GATEWAY ----------------------------\n'
 
-if [[ ! $API_ID  == "$MISSING" ]]; then
-    echo -e "API Gateway ID is: $(FC $API_ID)"
-else
-    echo -e "$ERROR API Gateway ID is: $MISSING. Exiting."
-    exit 1
-fi
+# if [[ ! $API_ID  == "$MISSING" ]]; then
+#     echo -e "API Gateway ID: $(FC $API_ID)"
+# else
+#     echo -e "$ERROR API Gateway ID: $MISSING. Exiting."
+#     exit 1
+# fi
 
-if [[ ! $API_RESOURCE_ID  == "$MISSING" ]]; then
-    echo -e "API Resource ID is: $(FC $API_RESOURCE_ID)"
-else
-    echo -e "$ERROR API Resource ID is: $MISSING. Exiting."
-    exit 1
-fi
+# if [[ ! $API_RESOURCE_ID  == "$MISSING" ]]; then
+#     echo -e "API Resource ID: $(FC $API_RESOURCE_ID)"
+# else
+#     echo -e "$ERROR API Resource ID: $MISSING. Exiting."
+#     exit 1
+# fi
 
 
 if [[ ! $API_ALIAS_RESOURCE_ID  == "$MISSING" ]]; then
@@ -166,26 +166,25 @@ else
 fi
 
 
+# if [[ ! $API_AUTHORIZER_ID  == "$MISSING" ]]; then
+#     echo -e "API Authorizer ID: $(FC $API_AUTHORIZER_ID)"
+# else
+#     echo -e "$ERROR API Authorizer ID: $MISSING. Exiting."
+#     exit 1
+# fi
 
+# if [[ ! $API_TOKEN  == "$MISSING" ]]; then
+#     echo -e "API Gateway authorization token: $(FC $API_TOKEN)"
+# else
+#     echo -e "$ERROR API Gateway authorization token: $MISSING. Exiting."
+#     exit 1
+# fi
 
-if [[ ! $API_AUTHORIZER_ID  == "$MISSING" ]]; then
-    echo -e "API Authorizer ID: $(FC $API_AUTHORIZER_ID)"
-else
-    echo -e "$ERROR API Authorizer ID: $MISSING. Exiting."
-    exit 1
-fi
-
-if [[ ! $API_TOKEN  == "$MISSING" ]]; then
-    echo -e "API Gateway authorization token: $(FC $API_TOKEN)"
-else
-    echo -e "$ERROR API Gateway authorization token: $MISSING. Exiting."
-    exit 1
-fi
 
 # confirmation
 echo
 echo -e "$INFO You are on git branch $(FC '('$PRJ_BRANCH')')"\
-    "deploying to API stage $(BY $API_STAGE), resource $(BY $API_RESOURCE_NAME)"
+    "deploying to API stage $(BY $API_STAGE), resource ID $(BY $API_RESOURCE_ID)"
 
 read -p "$(FY 'WARN :') To confirm, type the name of the API stage: "
 if [[ ! "$REPLY" == "$API_STAGE" ]]; then

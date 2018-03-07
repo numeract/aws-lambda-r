@@ -72,6 +72,7 @@ OVER=0
 while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
     
     # a short SSH command that cannot fail
+    # since it is the first time we see this sever, store its fingerprint
     ssh -i $EC2_KEY_FILE \
         -o "StrictHostKeyChecking no" \
         -T $EC2_USERNAME@$EC2_DNS_NAME \

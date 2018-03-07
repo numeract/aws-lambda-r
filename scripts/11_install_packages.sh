@@ -47,7 +47,7 @@ sudo chmod -R a+w ~/library
 function join_by { local IFS="$1"; shift; echo "$*"; }
 
 R_PACKAGES_Q=$(printf "'%s' " "${R_PACKAGES[@]}")
-R_PACKAGES_INSTALL=$(join_by, $R_PACKAGES_Q)
+R_PACKAGES_INSTALL=$(join_by , $R_PACKAGES_Q)
 if [[ "$R_PACK_INSTALL" == "''" ]]; then
     echo -e "$WARN No R packages found, not installing any R packages."
 else
