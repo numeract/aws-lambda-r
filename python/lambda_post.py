@@ -1,5 +1,4 @@
 import os
-import imp
 os.environ["R_HOME"] = os.getcwd()
 os.environ["R_LIBS"] = os.path.join(os.getcwd(), 'libraries')
 import rpy2
