@@ -127,9 +127,6 @@ SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 
 ##  S3 BUCKET
 
-TODO: we cannot automate this as the number of buckets is limited for each 
-account and they are unique across all users 
-(e.g., there is only one `aws-lambda-r-bucket` bucket)
 
 
 ## API GATEWAY

@@ -21,10 +21,10 @@ sudo yum install -y \
     R.x86_64
 
 echo -e "$INFO Installing other Linux packages ..."
-sudo yum install -y git-all
-sudo yum install -y wget
+# sudo yum install -y git-all
+# sudo yum install -y wget
 sudo yum install -y blas lapack
-sudo yum install -y mysql-devel
+# sudo yum install -y mysql-devel
 # add other Linux packages as needed by R packages
 # be sure to check their size
 
