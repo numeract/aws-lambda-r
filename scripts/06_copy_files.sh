@@ -8,13 +8,16 @@
 [[ $PRJ_DIR ]] || source "$SCR_DIR/02_setup.sh"
 
 
+# copy files to local lambda dir
+echo -e "$INFO Copy files to local $(FY "$(basename $LAMBDA_DIR)/")"
+
 # read the list of files, use grep to skip empty lines
 LAMBDA_FILES=( $(cat "$SET_DIR/lambda_files.txt" | grep -v "^\s*$") )
 
 # copy lambda files from different dir to only one dir
 for i in "${LAMBDA_FILES[@]}"
 do
-    echo -e "$INFO Copy file: $i to "$(basename $LAMBDA_DIR)"/"
+    echo -e "$INFO Copy file: $i to "$(basename $LAMBDA_DIR)/""
     cp "$PRJ_DIR/$i" "$LAMBDA_DIR"
     exit_status=$?
     if [[ $exit_status != 0 ]]; then
@@ -22,18 +25,24 @@ do
     fi
 done
 if [[ $exit_status != 0 ]]; then
-    echo -e "$ERROR Cannot copy all files. Exiting."
+    echo -e "$ERROR Failed to copy all files to $(FY "$(basename $LAMBDA_DIR)/")" \
+        "Terminating end exiting ..."
+    source "$SCR_DIR/08_terminate_ec2.sh"
     exit 1
 fi
 
-# copy files to EC2
-echo -e "$INFO Copy local $(FY $LAMBDA_DIR) to EC2 $(FY '~/'$PRJ_NAME)"
+
+# copy files from local lambda dir to EC2
+echo -e "$INFO Copying local $(FY "$(basename $LAMBDA_DIR)/") to" \
+    "EC2 $(FY '~/'$PRJ_NAME) ..."
 
 scp -i "$EC2_KEY_FILE" \
     -r "$LAMBDA_DIR" \
     "${EC2_USERNAME}@${EC2_DNS_NAME}:~/${PRJ_NAME}"
 exit_status=$?
 if [[ $exit_status != 0 ]]; then
-    echo -e "$ERROR Cannot copy lambda files to EC2. Exiting."
+    echo -e "$ERROR Failed to copy $(FY "$(basename $LAMBDA_DIR)/") to EC2." \
+        "Terminating end exiting ..."
+    source "$SCR_DIR/08_terminate_ec2.sh"
     exit 1
 fi

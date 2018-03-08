@@ -14,7 +14,7 @@ source "$SCR_DIR/04_create_ec2.sh"
 
 source "$SCR_DIR/05_update_ec2.sh"
 
-# source "$SCR_DIR/06_copy_files.sh"
+source "$SCR_DIR/06_copy_files.sh"
 
 # source "$SCR_DIR/07_deploy_lambda.sh"
 
