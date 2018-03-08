@@ -5,15 +5,20 @@
 [[ $PRJ_DIR ]] || source "$SCR_DIR/02_setup.sh"
 
 
-EC2_AMI_ID="ami-acd005d5"
+# always start from the default Amazon Linux AMI
+EC2_AMI_ID="$EC2_DEFAULT_AMI_ID"
 
+
+# create and update an instance
 source "$SCR_DIR/04_create_ec2.sh"
-source "$SCR_DIR/10_connect_to_ec2.sh"
+source "$SCR_DIR/05_update_ec2.sh"
+
 
 # stop instance
 if [[ -z $EC2_INSTANCE_ID ]]; then
     echo -e "$ERROR No EC2 Instance ID found." \
-        "Please terminate it using AWS web console."
+        "Please also check AWS web console. Exiting."
+        exit 1
 else
     echo -e "$INFO Attempting to stop EC2 Instance ID" \
         "$(FC $EC2_INSTANCE_ID) ..."
@@ -24,12 +29,13 @@ else
     if [[ $exit_status -eq 0 ]]; then
         echo -e "$INFO Instance $(FC $EC2_INSTANCE_ID) is being stopped ..."
     else
-        echo -e "$ERROR Cannot stop Instance $(FC $EC2_INSTANCE_ID)." \ 
-            "Please stop it using AWS website console."
+        echo -e "$ERROR Cannot stop Instance ID $(FC $EC2_INSTANCE_ID)." \ 
+            "Please terminate it using AWS website console. Exiting."
+        exit 1
     fi
 fi
 
-# Wait until the machine is stopped
+# wait until the instance is stopped
 echo -e "$INFO Waiting for the AWS EC2 Instance to stop ..."
 OVER=0
 TEST=0
@@ -48,19 +54,21 @@ while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
 done
 
 
-
-EC2_AMI_ID=$(aws ec2 create-image \
+# create custom AMI from stopped instance
+echo -e "$INFO Create custom AMI from Instance ID "
+EC2_CUSTOM_AMI_ID=$(aws $AWS_PRFL ec2 create-image \
     --instance-id $EC2_INSTANCE_ID \
-    --name "Custom AMI" \
+    --name "${PRJ_NAME}-ami" \
     --output text)
 
-# Wait until the image is available
-echo -e "$INFO Waiting for the AMI to be available ..."
+# Wait until AMI is available - this will take longer
+EC2_MAX_TESTS=100
+echo -e "$INFO Waiting for AMI ID $(FC $EC2_CUSTOM_AMI_ID) to be available ..."
 OVER=0
 TEST=0
 while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
-    AMI_STATE=$(aws ec2 describe-images \
-        --image-ids $EC2_AMI_ID \
+    AMI_STATE=$(aws $AWS_PRFL ec2 describe-images \
+        --image-ids $EC2_CUSTOM_AMI_ID \
         --query Images[0].State \
         --output text)
     if [[ "$AMI_STATE" == "available" ]]; then
@@ -73,6 +81,10 @@ while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
 done
  
 
-# echo -en "\nEC2_AMI_ID=${EC2_AMI_ID}" | tee -a ../settings/default_setup.sh
+# saving $EC2_CUSTOM_AMI_ID by writing it to setup_auto.sh
+echo -e "EC2_CUSTOM_AMI_ID=\"${EC2_CUSTOM_AMI_ID}\"" | \
+    tee -a ./settings/setup_auto.sh
 
+
+# terminating the stopped instance
 source "$SCR_DIR/08_terminate_ec2.sh"
