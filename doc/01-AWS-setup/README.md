@@ -124,16 +124,58 @@ SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 
 ### Create Lambda Authorizer function (automated, see `aws_setup.sh` script)
 
+1. Create Lambda Authorizer function
+2. Go to Services, Lambda
+3. Click on "Create a function" button
+5. Select "Author from scratch function" option
+6. Give the function a name and assign a lambda role previously created
+7. Click on "Create function" button
+8. From Lambda Configuration Tab, Function Code section, select "Edit code inline", option and runtime Node.js.6.10
+9. Copy the content of the index.zip archive into the inline code editor
+10. Click "Save" button
+
 
 ##  S3 BUCKET
 
-
-
 ## API GATEWAY
 
-1. Create API (automated, see `aws_setup.sh` script)
-2. Create resources (automated, see `aws_setup.sh` script)
-3. Create authorizer (automated, see `aws_setup.sh` script)
-4. Create stages  
-5. Attach role for CloudWatch logging to API
-6. Enable CloudWatch Logging on stages
+### Create API (automated, see `aws_setup.sh` script)
+
+1. Go to Services, API Gateway
+2. Click on "Get Started" button
+3. Click "New API" button
+4. Complete API details and then click "Create API" button
+
+
+### Create resources (automated, see `aws_setup.sh` script)
+
+1. From the side bar of Amazon API Gateway, select APIs section and then your API
+2. Select the Resources section and then click on "Actions" dropdown in order to select "Create Resource" option
+3. Give a name to resource and click on "Create Resource" button
+
+### Create authorizer (automated, see `aws_setup.sh` script)
+
+1. Create Lambda Authorizer function (see above)
+2. Create API authorizer
+3. From the side bar of Amazon API Gateway, select APIs section and then your API
+4. From "Authorizers" section, click "Create New Authorizer" button
+5. Complete the fields for the authorizer making sure that the corresponding region of 
+Lambda Authorizer function is selected
+6. After clicking "Create" button a pop-up will appear, asking for lambda function permission
+7. Click "Grant and Create" button
+
+### Create stages  
+
+1. If there is no deployment version of the API and no previous stage created 
+1.1 Go to Actions dropdown and select "Deploy API" option
+1.2 Select New Stage option from the deployment stage field
+1.3 Click "Deploy" button
+
+2. If there is a2 deployment version of the API
+2.1 Go to "Stages" section from Amazon API Gateway sidebar and click "Create" button
+2.2 Give the stage a name and choose a deployment for the stage
+2.3 Click "Create" button
+
+
+### Attach role for CloudWatch logging to API
+### Enable CloudWatch Logging on stages
