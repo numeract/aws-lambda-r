@@ -68,14 +68,14 @@ SETUP_USER_PATH="$SET_DIR/setup_user.sh"
 source $SETTINGS_DEFAULT_PATH
 source $SECRETS_DEFAULT_PATH
 
-# locate setup auto
+# locate setup auto file
 if [[ -f $SETUP_AUTO_PATH ]]; then
     source $SETUP_AUTO_PATH
 else
     echo -e "$WARN File $(FY $SETUP_AUTO_PATH) not found. Skipping."
 fi
 
-# locate setup user
+# locate setup user file
 if [[ -f $SETUP_USER_PATH ]]; then
     source $SETUP_USER_PATH
 else
@@ -97,7 +97,7 @@ fi
 
 
 # which AMI ID to use?
-if [[ $EC2_CUSTOM_AMI_ID  == "$MISSING" ]]; then
+if [[ $EC2_CUSTOM_AMI_ID == "$MISSING" ]]; then
     EC2_AMI_ID="$EC2_DEFAULT_AMI_ID"
 else
     EC2_AMI_ID="$EC2_CUSTOM_AMI_ID"

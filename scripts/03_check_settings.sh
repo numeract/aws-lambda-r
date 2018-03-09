@@ -58,14 +58,14 @@ fi
 # summary of the set variables and secrets
 echo -e '\n------------------------- EC2 INSTANCE ---------------------------\n'
 
-if [[ $EC2_CUSTOM_AMI_ID  == "$MISSING" ]]; then
+if [[ $EC2_CUSTOM_AMI_ID == "$MISSING" ]]; then
     echo -e "No Custom AMI present, using Default AMI: $(FC $EC2_AMI_ID)"
 else
     echo -e "Found Custom AMI (skip update and install): $(FC $EC2_AMI_ID)"
 fi
 echo -e "Instance Type: $(FC $EC2_INSTANCE_TYPE)"
 
-if [[ ! $EC2_SUBNET_ID  == "subnet-$MISSING" ]]; then
+if [[ ! $EC2_SUBNET_ID == "subnet-$MISSING" ]]; then
     echo -e "Subnet ID: $(FC $EC2_SUBNET_ID)"
 else
     echo -e "$ERROR Subnet ID: $(FC $EC2_SUBNET_ID). Exiting."
@@ -128,7 +128,7 @@ echo -e '\n------------------------- LAMBDA SETTINGS ------------------------\n'
 
 echo -e "Lambda function name: $(FC $LAMBDA_FUNCTION_NAME)"
 
-if [[ ! $IAM_LAMBDA_FUNCTION_ROLE  == "$MISSING" ]]; then
+if [[ ! $IAM_LAMBDA_FUNCTION_ROLE == "$MISSING" ]]; then
     echo -e "IAM Lambda Function Role: $(FY $IAM_LAMBDA_FUNCTION_ROLE)"
 else
     echo -e "$ERROR Lambda Function Role: $MISSING. Exiting."
@@ -166,14 +166,14 @@ else
 fi
 
 
-# if [[ ! $API_AUTHORIZER_ID  == "$MISSING" ]]; then
+# if [[ ! $API_AUTHORIZER_ID == "$MISSING" ]]; then
 #     echo -e "API Authorizer ID: $(FC $API_AUTHORIZER_ID)"
 # else
 #     echo -e "$ERROR API Authorizer ID: $MISSING. Exiting."
 #     exit 1
 # fi
 
-# if [[ ! $API_TOKEN  == "$MISSING" ]]; then
+# if [[ ! $API_TOKEN == "$MISSING" ]]; then
 #     echo -e "API Gateway authorization token: $(FC $API_TOKEN)"
 # else
 #     echo -e "$ERROR API Gateway authorization token: $MISSING. Exiting."

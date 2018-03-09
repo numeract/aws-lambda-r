@@ -13,12 +13,12 @@ cd ~/${PRJ_NAME}
 # Python 3 packages transfer 
 
 source ~/env/bin/activate
-
 cd ${PRJ_NAME}
 sudo cp -r ${CP_VERBOSE} ~/env/lib64/python3.6/site-packages/* ~/${PRJ_NAME}
 deactivate
 
-sudo cp /usr/lib64/python3.6/lib-dynload/_sqlite3.cpython-36m-x86_64-linux-gnu.so ~/${PRJ_NAME}
+sudo cp /usr/lib64/python3.6/lib-dynload/_sqlite3.cpython-36m-x86_64-linux-gnu.so \
+    ~/${PRJ_NAME}
 
 
 # Copy R needed libraries into project directory
@@ -52,14 +52,14 @@ sudo cp ~/${PRJ_NAME}/bin/exec/R ~/${PRJ_NAME}
 cp /usr/lib64/libblas.so.3 ~/${PRJ_NAME}/lib
 cp /usr/lib64/liblapack.so.3 ~/${PRJ_NAME}/lib
 cp /usr/lib64/mysql/libmysqlclient.so.18.0.0 ~/${PRJ_NAME}/lib
-sudo mv ~/${PRJ_NAME}/lib/libmysqlclient.so.18.0.0 ~/${PRJ_NAME}/lib/libmysqlclient.so.18
+sudo mv ~/${PRJ_NAME}/lib/libmysqlclient.so.18.0.0 \
+    ~/${PRJ_NAME}/lib/libmysqlclient.so.18
 mkdir ~/${PRJ_NAME}/lib/external
 cp ~/${PRJ_NAME}/lib/libmysqlclient.so.18 ~/${PRJ_NAME}/lib/external
-sudo mv \
-    ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.cpython-34m.so \
+sudo mv ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.cpython-34m.so \
     ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.so
 
 
 echo -e "$INFO Zipping the deployment package"
-zip -qr9 ~/${LAMBDA_ZIP} *
+zip -qr9 ~/${LAMBDA_ZIP_NAME} *
 echo -e "$INFO Finished zipping the deployment package"
