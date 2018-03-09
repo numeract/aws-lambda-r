@@ -130,9 +130,14 @@ SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 5. Select "Author from scratch function" option
 6. Give the function a name and assign a lambda role previously created
 7. Click on "Create function" button
-8. From Lambda Configuration Tab, Function Code section, select "Edit code inline", option and runtime Node.js.6.10
+8. From Lambda Configuration Tab, Function Code section, select "Edit code inline"
+option and runtime Node.js.6.10
 9. Copy the content of the index.zip archive into the inline code editor
 10. Click "Save" button
+
+![Create Lambda Auth1](41-create-lambda-auth.PNG)
+
+![Create Lambda Auth2](42-create-lambda-auth.PNG)
 
 
 ##  S3 BUCKET
@@ -146,12 +151,19 @@ SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 3. Click "New API" button
 4. Complete API details and then click "Create API" button
 
+![Create API](61-new- API.PNG)
 
 ### Create resources (automated, see `aws_setup.sh` script)
 
 1. From the side bar of Amazon API Gateway, select APIs section and then your API
 2. Select the Resources section and then click on "Actions" dropdown in order to select "Create Resource" option
 3. Give a name to resource and click on "Create Resource" button
+
+![Create API resource1](62-create-API-resource.PNG)
+
+![Create API resource2](63-create-API-resource.PNG)
+
+![Create API resource3](64-create-API-resource.PNG)
 
 ### Create authorizer (automated, see `aws_setup.sh` script)
 
@@ -164,6 +176,10 @@ Lambda Authorizer function is selected
 6. After clicking "Create" button a pop-up will appear, asking for lambda function permission
 7. Click "Grant and Create" button
 
+![Create API auth1](68-create-API-auth.PNG)
+
+![Create API auth2](69-create-API-auth.PNG)
+
 ### Create stages  
 
 1. If there is no deployment version of the API and no previous stage created 
@@ -171,11 +187,16 @@ Lambda Authorizer function is selected
 1.2 Select New Stage option from the deployment stage field
 1.3 Click "Deploy" button
 
+![Create API stage1](65-create-API-stage.PNG)
+
 2. If there is a2 deployment version of the API
 2.1 Go to "Stages" section from Amazon API Gateway sidebar and click "Create" button
 2.2 Give the stage a name and choose a deployment for the stage
 2.3 Click "Create" button
 
+![Create API stage2](66-create-API-stage.PNG)
+
+![Create API stage3](67-create-API-stage.PNG)
 
 ### Attach role for CloudWatch logging to API
 ### Enable CloudWatch Logging on stages
