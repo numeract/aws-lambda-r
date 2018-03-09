@@ -187,7 +187,7 @@ Lambda Authorizer function is selected
 1.2 Select New Stage option from the deployment stage field
 1.3 Click "Deploy" button
 
-![Create API stage1](65-create-API-stage.PNG)
+![Create API stage1](65-create_API-stage.PNG)
 
 2. If there is a2 deployment version of the API
 2.1 Go to "Stages" section from Amazon API Gateway sidebar and click "Create" button
