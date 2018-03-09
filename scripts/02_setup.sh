@@ -104,9 +104,38 @@ else
 fi
 
 
+# The Name of the API Gateway Resource
+API_RESOURCE_NAME="$(aws $AWS_PRFL apigateway get-resource \
+    --rest-api-id ${API_ID} \
+    --resource-id ${API_RESOURCE_ID} \
+    --query "pathPart" \
+    --output text)"
+exit_status=$?
+if [[ $exit_status -ne 0 ]]; then
+    echo -e "$ERROR API Resource Name: $MISSING. Exiting."
+    exit 1
+fi
+
+# The Name of the API Gateway Resource Alias
+if [[ ! $API_ALIAS_RESOURCE_ID == "$MISSING" ]]; then
+    API_ALIAS_RESOURCE_NAME="$(aws $AWS_PRFL apigateway get-resource \
+        --rest-api-id ${API_ID} \
+        --resource-id ${API_ALIAS_RESOURCE_ID} \
+        --query "pathPart" \
+        --output text)"
+    exit_status=$?
+    if [[ $exit_status -ne 0 ]]; then
+        echo -e "$ERROR API Resource Name: $MISSING. Exiting."
+        exit 1
+    fi
+fi
+
+
 # arbitrary AWS Lambda function name 
-# if you change this line, search and replace all sh files where it is redefined
-LAMBDA_FUNCTION_NAME="${PRJ_NAME}-${PRJ_BRANCH}-${API_STAGE}"
+LAMBDA_FUNCTION_NAME="${PRJ_NAME}-${PRJ_BRANCH}-${API_STAGE}-${API_RESOURCE_NAME}"
+
+# name of the zip file (Lambda deployment package) that will be stored on S3
+LAMBDA_ZIP_NAME="${LAMBDA_FUNCTION_NAME}.zip"
 
 
 # settings to be pushed to the EC2 instance

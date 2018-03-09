@@ -2,7 +2,7 @@
 
 
 echo -e "$INFO Uploading deployment package on S3"
-aws s3 cp ~/${LAMBDA_ZIP} s3://${S3_BUCKET}/lambda/
+aws s3 cp ~/${LAMBDA_ZIP_NAME} s3://${S3_BUCKET}/lambda/
 
 PRE_EX_LAMBDA=$(aws lambda get-function-configuration \
     --function-name ${LAMBDA_FUNCTION_NAME} \
@@ -24,7 +24,7 @@ echo -e "$INFO Creating lambda function."
 aws lambda create-function \
     --region ${AWS_REGION} \
     --function-name ${LAMBDA_FUNCTION_NAME} \
-    --code S3Bucket=${S3_BUCKET},S3Key=lambda/${LAMBDA_ZIP} \
+    --code S3Bucket=${S3_BUCKET},S3Key=lambda/${LAMBDA_ZIP_NAME} \
     --role ${IAM_LAMBDA_FUNCTION_ROLE} \
     --handler ${LAMBDA_PYTHON_HANDLER}.${LAMBDA_HANDLER_FUNCTION} \
     --runtime ${LAMBDA_RUNTIME} \

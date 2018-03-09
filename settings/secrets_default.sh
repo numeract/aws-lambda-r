@@ -9,12 +9,13 @@
 # AWS Access Key ID (simplest setup: create a deployment user/key)
 # AWS > IAM > Users > Add user
 # (we use the IAM_ prefix to avoid exporting it locally by mistake)
-# Copy from AWS CLI profile
+# Might be different than what is in AWS profile; will be used on EC2
+# If you use the came access on both local and EC2, copy from AWS CLI profile
 IAM_ACCESS_KEY_ID="$MISSING"
 
 # Secret Access Key corresponding to Access Key ID
 # Only available when the user has been created
-# Copy from AWS CLI profile
+# If you use the came access on both local and EC2, copy from AWS CLI profile
 IAM_SECRET_ACCESS_KEY="$MISSING"
 
 # The ARN of the AWS Role associated with the lambda function
@@ -62,9 +63,15 @@ API_ID="$MISSING"
 # AWS > API Gateway > APIs > [API NAME] > Resources
 API_RESOURCE_ID="$MISSING"
 
+# Obtained automatically from API_RESOURCE_ID, listed here for reference
+API_RESOURCE_NAME="$MISSING"
+
 # The ID of the resource containing the latest version of the API
 # AWS > API Gateway > APIs > [API NAME] > Resources
 API_ALIAS_RESOURCE_ID="$MISSING"
+
+# Obtained automatically from API_ALIAS_RESOURCE_ID, listed here for reference
+API_ALIAS_RESOURCE_NAME="$MISSING"
 
 # The ID of the custom authorizer used by the API's http method 
 # AWS > API Gateway > APIs > [API NAME] > Authorizers

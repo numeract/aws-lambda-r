@@ -138,26 +138,46 @@ fi
 
 echo -e '\n------------------------- API GATEWAY ----------------------------\n'
 
-# if [[ ! $API_ID  == "$MISSING" ]]; then
-#     echo -e "API Gateway ID: $(FC $API_ID)"
-# else
-#     echo -e "$ERROR API Gateway ID: $MISSING. Exiting."
-#     exit 1
-# fi
+if [[ ! $API_ID == "$MISSING" ]]; then
+    echo -e "API Gateway ID: $(FC $API_ID)"
+else
+    echo -e "$ERROR API Gateway ID: $MISSING. Exiting."
+    exit 1
+fi
 
-# if [[ ! $API_RESOURCE_ID  == "$MISSING" ]]; then
-#     echo -e "API Resource ID: $(FC $API_RESOURCE_ID)"
-# else
-#     echo -e "$ERROR API Resource ID: $MISSING. Exiting."
-#     exit 1
-# fi
+if [[ ! $API_RESOURCE_ID == "$MISSING" ]]; then
+    echo -e "API Resource ID: $(FC $API_RESOURCE_ID)"
+else
+    echo -e "$ERROR API Resource ID: $MISSING. Exiting."
+    exit 1
+fi
 
 
-if [[ ! $API_ALIAS_RESOURCE_ID  == "$MISSING" ]]; then
+if [[ ! $API_RESOURCE_NAME == "$MISSING" ]]; then
+    echo -e "API Resource Name: $(FC $API_RESOURCE_NAME)"
+else
+    echo -e "$ERROR API Resource Name: $MISSING. Exiting."
+    exit 1
+fi
+
+if [[ ! $API_ALIAS_RESOURCE_ID == "$MISSING" ]]; then
     echo -e "API Alias Resource ID: $(FC $API_ALIAS_RESOURCE_ID)"
-    # checking if the API resources are the same
-    if [[ $API_ALIAS_RESOURCE_ID  == $API_RESOURCE_ID ]]; then
-        echo -e "$ERROR API Resource and Resource Alias should not" \
+    # checking if the API resources IDs are the same
+    if [[ $API_ALIAS_RESOURCE_ID == $API_RESOURCE_ID ]]; then
+        echo -e "$ERROR API Resource ID and Alias Resource ID should not" \
+            "be the same. Exiting."
+        exit 1
+    fi
+    # display Alias Resource Name
+    if [[ ! $API_ALIAS_RESOURCE_NAME == "$MISSING" ]]; then
+        echo -e "API Alias Resource Name: $(FC $API_ALIAS_RESOURCE_NAME)"
+    else
+        echo -e "$ERROR API Alias Resource Name: $MISSING. Exiting."
+        exit 1
+    fi
+    # checking if the API resources Names are the same
+    if [[ $API_ALIAS_RESOURCE_NAME == $API_RESOURCE_NAME ]]; then
+        echo -e "$ERROR API Resource Name and Alias Resource Name should not" \
             "be the same. Exiting."
         exit 1
     fi
