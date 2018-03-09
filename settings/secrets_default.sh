@@ -77,6 +77,8 @@ API_ALIAS_RESOURCE_NAME="$MISSING"
 # AWS > API Gateway > APIs > [API NAME] > Authorizers
 API_AUTHORIZER_ID="$MISSING"
 
-# Authorization token used in order to make API requests
-# AWS> LAMBDA > Lambda authorization function
-API_TOKEN="$MISSING"
+# Authorization token for the Lambda Authorizer function 
+# Needed to make API requests (to restrict access to the main Lambda function)
+# Must match API_TOKEN in lambda_authorizer.js
+# AWS> LAMBDA > see code within the lambda authorization function
+API_TOKEN="aws-lambda-r-api-token"

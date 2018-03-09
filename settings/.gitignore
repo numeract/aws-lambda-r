@@ -4,6 +4,9 @@
 !.gitignore
 !README.md
 !lambda_files.txt
+!lambda_authorizer.js
+!lambda_role_policy.json
+!lambda_role_trust.json
 !settings_default.sh
 !secrets_default.sh
 !setup_auto_example.sh
