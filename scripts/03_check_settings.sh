@@ -111,6 +111,8 @@ else
     exit 1
 fi
 
+echo -e "Your AWS Account ID is:" \
+    "$(FC "********$(printf $AWS_ACCOUNT_ID | tail -c 4)")"
 echo -e "AWS Region: $(FC $AWS_REGION)"
 
 

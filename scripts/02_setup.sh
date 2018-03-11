@@ -21,10 +21,10 @@ BY () { echo -e "\e[43m\e[30m$1\e[39m\e[49m"; }         # Background Yellow
 # since we are sourcing, avoid redefining it (maybe current dir has changed)
 echo -e "$INFO Checking project directories"
 [[ $SCR_DIR ]] || SCR_DIR="$(cd "$(dirname "$0")/."; pwd)"
-PRJ_DIR="$(cd "$SCR_DIR/.."; pwd)"
-SET_DIR="$PRJ_DIR/settings"
-PYTHON_DIR="$PRJ_DIR/python"
-LAMBDA_DIR="$PRJ_DIR/lambda"
+PRJ_DIR="$(cd "${SCR_DIR}/.."; pwd)"
+SET_DIR="${PRJ_DIR}/settings"
+PYTHON_DIR="${PRJ_DIR}/python"
+LAMBDA_DIR="${PRJ_DIR}/lambda"
 
 # git related
 GIT_DIR="$(cd "$(git rev-parse --show-toplevel)"; pwd)"
@@ -60,10 +60,10 @@ fi
 # source default settings and secrets
 echo -e "$INFO Loading default settings and secrets"
 
-SETTINGS_DEFAULT_PATH="$SET_DIR/settings_default.sh"
-SECRETS_DEFAULT_PATH="$SET_DIR/secrets_default.sh"
-SETUP_AUTO_PATH="$SET_DIR/setup_auto.sh"
-SETUP_USER_PATH="$SET_DIR/setup_user.sh"
+SETTINGS_DEFAULT_PATH="${SET_DIR}/settings_default.sh"
+SECRETS_DEFAULT_PATH="${SET_DIR}/secrets_default.sh"
+SETUP_AUTO_PATH="${SET_DIR}/setup_auto.sh"
+SETUP_USER_PATH="${SET_DIR}/setup_user.sh"
 
 source $SETTINGS_DEFAULT_PATH
 source $SECRETS_DEFAULT_PATH
@@ -104,31 +104,18 @@ else
 fi
 
 
-# The Name of the API Gateway Resource
-API_RESOURCE_NAME="$(aws $AWS_PRFL apigateway get-resource \
-    --rest-api-id ${API_ID} \
-    --resource-id ${API_RESOURCE_ID} \
-    --query "pathPart" \
+# does AWS CLI work? Also get AWS Account ID (used to create ARNs)
+# part of ARNs, not a secret
+AWS_ACCOUNT_ID="$(aws $AWS_PRFL sts get-caller-identity \
+    --query "Account" \
     --output text)"
 exit_status=$?
 if [[ $exit_status -ne 0 ]]; then
-    echo -e "$ERROR API Resource Name: $MISSING. Exiting."
+    echo -e "$ERROR Failed to obtain AWS Account ID. AWS CLI not properly" \
+        "configured. Exiting."
     exit 1
 fi
 
-# The Name of the API Gateway Resource Alias
-if [[ ! $API_ALIAS_RESOURCE_ID == "$MISSING" ]]; then
-    API_ALIAS_RESOURCE_NAME="$(aws $AWS_PRFL apigateway get-resource \
-        --rest-api-id ${API_ID} \
-        --resource-id ${API_ALIAS_RESOURCE_ID} \
-        --query "pathPart" \
-        --output text)"
-    exit_status=$?
-    if [[ $exit_status -ne 0 ]]; then
-        echo -e "$ERROR API Resource Name: $MISSING. Exiting."
-        exit 1
-    fi
-fi
 
 
 # arbitrary AWS Lambda function name 
@@ -145,9 +132,9 @@ EC2_SET_3="$SETUP_AUTO_PATH"
 EC2_SET_4="$SETUP_USER_PATH"
 
 # script to run on EC2 to update / create AMI
-EC2_SCR_11="$SCR_DIR/11_install_packages.sh"
+EC2_SCR_11="${SCR_DIR}/11_install_packages.sh"
 
 # scripts to run on EC2 to deploy & configure lambda + api gateway
-EC2_SCR_12="$SCR_DIR/12_configure_ec2.sh"
-EC2_SCR_13="$SCR_DIR/13_create_deployment_package.sh"
-EC2_SCR_14="$SCR_DIR/14_create_lambda_api_method.sh"
+EC2_SCR_12="${SCR_DIR}/12_configure_ec2.sh"
+EC2_SCR_13="${SCR_DIR}/13_create_deployment_package.sh"
+EC2_SCR_14="${SCR_DIR}/14_create_lambda_api_method.sh"
