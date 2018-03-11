@@ -6,8 +6,9 @@
 exports.handler =  function(event, context, callback) {
     var token = event.authorizationToken;
     
-    // By default, the API_TOKEN is 'aws-lambda-r-token' and must match the value in settings
-    var API_TOKEN = 'aws-lambda-r-token';
+    // By default, the API_TOKEN is 'aws-lambda-r-api-token' and 
+    // must match the value in settings
+    var API_TOKEN = 'aws-lambda-r-api-token';
 
     switch (token.toLowerCase()) {
         case API_TOKEN:
