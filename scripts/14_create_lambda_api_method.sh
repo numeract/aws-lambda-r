@@ -1,7 +1,8 @@
 #!/bin/bash
 
 
-echo -e "$INFO Uploading deployment package on S3"
+LAMBDA_ZIP_NAME="${LAMBDA_FUNCTION_NAME}.zip"
+echo -e "$INFO Uploading deployment package $(FC $LAMBDA_ZIP_NAME) to S3"
 aws s3 cp ~/${LAMBDA_ZIP_NAME} s3://${S3_BUCKET}/lambda/
 
 PRE_EX_LAMBDA=$(aws lambda get-function-configuration \
@@ -25,7 +26,7 @@ aws lambda create-function \
     --region ${AWS_REGION} \
     --function-name ${LAMBDA_FUNCTION_NAME} \
     --code S3Bucket=${S3_BUCKET},S3Key=lambda/${LAMBDA_ZIP_NAME} \
-    --role ${IAM_LAMBDA_FUNCTION_ROLE} \
+    --role $IAM_LAMBDA_ROLE_ARN \
     --handler ${LAMBDA_PYTHON_HANDLER}.${LAMBDA_HANDLER_FUNCTION} \
     --runtime ${LAMBDA_RUNTIME} \
     --environment Variables="{R_HOME=/var/task/bin,R_LIBS=/lib/}" \
@@ -42,7 +43,7 @@ echo -e "$INFO LAMBDA_ARN: $(FY $LAMBDA_ARN)"
 
 API_ARN=$(echo ${LAMBDA_ARN} | \
     sed -e 's/lambda/execute-api/' \
-    -e "s/function:${LAMBDA_FUNCTION_NAME}/${API_ID}/")
+    -e "s/function:${LAMBDA_FUNCTION_NAME}/${API_GATEWAY_ID}/")
 echo -e "$INFO API_ARN: $(FY $API_ARN)"
 
 
@@ -51,7 +52,7 @@ echo
 echo -e "$INFO API method for Resource $(FC $API_RESOURCE_NAME)"
 
 API_METHOD=$(aws apigateway get-method \
-    --rest-api-id ${API_ID} \
+    --rest-api-id ${API_GATEWAY_ID} \
     --resource-id ${API_RESOURCE_ID} \
     --http-method ${API_HTTP_METHOD} \
     --query httpMethod)
@@ -60,7 +61,7 @@ API_METHOD=$(aws apigateway get-method \
 if [[ "${API_METHOD}" ==  "\"${API_HTTP_METHOD}\"" ]]; then
     echo -e "$INFO  Deleting pre-existent HTTP method"
     aws apigateway delete-method \
-        --rest-api-id ${API_ID} \
+        --rest-api-id ${API_GATEWAY_ID} \
         --resource-id ${API_RESOURCE_ID} \
         --http-method ${API_HTTP_METHOD} \
         --output table 
@@ -71,7 +72,7 @@ fi
 # Creating API method under specified resource
 echo -e "$INFO Creating ${API_HTTP_METHOD} under ${API_RESOURCE_NAME} resource"
 aws apigateway put-method \
-    --rest-api-id ${API_ID} \
+    --rest-api-id ${API_GATEWAY_ID} \
     --resource-id ${API_RESOURCE_ID} \
     --http-method ${API_HTTP_METHOD} \
     --authorization-type ${API_AUTHORIZATION_TYPE} \
@@ -80,7 +81,7 @@ aws apigateway put-method \
     
 echo -e "$INFO API put-integration."
 aws apigateway put-integration \
-    --rest-api-id ${API_ID} \
+    --rest-api-id ${API_GATEWAY_ID} \
     --resource-id ${API_RESOURCE_ID} \
     --http-method ${API_HTTP_METHOD} \
     --type AWS \
@@ -90,7 +91,7 @@ aws apigateway put-integration \
 
 echo -e "$INFO API put-method-response."   
 aws apigateway put-method-response \
-    --rest-api-id ${API_ID} \
+    --rest-api-id ${API_GATEWAY_ID} \
     --resource-id ${API_RESOURCE_ID} \
     --http-method ${API_HTTP_METHOD} \
     --status-code 200 \
@@ -99,7 +100,7 @@ aws apigateway put-method-response \
     
 echo -e "$INFO API put-integration-response." 
 aws apigateway put-integration-response \
-    --rest-api-id ${API_ID} \
+    --rest-api-id ${API_GATEWAY_ID} \
     --resource-id ${API_RESOURCE_ID} \
     --http-method ${API_HTTP_METHOD} \
     --status-code 200 \
@@ -134,7 +135,7 @@ echo -e "$INFO Finished creating $(FC $API_HTTP_METHOD) under" \
 echo
 echo -e "$INFO API method for Resource $(FC $API_ALIAS_RESOURCE_NAME)"
 
-API_ALIAS_METHOD=$(aws apigateway get-method --rest-api-id ${API_ID} \
+API_ALIAS_METHOD=$(aws apigateway get-method --rest-api-id ${API_GATEWAY_ID} \
     --resource-id ${API_ALIAS_RESOURCE_ID} \
     --http-method ${API_HTTP_METHOD} \
     --query httpMethod)
@@ -143,7 +144,7 @@ API_ALIAS_METHOD=$(aws apigateway get-method --rest-api-id ${API_ID} \
 if [[ "${API_ALIAS_METHOD}" ==  "\"${API_HTTP_METHOD}\"" ]]; then
    echo -e "$INFO  Deleting pre-existent HTTP method"
    aws apigateway delete-method \
-        --rest-api-id ${API_ID} \
+        --rest-api-id ${API_GATEWAY_ID} \
         --resource-id ${API_ALIAS_RESOURCE_ID} \
         --http-method ${API_HTTP_METHOD} \
         --output table 
@@ -152,7 +153,7 @@ fi
 # Creating API method under specified resource
 echo -e "$INFO Creating ${API_HTTP_METHOD} under ${API_ALIAS_RESOURCE_NAME} resource"
 aws apigateway put-method \
-    --rest-api-id ${API_ID} \
+    --rest-api-id ${API_GATEWAY_ID} \
     --resource-id ${API_ALIAS_RESOURCE_ID} \
     --http-method ${API_HTTP_METHOD} \
     --authorization-type ${API_AUTHORIZATION_TYPE} \
@@ -161,7 +162,7 @@ aws apigateway put-method \
 
 echo -e "$INFO API put-integration."
 aws apigateway put-integration \
-    --rest-api-id ${API_ID} \
+    --rest-api-id ${API_GATEWAY_ID} \
     --resource-id ${API_ALIAS_RESOURCE_ID} \
     --http-method ${API_HTTP_METHOD} \
     --type AWS \
@@ -171,7 +172,7 @@ aws apigateway put-integration \
 
 echo -e "$INFO API put-method-response."   
 aws apigateway put-method-response \
-    --rest-api-id ${API_ID} \
+    --rest-api-id ${API_GATEWAY_ID} \
     --resource-id ${API_ALIAS_RESOURCE_ID} \
     --http-method ${API_HTTP_METHOD} \
     --status-code 200 \
@@ -180,7 +181,7 @@ aws apigateway put-method-response \
 
 echo -e "$INFO API put-integration-response."
 aws apigateway put-integration-response \
-    --rest-api-id ${API_ID} \
+    --rest-api-id ${API_GATEWAY_ID} \
     --resource-id ${API_ALIAS_RESOURCE_ID} \
     --http-method ${API_HTTP_METHOD} \
     --status-code 200 \
@@ -213,14 +214,14 @@ echo -e "$INFO Finished creating $(FC $API_HTTP_METHOD) under" \
 
 echo -e "$INFO API create-deployment." 
 aws apigateway create-deployment \
-    --rest-api-id ${API_ID} \
+    --rest-api-id ${API_GATEWAY_ID} \
     --stage-name ${API_STAGE} \
     --description ${LAMBDA_FUNCTION_NAME} \
     --output table
 
 echo -e "$INFO API stage updating description."    
 aws apigateway update-stage \
-    --rest-api-id ${API_ID} \
+    --rest-api-id ${API_GATEWAY_ID} \
     --stage-name ${API_STAGE} \
     --patch-operations op=replace,path=/description,value=${LAMBDA_FUNCTION_NAME} \
     --output table
@@ -233,7 +234,7 @@ CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
     -H  "Content-Type: application/json" \
     -X ${API_HTTP_METHOD} \
     -d '{"request_id": 1111}' \
-    https://${API_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_RESOURCE_NAME})
+    https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_RESOURCE_NAME})
 [[ ${#CURL_OUT} -gt 1000 ]] || echo "$CURL_OUT"
 
 echo
@@ -242,5 +243,5 @@ CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
     -H  "Content-Type: application/json" \
     -X ${API_HTTP_METHOD} \
     -d '{"request_id": 1111}' \
-    https://${API_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_ALIAS_RESOURCE_NAME})
+    https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_ALIAS_RESOURCE_NAME})
 [[ ${#CURL_OUT} -gt 1000 ]] || echo "$CURL_OUT"

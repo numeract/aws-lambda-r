@@ -60,6 +60,8 @@ sudo mv ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.cpython-34m.so \
     ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.so
 
 
-echo -e "$INFO Zipping the deployment package"
+echo -e "$INFO Zipping the deployment package ..."
+LAMBDA_ZIP_NAME="${LAMBDA_FUNCTION_NAME}.zip"
 zip -qr9 ~/${LAMBDA_ZIP_NAME} *
-echo -e "$INFO Finished zipping the deployment package"
+echo -e "$INFO Finished zipping the deployment package to" \
+    "$(FC $LAMBDA_ZIP_NAME)"
