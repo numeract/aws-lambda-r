@@ -105,15 +105,12 @@ fi
 
 
 # does AWS CLI work? Also get AWS Account ID (used to create ARNs)
-# part of ARNs, not a secret
 AWS_ACCOUNT_ID="$(aws $AWS_PRFL sts get-caller-identity \
     --query "Account" \
     --output text)"
 exit_status=$?
 if [[ $exit_status -ne 0 ]]; then
-    echo -e "$ERROR Failed to obtain AWS Account ID. AWS CLI not properly" \
-        "configured. Exiting."
-    exit 1
+    echo -e "$WARN Failed to obtain AWS Account ID. Is AWS CLI configured?"
 fi
 
 
