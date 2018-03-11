@@ -25,6 +25,29 @@ AWS_PRFL="--profile default"
 AWS_REGION="us-east-1"
 
 
+# AWS IAM ----------------------------------------------------------------------
+
+# The AWS name the IAM Role associated with the Lambda function execution
+# AWS > IAM > Roles > (if missing: Create new role)
+# Added in `setup_auto.sh` by `24_setup_lambda.sh`
+IAM_LAMBDA_ROLE_NAME="$MISSING"
+
+# Obtained automatically from IAM_LAMBDA_ROLE_NAME, listed here for reference
+# Added in `setup_auto.sh` by `24_setup_lambda.sh`
+IAM_LAMBDA_ROLE_ARN="$MISSING"
+
+# The name of the file containing Lambda trust policy
+# We allow Lambda to assume this IAM (execution) role
+# Using a relative path to avoid drive letter issues in AWS CLI on windows
+IAM_LAMBDA_ROLE_TRUST_FILE="settings/lambda_role_trust.json"
+
+# The name of the file containing IAM role policy for Lambda execution
+# We allow Lambda to write to logs
+# Add other access, as needed, for Lambda (e.g. access S3)
+# Using a relative path to avoid drive letter issues in AWS CLI on windows
+IAM_LAMBDA_ROLE_POLICY_FILE="settings/lambda_role_policy.json"
+
+
 # AWS EC2 ----------------------------------------------------------------------
 
 # The ID of the Amazon Machine Image which is the template for the EC2 instance.
@@ -34,7 +57,7 @@ EC2_DEFAULT_AMI_ID="ami-4fffc834"
 
 # The ID of the cache AMI ($EC2_AMI_ID + update + python + R)
 # If present this ID will be used instead of $EC2_AMI_ID
-# Usually kept private because it is project specific and may contain your keys
+# AMI kept private because it is project specific (and it may contain your keys)
 # Added automatically in setup_auto.sh by 
 EC2_CUSTOM_AMI_ID="$MISSING"
 
@@ -47,6 +70,21 @@ EC2_USERNAME="ec2-user"
 
 # Maximum number of attempts to check on the EC2. Each attempt takes 5 seconds.
 EC2_MAX_TESTS=20
+
+
+## AWS Lambda Authorizer -------------------------------------------------------
+
+# The AWS name of the Lambda Authorizer function
+# Added in `setup_auto.sh` by `24_setup_lambda.sh`
+LAMBDA_AUTHORIZER_NAME="$MISSING"
+
+# Obtained automatically from LAMBDA_AUTHORIZER_NAME, listed here for reference
+# Added in `setup_auto.sh` by `24_setup_lambda.sh`
+LAMBDA_AUTHORIZER_ARN="$MISSING"
+
+# The file containing the Lambda Authorizer function
+# Using a relative path to avoid drive letter issues in AWS CLI on windows
+LAMBDA_AUTHORIZER_FILE="settings/lambda_authorizer.js"
 
 
 ## AWS Lambda ------------------------------------------------------------------
@@ -73,6 +111,9 @@ LAMBDA_MEMORY_SIZE="3008"
 
 
 # AWS API Gateway --------------------------------------------------------------
+
+# Use / deploy to an Alias Resource?
+API_ALIAS_RESOURCE_USE="false"
 
 # A stage is a unique identifier for a version of a deployed API
 # Choices (suggested): alpha, beta, prod

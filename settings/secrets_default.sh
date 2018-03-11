@@ -18,10 +18,6 @@ IAM_ACCESS_KEY_ID="$MISSING"
 # If you use the came access on both local and EC2, copy from AWS CLI profile
 IAM_SECRET_ACCESS_KEY="$MISSING"
 
-# The ARN of the AWS Role associated with the lambda function
-# AWS > IAM > Roles > (optional: Create new role)
-IAM_LAMBDA_FUNCTION_ROLE="arn:aws:iam::$MISSING:role/$MISSING"
-
 
 # AWS EC2 ----------------------------------------------------------------------
 
@@ -32,7 +28,7 @@ IAM_LAMBDA_FUNCTION_ROLE="arn:aws:iam::$MISSING:role/$MISSING"
 EC2_KEY_NAME="$MISSING"
 
 # The dir where the above key file is located
-EC2_KEY_FILE="~/.ssh/$EC2_KEY_NAME.pem"
+EC2_KEY_FILE="~/.ssh/${EC2_KEY_NAME}.pem"
 
 # AWS > VPC > Subnets > (optional: Create Subnet)
 # If no VPC setup, see AWS > VPC > Your VPCs > Create VPC
@@ -45,36 +41,56 @@ EC2_SECURITY_GROUP_IDS="sg-$MISSING"
 
 ## AWS S3 ----------------------------------------------------------------------
 
-# The name of the s3 bucket in which the deployment package will be uploaded
+# The name of the S3 bucket in which the deployment package will be uploaded
 # AWS > S3 > (optional: Create bucket & folder)
 S3_BUCKET="$MISSING"
 
 
 ## AWS Lambda ------------------------------------------------------------------
 
+# The AWS name of the Lambda function (in Python, calling R)
+# If missing, "${PRJ_NAME}-${PRJ_BRANCH}-${API_STAGE}-${API_RESOURCE_NAME}"
+# AWS > Lambda > Functions
+LAMBDA_FUNCTION_NAME="$MISSING"
+
 
 # AWS API Gateway --------------------------------------------------------------
 
-# The ID of the API gateway on which the http calls are made 
-# AWS > API Gateway > API's ??
-API_ID="$MISSING"
+# The AWS name of the API Gateway on which the http calls are made 
+# AWS > API Gateway > API's
+# Added in `setup_auto.sh` by `24_setup_lambda.sh`
+API_GATEWAY_NAME="$MISSING"
 
-# The ID of the resource under the API Gateway
+# Obtained automatically from API_GATEWAY_NAME, listed here for reference
+# Added in `setup_auto.sh` by `24_setup_lambda.sh`
+API_GATEWAY_ID="$MISSING"
+
+# The AWS name of the resource under the API Gateway Root Resource
 # AWS > API Gateway > APIs > [API NAME] > Resources
-API_RESOURCE_ID="$MISSING"
-
-# Obtained automatically from API_RESOURCE_ID, listed here for reference
+# Added in `setup_auto.sh` by `24_setup_lambda.sh`
 API_RESOURCE_NAME="$MISSING"
 
-# The ID of the resource containing the latest version of the API
-# AWS > API Gateway > APIs > [API NAME] > Resources
-API_ALIAS_RESOURCE_ID="$MISSING"
+# Obtained automatically from API_RESOURCE_NAME, listed here for reference
+# Added in `setup_auto.sh` by `24_setup_lambda.sh`
+API_RESOURCE_ID="$MISSING"
 
-# Obtained automatically from API_ALIAS_RESOURCE_ID, listed here for reference
+# The AWS name of the Alias resource (e.g. url of the latest app API version)
+# Ignored if $API_ALIAS_RESOURCE == "false"
+# AWS > API Gateway > APIs > [API NAME] > Resources
+# Added in `setup_auto.sh` by `24_setup_lambda.sh`
 API_ALIAS_RESOURCE_NAME="$MISSING"
 
-# The ID of the custom authorizer used by the API's http method 
+# Obtained automatically from API_ALIAS_RESOURCE_NAME, listed here for reference
+# Added in `setup_auto.sh` by `24_setup_lambda.sh`
+API_ALIAS_RESOURCE_ID="$MISSING"
+
+# The AWS name of API custom authorizer (that calls Lambda Authorizer)
 # AWS > API Gateway > APIs > [API NAME] > Authorizers
+# Added in `setup_auto.sh` by `24_setup_lambda.sh`
+API_AUTHORIZER_NAME="$MISSING"
+
+# Obtained automatically from API_AUTHORIZER_NAME, listed here for reference
+# Added in `setup_auto.sh` by `24_setup_lambda.sh`
 API_AUTHORIZER_ID="$MISSING"
 
 # Authorization token for the Lambda Authorizer function 
