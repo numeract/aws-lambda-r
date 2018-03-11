@@ -77,6 +77,7 @@ aws $AWS_PRFL ec2 modify-subnet-attribute \
     --map-public-ip-on-launch 
 
 # Create a security group in VPC       
+# TODO: proper group-name, description (cannot be modified later)
 SECURITY_GROUP_ID=$(aws $AWS_PRFL ec2 create-security-group \
     --group-name EC2access \
     --description "Security group for SSH access" \

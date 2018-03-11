@@ -81,9 +81,10 @@ while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
 done
  
 
-# saving $EC2_CUSTOM_AMI_ID by writing it to setup_auto.sh
+# append $EC2_CUSTOM_AMI_ID to setup_auto.sh
+echo -e "$INFO Appending to $(FY $(basename $SETUP_AUTO_PATH)): "
 echo -e "EC2_CUSTOM_AMI_ID=\"${EC2_CUSTOM_AMI_ID}\"" | \
-    tee -a ./settings/setup_auto.sh
+    tee -a $SETUP_AUTO_PATH
 
 
 # terminating the stopped instance

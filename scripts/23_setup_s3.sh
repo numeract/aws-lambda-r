@@ -8,9 +8,18 @@
 [[ $PRJ_DIR ]] || source "$SCR_DIR/02_setup.sh"
 
 
-# if no given name, use a name = last 4 letters of access key and prj name
+# if no given name:
+# - try "<account alias>-${PRJ_NAME}"
+# - if no account alias, use "<last 4 digits of account ID>-${PRJ_NAME}"
 if [[ $S3_BUCKET == "$MISSING" ]]; then
-    S3_BUCKET=""$(printf $IAM_ACCESS_KEY_ID | tail -c 4)"-${PRJ_NAME}"
+    AWS_ACCOUNT_ALIAS=$(aws $AWS_PRFL iam list-account-aliases \
+        --query "AccountAliases[0]" \
+        --output text)
+    if [[ $AWS_ACCOUNT_ALIAS == "None" ]]; then
+        S3_BUCKET=""$(printf $AWS_ACCOUNT_ID | tail -c 4)"-${PRJ_NAME}"
+    else
+        S3_BUCKET="${AWS_ACCOUNT_ALIAS}-${PRJ_NAME}"
+    fi
     S3_BUCKET="$(echo ${S3_BUCKET} | tr '[A-Z]' '[a-z]')"
 fi
 echo -e "$INFO S3 Bucket to use: $(FC $S3_BUCKET)"
@@ -43,7 +52,14 @@ fi
 # test existence
 if aws $AWS_PRFL s3 ls "s3://${S3_BUCKET}" 2>&1 | grep -q 'NoSuchBucket'; then
     echo -e "$ERROR S3 Bucket $(FC $S3_BUCKET) still does not exist." \
-        "Please create it from AWS Web Console."
+        "Please create it from AWS Web Console. Exiting."
+    exit 1
 else
     echo -e "$INFO S3 Bucket $(FC $S3_BUCKET) now exists."
 fi
+
+
+# append $S3_BUCKET to setup_auto.sh
+echo -e "$INFO Appending to $(FY $(basename $SETUP_AUTO_PATH)): "
+echo -e "S3_BUCKET=\"${S3_BUCKET}\"" | \
+    tee -a $SETUP_AUTO_PATH
