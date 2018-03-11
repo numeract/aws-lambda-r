@@ -111,15 +111,16 @@ AWS_ACCOUNT_ID="$(aws $AWS_PRFL sts get-caller-identity \
 exit_status=$?
 if [[ $exit_status -ne 0 ]]; then
     echo -e "$WARN Failed to obtain AWS Account ID. Is AWS CLI configured?"
+    AWS_ACCOUNT_ID="$MISSING"
 fi
 
 
-
 # arbitrary AWS Lambda function name 
-LAMBDA_FUNCTION_NAME="${PRJ_NAME}-${PRJ_BRANCH}-${API_STAGE}-${API_RESOURCE_NAME}"
-
-# name of the zip file (Lambda deployment package) that will be stored on S3
-LAMBDA_ZIP_NAME="${LAMBDA_FUNCTION_NAME}.zip"
+if [[ $LAMBDA_FUNCTION_NAME == "$MISSING" ]]; then
+    LAMBDA_FUNCTION_NAME="${PRJ_NAME}-${PRJ_BRANCH}"
+    LAMBDA_FUNCTION_NAME="${LAMBDA_FUNCTION_NAME}-${API_STAGE}"
+    LAMBDA_FUNCTION_NAME="${LAMBDA_FUNCTION_NAME}-${API_RESOURCE_NAME}"
+fi
 
 
 # settings to be pushed to the EC2 instance
