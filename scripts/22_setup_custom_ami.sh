@@ -54,11 +54,12 @@ while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
 done
 
 
-# create custom AMI from stopped instance
-echo -e "$INFO Create custom AMI from Instance ID "
+# create a new custom AMI from the stopped instance, do not delete old AMI
+echo -e "$INFO Create custom AMI from Instance ID"
+EC2_CUSTOM_AMI_NAME="${PRJ_NAME}-ami_$(date -u '+%Y-%m-%d_%H-%M-%S_%Z')"
 EC2_CUSTOM_AMI_ID=$(aws $AWS_PRFL ec2 create-image \
     --instance-id $EC2_INSTANCE_ID \
-    --name "${PRJ_NAME}-ami" \
+    --name "$EC2_CUSTOM_AMI_NAME" \
     --output text)
 
 # Wait until AMI is available - this will take longer
@@ -81,11 +82,13 @@ while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
 done
  
 
-# append $EC2_CUSTOM_AMI_ID to setup_auto.sh
-echo -e "$INFO Appending to $(FY $(basename $SETUP_AUTO_PATH)): "
-echo -e "EC2_CUSTOM_AMI_ID=\"${EC2_CUSTOM_AMI_ID}\"" | \
-    tee -a $SETUP_AUTO_PATH
-
-
 # terminating the stopped instance
 source "$SCR_DIR/08_terminate_ec2.sh"
+
+
+# append to setup_auto.sh
+echo -e "$INFO Appending to $(FY $(basename $SETUP_AUTO_PATH)):"
+echo -en \
+    "\n# Added on: $(date -u '+%Y-%m-%d %H:%M:%S %Z')\n" \
+    "EC2_CUSTOM_AMI_ID=\"${EC2_CUSTOM_AMI_ID}\"\n" \
+    | sed -e 's/^[ ]*//' | tee -a $SETUP_AUTO_PATH

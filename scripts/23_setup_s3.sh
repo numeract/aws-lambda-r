@@ -8,7 +8,7 @@
 [[ $PRJ_DIR ]] || source "$SCR_DIR/02_setup.sh"
 
 
-# if no given name:
+# if S3 name is missing:
 # - try "<account alias>-${PRJ_NAME}"
 # - if no account alias, use "<last 4 digits of account ID>-${PRJ_NAME}"
 if [[ $S3_BUCKET == "$MISSING" ]]; then
@@ -59,7 +59,9 @@ else
 fi
 
 
-# append $S3_BUCKET to setup_auto.sh
-echo -e "$INFO Appending to $(FY $(basename $SETUP_AUTO_PATH)): "
-echo -e "S3_BUCKET=\"${S3_BUCKET}\"" | \
-    tee -a $SETUP_AUTO_PATH
+# append to setup_auto.sh
+echo -e "$INFO Appending to $(FY $(basename $SETUP_AUTO_PATH)):"
+echo -en \
+    "\n# Added on: $(date -u '+%Y-%m-%d %H:%M:%S %Z')\n" \
+    "S3_BUCKET=\"${S3_BUCKET}\"\n" \
+    | sed -e 's/^[ ]*//' | tee -a $SETUP_AUTO_PATH
