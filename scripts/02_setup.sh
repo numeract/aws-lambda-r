@@ -110,8 +110,8 @@ AWS_ACCOUNT_ID="$(aws $AWS_PRFL sts get-caller-identity \
     --output text)"
 exit_status=$?
 if [[ $exit_status -ne 0 ]]; then
-    echo -e "$WARN Failed to obtain AWS Account ID. Is AWS CLI configured?"
-    AWS_ACCOUNT_ID="$MISSING"
+    echo -e "$ERROR Failed to obtain AWS Account ID. Is AWS CLI configured?"
+    exit 1
 fi
 
 

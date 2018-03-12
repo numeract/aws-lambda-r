@@ -72,7 +72,7 @@ else
     exit 1
 fi
 
-echo -e "Your AWS Account ID is:" \
+echo -e "AWS Account ID:" \
     "$(FC "********$(printf $AWS_ACCOUNT_ID | tail -c 4)")"
 echo -e "AWS Region: $(FC $AWS_REGION)"
 
@@ -126,12 +126,24 @@ fi
 
 echo -e '\n------------------------- LAMBDA SETTINGS --------------------------'
 
-echo -e "Lambda function name: $(FC $LAMBDA_FUNCTION_NAME)"
-
-if [[ ! $IAM_LAMBDA_ROLE_ARN == "$MISSING" ]]; then
-    echo -e "IAM Lambda Function Role: $(FY $IAM_LAMBDA_ROLE_ARN)"
+if [[ ! $IAM_LAMBDA_ROLE_NAME == "$MISSING" ]]; then
+    echo -e "IAM Lambda Function Role: $(FC $IAM_LAMBDA_ROLE_NAME)"
 else
     echo -e "$ERROR IAM Lambda Function Role: $MISSING. Exiting."
+    exit 1
+fi
+
+if [[ ! $LAMBDA_AUTHORIZER_NAME == "$MISSING" ]]; then
+    echo -e "Lambda Authorizer Function: $(FC $LAMBDA_AUTHORIZER_NAME)"
+else
+    echo -e "$ERROR Lambda Authorizer Function: $MISSING. Exiting."
+    exit 1
+fi
+
+if [[ ! $LAMBDA_FUNCTION_NAME == "$MISSING" ]]; then
+    echo -e "Lambda Function: $(FC $LAMBDA_FUNCTION_NAME)"
+else
+    echo -e "$ERROR Lambda Function: $MISSING. Exiting."
     exit 1
 fi
 

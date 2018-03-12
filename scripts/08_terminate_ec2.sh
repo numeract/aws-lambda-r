@@ -22,7 +22,7 @@ else
     if [[ $exit_status -eq 0 ]]; then
         echo -e "$INFO Instance $(FC $EC2_INSTANCE_ID) is being terminated ..."
     else
-        echo -e "$ERROR Cannot terminate Instance ID $(FC $EC2_INSTANCE_ID)." \ 
+        echo -e "$ERROR Cannot terminate Instance ID $(FC $EC2_INSTANCE_ID)." \
             "Please terminate it using AWS web console."
     fi
 fi

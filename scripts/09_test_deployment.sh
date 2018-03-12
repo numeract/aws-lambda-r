@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# post deployment tests
+# post-deployment tests
 
 
 # load local settings if not already loaded
