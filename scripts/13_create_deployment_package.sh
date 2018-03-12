@@ -3,11 +3,11 @@
 # run on EC2 to create deployment package
 
 
-# prep folder
+# prep folder ~/${PRJ_NAME}, created when files were copied
 echo -e "$INFO Creating deployment package"
 sudo chmod -R a+w ~/${PRJ_NAME}
 cd ~/${PRJ_NAME}
-
+echo -e "$INFO PWD: $(pwd)"
 
 
 # Python 3 packages transfer 

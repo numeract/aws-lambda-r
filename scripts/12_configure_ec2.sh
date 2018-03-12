@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# run on EC2, configure EC2
+# run on EC2, configures EC2
 
-
-# All 4 settings scripts were called before calling this scrip
-# We have access to all the settings as on the local machine
+# Assume colors variables and functions defined before settings files
+# All 4 settings scripts were called before calling this script
+# We have access to all the settings as on the local machine,
+# we need to reproduce some of `02_setup.sh` functionality
 
 
 # on EC2 we need to connect to other AWS service (S3, Lambda, API Gateway, ...)

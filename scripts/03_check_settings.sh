@@ -141,9 +141,9 @@ else
 fi
 
 if [[ ! $LAMBDA_FUNCTION_NAME == "$MISSING" ]]; then
-    echo -e "Lambda Function: $(FC $LAMBDA_FUNCTION_NAME)"
+    echo -e "Lambda Function Name: $(FC $LAMBDA_FUNCTION_NAME)"
 else
-    echo -e "$ERROR Lambda Function: $MISSING. Exiting."
+    echo -e "$ERROR Lambda Function Name: $MISSING. Exiting."
     exit 1
 fi
 

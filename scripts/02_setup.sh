@@ -115,7 +115,8 @@ if [[ $exit_status -ne 0 ]]; then
 fi
 
 
-# arbitrary AWS Lambda function name 
+# arbitrary AWS Lambda function name
+# must match `12_configure_ec2.sh` definition
 if [[ $LAMBDA_FUNCTION_NAME == "$MISSING" ]]; then
     LAMBDA_FUNCTION_NAME="${PRJ_NAME}-${PRJ_BRANCH}"
     LAMBDA_FUNCTION_NAME="${LAMBDA_FUNCTION_NAME}-${API_STAGE}"
