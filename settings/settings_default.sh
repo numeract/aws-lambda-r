@@ -8,10 +8,10 @@
 
 # name of the project root directory, error if mismatch
 # use only letters, dashes, and digits, e.g. aws-lambda-r
-PRJ_NAME="$MISSING"
+PRJ_NAME="aws-lambda-r"
 
 # Name of the current Git branch, error if mismatch
-PRJ_BRANCH="$MISSING"
+PRJ_BRANCH="dev"
 
 
 # AWS --------------------------------------------------------------------------
@@ -22,7 +22,7 @@ AWS_PRFL="--profile default"
 
 # We do not set AWS_DEFAULT_REGION to prevent undesired interactions with AWS CLI
 # AWS ec2, s3, lambda and API gateway region. us-east-1 is US East (N. Virginia).
-AWS_REGION="us-east-1"
+AWS_REGION="eu-west-1"
 
 
 # AWS IAM ----------------------------------------------------------------------
