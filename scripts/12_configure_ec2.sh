@@ -15,11 +15,37 @@ sudo mkdir -p ~/.aws
 echo -en \
     "[default]\n" \
     "output = json\n" \
-    "region = ${AWS_REGION}\n" | \
-    sudo tee ~/.aws/config
+    "region = ${AWS_REGION}\n" \
+    | sed -e 's/^[ ]*//' | sudo tee ~/.aws/config > /dev/null
 echo -en \
     "[default]\n" \
     "aws_access_key_id = ${IAM_ACCESS_KEY_ID}\n" \
     "aws_secret_access_key = ${IAM_SECRET_ACCESS_KEY}\n" \
-    "region = ${AWS_REGION}\n" | \
-    sudo tee ~/.aws/credentials
+    "region = ${AWS_REGION}\n" \
+    | sed -e 's/^[ ]*//' | sudo tee ~/.aws/credentials > /dev/null
+
+
+# does AWS CLI work on EC2? Also get AWS Account ID on EC2 (used to create ARNs)
+echo -e "$INFO Check AWS configuration on EC2 ..."
+AWS_ACCOUNT_ID="$(aws sts get-caller-identity \
+    --query "Account" \
+    --output text)"
+exit_status=$?
+if [[ $exit_status -ne 0 ]]; then
+    echo -e "$ERROR Failed to obtain AWS Account ID on EC2." \
+        "Is AWS CLI configured? Exiting."
+        exit 1
+else
+    echo -e "$INFO AWS Account ID:" \
+        "$(FC "********$(printf $AWS_ACCOUNT_ID | tail -c 4)")"
+fi
+
+
+# arbitrary AWS Lambda function name
+# must match `02_setup.sh` definition
+if [[ $LAMBDA_FUNCTION_NAME == "$MISSING" ]]; then
+    LAMBDA_FUNCTION_NAME="${PRJ_NAME}-${PRJ_BRANCH}"
+    LAMBDA_FUNCTION_NAME="${LAMBDA_FUNCTION_NAME}-${API_STAGE}"
+    LAMBDA_FUNCTION_NAME="${LAMBDA_FUNCTION_NAME}-${API_RESOURCE_NAME}"
+fi
+echo -e "$INFO Lambda Function Name: $(FC $LAMBDA_FUNCTION_NAME)"
