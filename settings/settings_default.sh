@@ -53,7 +53,7 @@ IAM_LAMBDA_ROLE_POLICY_FILE="settings/lambda_role_policy.json"
 # The ID of the Amazon Machine Image which is the template for the EC2 instance.
 # Find the most recent AMI used by AWS Lambda for your region
 # https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html
-EC2_DEFAULT_AMI_ID="ami-4fffc834"
+EC2_DEFAULT_AMI_ID="ami-ebd02392"
 
 # The ID of the cache AMI ($EC2_AMI_ID + update + python + R)
 # If present this ID will be used instead of $EC2_AMI_ID

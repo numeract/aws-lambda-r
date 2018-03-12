@@ -92,7 +92,7 @@ else
     echo -e "$INFO Creating Lambda Authorizer Function ..."
     # zip the js file containing the Authorizer function
     zip -joq9 ${LAMBDA_AUTHORIZER_FILE}.zip ${LAMBDA_AUTHORIZER_FILE}
-    JS_MODULE_NAME="$(basename $LAMBDA_AUTHORIZER_FILE .js)"
+    JS_MODULE_NAME="$(basename $LAMBDA_AUTHORIZER_FILE)"
     aws $AWS_PRFL lambda create-function \
         --region $AWS_REGION \
         --function-name $LAMBDA_AUTHORIZER_NAME \
