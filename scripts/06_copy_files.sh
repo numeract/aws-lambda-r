@@ -32,10 +32,16 @@ if [[ $exit_status != 0 ]]; then
 fi
 
 
+# delete `~/${PRJ_NAME} to start with a clean copy
+echo -e "$INFO Remove EC2 directory $(FY '~/'$PRJ_NAME)"
+ssh -i "$EC2_KEY_FILE" \
+    -T "${EC2_USERNAME}@${EC2_DNS_NAME}" \
+    "sudo rm -rf ~/${PRJ_NAME}"
+
+
 # copy files from local lambda dir to EC2
 echo -e "$INFO Copying local $(FY "$(basename $LAMBDA_DIR)/") to" \
     "EC2 $(FY '~/'$PRJ_NAME) ..."
-
 scp -i "$EC2_KEY_FILE" \
     -r "$LAMBDA_DIR" \
     "${EC2_USERNAME}@${EC2_DNS_NAME}:~/${PRJ_NAME}"
