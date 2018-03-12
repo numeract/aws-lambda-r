@@ -15,7 +15,7 @@ echo -e "$INFO Testing $(FC ${API_STAGE}/${API_RESOURCE_NAME}) call."
 CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
     -H  "Content-Type: application/json" \
     -X ${API_HTTP_METHOD} \
-    -d '{"session_id": '${SESSION_ID}'}' \
+    -d '{"request_id": 1111}' \
     https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_RESOURCE_NAME})
 [[ ${#CURL_OUT} -gt 1000 ]] || echo "$CURL_OUT"
 echo -e "$INFO Result (md5) of $(FC ${API_STAGE}/${API_RESOURCE_NAME}) call: $(FC $(echo "$CURL_OUT" | md5sum))"
@@ -25,7 +25,7 @@ echo -e "$INFO Testing $(FC ${API_STAGE}/${API_ALIAS_RESOURCE_NAME}) call."
 CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
     -H  "Content-Type: application/json" \
     -X ${API_HTTP_METHOD} \
-    -d '{"session_id": '${SESSION_ID}'}' \
+    -d '{"request_id": 1111}' \
     https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_ALIAS_RESOURCE_NAME})
 [[ ${#CURL_OUT} -gt 1000 ]] || echo "$CURL_OUT"
 echo -e "$INFO Result (md5) of $(FC ${API_STAGE}/${API_RESOURCE_NAME}) call: $(FC $(echo "$CURL_OUT" | md5sum))"
@@ -38,7 +38,7 @@ echo -e "$INFO Testing $(FC ${API_STAGE}/${API_RESOURCE_NAME}) call."
 CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
     -H  "Content-Type: application/json" \
     -X ${API_HTTP_METHOD} \
-    -d '{"session_id": '${SESSION_ID}'}' \
+    -d '{"request_id": 1111}' \
     https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_RESOURCE_NAME})
 [[ ${#CURL_OUT} -gt 1000 ]] || echo "$CURL_OUT"
 echo -e "$INFO Result (md5) of $(FC ${API_STAGE}/${API_RESOURCE_NAME}) call: $(FC $(echo "$CURL_OUT" | md5sum))"
@@ -48,7 +48,7 @@ echo -e "$INFO Testing $(FC ${API_STAGE}/${API_ALIAS_RESOURCE_NAME}) call."
 CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
     -H  "Content-Type: application/json" \
     -X ${API_HTTP_METHOD} \
-    -d '{"session_id": '${SESSION_ID}'}' \
+    -d '{"request_id": 1111}' \
     https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_ALIAS_RESOURCE_NAME})
 [[ ${#CURL_OUT} -gt 1000 ]] || echo "$CURL_OUT"
 echo -e "$INFO Result (md5) of $(FC ${API_STAGE}/${API_RESOURCE_NAME}) call: $(FC $(echo "$CURL_OUT" | md5sum))"
@@ -61,7 +61,7 @@ echo -e "$INFO Testing $(FC ${API_STAGE}/${API_RESOURCE_NAME}) call."
 CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
     -H  "Content-Type: application/json" \
     -X ${API_HTTP_METHOD} \
-    -d '{"session_id": '${SESSION_ID}'}' \
+    -d '{"request_id": 1111}' \
     https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_RESOURCE_NAME})
 [[ ${#CURL_OUT} -gt 1000 ]] || echo "$CURL_OUT"
 echo -e "$INFO Result (md5) of $(FC ${API_STAGE}/${API_RESOURCE_NAME}) call: $(FC $(echo "$CURL_OUT" | md5sum))"
@@ -71,7 +71,7 @@ echo -e "$INFO Testing $(FC ${API_STAGE}/${API_ALIAS_RESOURCE_NAME}) call."
 CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
     -H  "Content-Type: application/json" \
     -X ${API_HTTP_METHOD} \
-    -d '{"session_id": '${SESSION_ID}'}' \
+    -d '{"request_id": 1111}' \
     https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_ALIAS_RESOURCE_NAME})
 [[ ${#CURL_OUT} -gt 1000 ]] || echo "$CURL_OUT"
 echo -e "$INFO Result (md5) of $(FC ${API_STAGE}/${API_RESOURCE_NAME}) call: $(FC $(echo "$CURL_OUT" | md5sum))"
