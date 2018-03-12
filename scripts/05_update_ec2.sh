@@ -14,8 +14,10 @@ if [[ $EC2_AMI_ID == "$EC2_CUSTOM_AMI_ID" ]]; then
 else
     # connect to the created instance and update it
     echo -e "$INFO Connecting and Updating EC2 instance ..."
-    cat $EC2_SET_1 $EC2_SET_4 $EC2_SCR_11 | \
-        ssh -i "$EC2_KEY_FILE" \
+    # hack: colors and $MISSING first by reading from 02_setup.sh
+    cat <(head -n 19 "${SCR_DIR}/02_setup.sh") \
+            $EC2_SET_1 $EC2_SET_4 $EC2_SCR_11 \
+        | ssh -i "$EC2_KEY_FILE" \
             -T "${EC2_USERNAME}@${EC2_DNS_NAME}" \
             'bash -s'
     exit_status=$?
