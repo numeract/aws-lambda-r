@@ -13,7 +13,7 @@ echo -e "$INFO PWD: $(pwd)"
 # Python 3 packages transfer 
 
 source ~/env/bin/activate
-cd ${PRJ_NAME}
+cd ~/${PRJ_NAME}
 sudo cp -r ${CP_VERBOSE} ~/env/lib64/python3.6/site-packages/* ~/${PRJ_NAME}
 deactivate
 
@@ -51,13 +51,14 @@ sudo cp -r ${CP_VERBOSE} ~/library/* ~/${PRJ_NAME}/library
 sudo cp ~/${PRJ_NAME}/bin/exec/R ~/${PRJ_NAME}
 cp /usr/lib64/libblas.so.3 ~/${PRJ_NAME}/lib
 cp /usr/lib64/liblapack.so.3 ~/${PRJ_NAME}/lib
-cp /usr/lib64/mysql/libmysqlclient.so.18.0.0 ~/${PRJ_NAME}/lib
-sudo mv ~/${PRJ_NAME}/lib/libmysqlclient.so.18.0.0 \
-    ~/${PRJ_NAME}/lib/libmysqlclient.so.18
-mkdir ~/${PRJ_NAME}/lib/external
-cp ~/${PRJ_NAME}/lib/libmysqlclient.so.18 ~/${PRJ_NAME}/lib/external
-sudo mv ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.cpython-34m.so \
+
+
+sudo cp ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.cpython-36m-x86_64-linux-gnu.so \
     ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.so
+
+mkdir ~/${PRJ_NAME}/lib/external
+cp /usr/lib64/mysql/libmysqlclient.so.18.0.0 \
+    ~/${PRJ_NAME}/lib/external/libmysqlclient.so.18
 
 
 echo -e "$INFO Zipping the deployment package ..."
