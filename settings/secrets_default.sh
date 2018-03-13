@@ -32,18 +32,18 @@ EC2_KEY_FILE="~/.ssh/${EC2_KEY_NAME}.pem"
 
 # AWS > VPC > Subnets > (optional: Create Subnet)
 # If no VPC setup, see AWS > VPC > Your VPCs > Create VPC
-EC2_SUBNET_ID="subnet-2a9e4262"
+EC2_SUBNET_ID="subnet-$MISSING"
 
 # The security group id to which the new instance will belong
 # AWS > EC2 > Network a& Security > Security Groups > Create Security Group
-EC2_SECURITY_GROUP_IDS="sg-c688cfbc"
+EC2_SECURITY_GROUP_IDS="sg-$MISSING"
 
 
 ## AWS S3 ----------------------------------------------------------------------
 
 # The name of the S3 bucket in which the deployment package will be uploaded
 # AWS > S3 > (optional: Create bucket & folder)
-S3_BUCKET="numeract-aws-lambda-r-ireland"
+S3_BUCKET="$MISSING"
 
 
 ## AWS Lambda ------------------------------------------------------------------

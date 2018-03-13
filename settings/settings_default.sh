@@ -8,10 +8,10 @@
 
 # name of the project root directory, error if mismatch
 # use only letters, dashes, and digits, e.g. aws-lambda-r
-PRJ_NAME="aws-lambda-r"
+PRJ_NAME="$MISSING"
 
 # Name of the current Git branch, error if mismatch
-PRJ_BRANCH="dev"
+PRJ_BRANCH="$MISSING"
 
 
 # AWS --------------------------------------------------------------------------
@@ -22,7 +22,7 @@ AWS_PRFL="--profile default"
 
 # We do not set AWS_DEFAULT_REGION to prevent undesired interactions with AWS CLI
 # AWS ec2, s3, lambda and API gateway region. us-east-1 is US East (N. Virginia).
-AWS_REGION="eu-west-1"
+AWS_REGION="us-east-1"
 
 
 # AWS IAM ----------------------------------------------------------------------
@@ -53,7 +53,7 @@ IAM_LAMBDA_ROLE_POLICY_FILE="settings/lambda_role_policy.json"
 # The ID of the Amazon Machine Image which is the template for the EC2 instance.
 # Find the most recent AMI used by AWS Lambda for your region
 # https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html
-EC2_DEFAULT_AMI_ID="ami-ebd02392"
+EC2_DEFAULT_AMI_ID="ami-4fffc834"
 
 # The ID of the cache AMI ($EC2_AMI_ID + update + python + R)
 # If present this ID will be used instead of $EC2_AMI_ID
