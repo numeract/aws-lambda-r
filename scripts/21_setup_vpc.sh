@@ -8,7 +8,7 @@
 [[ $PRJ_DIR ]] || source "$SCR_DIR/02_setup.sh"
 
 
-echo -e "$INFO Creating VPC and Security Group"
+echo -e "$INFO Creating VPC and Security Group......"
 
 #  Create a non-default VPC with an IPv4 CIDR block
 VPC_ID=$(aws $AWS_PRFL ec2 create-vpc \
@@ -92,6 +92,10 @@ aws $AWS_PRFL ec2 authorize-security-group-ingress \
     --port 22 \
     --cidr 0.0.0.0/0
 
-# print
-echo -e "$INFO EC2_SUBNET_ID is: $(FY $SUBNET1_ID)"
-echo -e "$INFO EC2_SECURITY_GROUP_IDS is: $(FY $SECURITY_GROUP_ID)"
+# append to setup_auto.sh
+echo -e "$INFO Appending to $(FY $(basename $SETUP_AUTO_PATH)):"
+echo -en \
+    "\n # Added on: $(date -u '+%Y-%m-%d %H:%M:%S %Z')\n" \
+    "EC2_SUBNET_ID=\"${SUBNET1_ID}\"\n" \
+    "EC2_SECURITY_GROUP_IDS=\"${SECURITY_GROUP_ID}\"\n" \
+    | sed -e 's/^[ ]*//' | tee -a $SETUP_AUTO_PATH
