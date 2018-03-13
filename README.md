@@ -73,6 +73,34 @@ account (although familiarity with AWS helps a lot) and how to delete the setup 
 3. Copy directories `lambda/`, `python/`, `scripts/`, `settings/` to your project directory
 4. [TODO]
 
+###  macOS additional steps
+
+Install the following packages, if not already installed:
+
+1. [**Homebrew**](https://brew.sh)
+
+`$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+
+2. [**Bash 4**](http://tldp.org/LDP/abs/html/bashver4.html)
+
+`$ brew update && brew install bash`
+
+3. Add **Bash 4** as the default shell:
+
+```$ sudo nano /etc/shells
+
+# add to last line
+$ /usr/local/bin/bash
+
+# save and quit via ctrl + x
+```
+
+4. **md5sum**:
+
+`$ brew install md5sha1sum`
+
+Load all the scripts via `sudo bash ./scripts/<script_name>.sh` instead of `.scripts/<script_name>.sh`.
+
 
 ### References
 
