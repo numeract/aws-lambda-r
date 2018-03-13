@@ -132,7 +132,9 @@ SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 7. Click on "Create function" button
 8. From Lambda Configuration Tab, Function Code section, select "Edit code inline"
 option and runtime Node.js.6.10
-9. Copy the content of the index.zip archive into the inline code editor
+9. Copy the content of the index.zip archive into the inline code editor.
+Make sure that the value of API_TOKEN is modified and matches the value in settings.
+![Create Lambda Auth3](43-create-lambda-auth.PNG)
 10. Click "Save" button
 
 ![Create Lambda Auth1](41-create-lambda-auth.PNG)
@@ -151,7 +153,7 @@ option and runtime Node.js.6.10
 3. Click "New API" button
 4. Complete API details and then click "Create API" button
 
-![Create API](61-new- API.PNG)
+![Create API](61-new-API.PNG)
 
 ### Create resources (automated, see `aws_setup.sh` script)
 
