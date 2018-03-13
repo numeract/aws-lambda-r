@@ -43,7 +43,7 @@ EC2_SECURITY_GROUP_IDS="sg-c688cfbc"
 
 # The name of the S3 bucket in which the deployment package will be uploaded
 # AWS > S3 > (optional: Create bucket & folder)
-S3_BUCKET="numeract-aws-lambda-r"
+S3_BUCKET="numeract-aws-lambda-r-ireland"
 
 
 ## AWS Lambda ------------------------------------------------------------------

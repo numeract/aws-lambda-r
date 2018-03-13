@@ -20,12 +20,12 @@ BY () { echo -e "\e[43m\e[30m$1\e[39m\e[49m"; }         # Background Yellow
 # expanded path of the parent dir where this file is located
 # since we are sourcing, avoid redefining it (maybe current dir has changed)
 echo -e "$INFO Checking project directories"
+CURRENT_DIR="$(pwd)"
 [[ $SCR_DIR ]] || SCR_DIR="$(cd "$(dirname "$0")/."; pwd)"
 PRJ_DIR="$(cd "${SCR_DIR}/.."; pwd)"
 SET_DIR="${PRJ_DIR}/settings"
 PYTHON_DIR="${PRJ_DIR}/python"
 LAMBDA_DIR="${PRJ_DIR}/lambda"
-
 # git related
 GIT_DIR="$(cd "$(git rev-parse --show-toplevel)"; pwd)"
 GIT_NAME="$(basename $GIT_DIR)"
@@ -56,6 +56,12 @@ if [[ ! -d "$LAMBDA_DIR" ]]; then
     exit 1
 fi
 
+if [[ $PRJ_DIR != $CURRENT_DIR ]]; then
+    echo -e "$ERROR Expected current directory to be $(FY $PRJ_DIR)," \
+    "insted got $(FY $CURRENT_DIR)."  \
+    "Please change directory before running. Exiting."  
+    exit 1
+fi
 
 # source default settings and secrets
 echo -e "$INFO Loading default settings and secrets"
