@@ -146,6 +146,14 @@ Make sure that the value of API_TOKEN is modified and matches the value in setti
 
 ##  S3 BUCKET
 
+1. Go to Services, S3
+2. Click "Create bucket" button
+3.Complete the fields related to bucket name and region.
+Make sure that the chosen region matches the one in settings.
+4. Click "Create" button
+
+![Create Bucket](31-create-bucket.PNG)
+
 ## API GATEWAY
 
 ### Create API (automated, see `aws_setup.sh` script)
