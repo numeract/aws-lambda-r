@@ -134,7 +134,9 @@ SSH Keys allows access through an SSH tunnel to an AWS EC2 instance.
 option and runtime Node.js.6.10
 9. Copy the content of the index.zip archive into the inline code editor.
 Make sure that the value of API_TOKEN is modified and matches the value in settings.
+
 ![Create Lambda Auth3](43-create-lambda-auth.PNG)
+
 10. Click "Save" button
 
 ![Create Lambda Auth1](41-create-lambda-auth.PNG)
@@ -143,6 +145,14 @@ Make sure that the value of API_TOKEN is modified and matches the value in setti
 
 
 ##  S3 BUCKET
+
+1. Go to Services, S3
+2. Click "Create bucket" button
+3.Complete the fields related to bucket name and region.
+Make sure that the chosen region matches the one in settings.
+4. Click "Create" button
+
+![Create Bucket](31-create-bucket.PNG)
 
 ## API GATEWAY
 
