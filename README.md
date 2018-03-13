@@ -71,7 +71,11 @@ account (although familiarity with AWS helps a lot) and how to delete the setup 
     + Be sure that git is initialized in the project directory (without git will be almost impossible to keep track of changes, especially in production)
         + `git status`
 3. Copy directories `lambda/`, `python/`, `scripts/`, `settings/` to your project directory
-4. [TODO]
+4. Rename `setup_auto_example.sh` and `setup_user_example.sh` to `setup_auto.sh` and `setup_user.sh` 
+5. Overwrite variables from `secrets_default.sh` with personal secrets in `setup_user.sh`
+6. Make sure that data in `settings_default.sh` is valid (e.g., AWS region is correctly defined)
+7. For automated AWS infrastructure setup run first `21_setup_vpc.sh`, `22_setup_custom_ami.sh`, `23_setu_s3.sh` and `24_setup_lambda.sh`, otherwise create them manually following the instructions found in documentation
+
 
 
 ### References
