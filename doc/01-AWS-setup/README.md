@@ -152,7 +152,7 @@ Make sure that the value of API_TOKEN is modified and matches the value in setti
 Make sure that the chosen region matches the one in settings.
 4. Click "Create" button
 
-![Create Bucket](31-create-bucket.PNG)
+![Create Bucket](51-create-bucket.PNG)
 
 ## API GATEWAY
 
