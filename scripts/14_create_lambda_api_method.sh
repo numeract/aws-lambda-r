@@ -101,12 +101,12 @@ echo -e "$INFO API put-integration."
 aws apigateway put-integration \
     --rest-api-id $API_GATEWAY_ID \
     --resource-id $API_RESOURCE_ID \
-    --http-method $API_HTTP_METHOD \
+    --http-method $API_HTTP_MaETHOD \
     --type AWS \
     --integration-http-method $API_HTTP_METHOD \
     --uri "arn:aws:apigateway:${AWS_REGION}:lambda:path/2015-03-31/functions/${LAMBDA_ARN}/invocations" \
     --output table
-if [[ $exit_status -eq 0 ]]; then
+if [[ $exit_status -eq 255 ]]; then
     echo -e "$INFO Successfully created API integration."
 else
     echo -e "$ERROR Cannot create API integration. Exiting."
