@@ -49,3 +49,7 @@ if [[ $LAMBDA_FUNCTION_NAME == "$MISSING" ]]; then
     LAMBDA_FUNCTION_NAME="${LAMBDA_FUNCTION_NAME}-${API_RESOURCE_NAME}"
 fi
 echo -e "$INFO Lambda Function Name: $(FC $LAMBDA_FUNCTION_NAME)"
+
+# automatically stop script when a command fails
+set -e
+
