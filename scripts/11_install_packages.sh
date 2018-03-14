@@ -42,14 +42,11 @@ fi
 
 deactivate
 
-
-
 # install R packages
 echo -e "$INFO Creating the R library directory and setting permissions ..."
 cd ~/
 sudo mkdir library
 sudo chmod -R a+w ~/library
-
 
 function join_by { local IFS="$1"; shift; echo "$*"; }
 

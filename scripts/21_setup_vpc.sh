@@ -99,3 +99,4 @@ echo -en \
     "EC2_SUBNET_ID=\"${SUBNET1_ID}\"\n" \
     "EC2_SECURITY_GROUP_IDS=\"${SECURITY_GROUP_ID}\"\n" \
     | sed -e 's/^[ ]*//' | tee -a $SETUP_AUTO_PATH
+    
