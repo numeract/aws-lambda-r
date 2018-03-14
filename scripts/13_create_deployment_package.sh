@@ -51,6 +51,14 @@ mkdir ~/${PRJ_NAME}/lib/external
 cp /usr/lib64/mysql/libmysqlclient.so.18.0.0 \
     ~/${PRJ_NAME}/lib/external/libmysqlclient.so.18
 
+# Check package file size
+maxsize=250
+size=$(du -sm | awk '{ print $1 }')
+  if [ $size -ge $maxsize ]; then
+     echo -e "$ERROR File size exceeds 250MB."
+     exit 1
+fi
+
 echo -e "$INFO Zipping the deployment package ..."
 LAMBDA_ZIP_NAME="${LAMBDA_FUNCTION_NAME}.zip"
 zip -qr9 ~/${LAMBDA_ZIP_NAME} *
