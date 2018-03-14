@@ -2,16 +2,13 @@
 
 # run on EC2 to create deployment package
 
-
-# prep folder ~/${PRJ_NAME}, created when files were copied
+# preparing project folder, created when files were copied
 echo -e "$INFO Creating deployment package"
 sudo chmod -R a+w ~/${PRJ_NAME}
 cd ~/${PRJ_NAME}
 echo -e "$INFO PWD: $(pwd)"
 
-
 # Python 3 packages transfer 
-
 source ~/env/bin/activate
 cd ~/${PRJ_NAME}
 sudo cp -r ${CP_VERBOSE} ~/env/lib64/python3.6/site-packages/* ~/${PRJ_NAME}
