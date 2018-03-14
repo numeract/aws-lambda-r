@@ -18,7 +18,6 @@ deactivate
 cp /usr/lib64/python3.6/lib-dynload/_sqlite3.cpython-36m-x86_64-linux-gnu.so \
     ~/${PRJ_NAME}
 
-
 # Copy R needed libraries into project directory    
 echo -e "$INFO Copy R libraries into project directory."
 ls /usr/lib64/R | \
@@ -37,7 +36,7 @@ echo -e "$INFO R libraries copy finished."
 
 echo -e "$INFO PWD: $(pwd)"
 sudo chmod -R a+w ~/${PRJ_NAME}/library
-echo -e "$INFO changed permissions"
+echo -e "$INFO Changed permissions"
 
 # Organizing libraries for deployment package
 cp -r ${CP_VERBOSE} ~/library/* ~/${PRJ_NAME}/library
