@@ -1,5 +1,22 @@
 #!/bin/bash
 
+if [[ $API_ALIAS_RESOURCE_USE -eq "false" ]]; then
+
+	echo -e "$INFO API create-deployment." 
+	aws apigateway create-deployment \
+	    --rest-api-id $API_GATEWAY_ID \
+	    --stage-name $API_STAGE \
+	    --description $LAMBDA_FUNCTION_NAME \
+	    --output table
+
+	echo -e "$INFO API stage updating description."    
+	aws apigateway update-stage \
+	    --rest-api-id $API_GATEWAY_ID \
+	    --stage-name $API_STAGE \
+	    --patch-operations "op=replace,path=/description,value=${LAMBDA_FUNCTION_NAME}" \
+	    --output table
+	exit 0
+fi
 
 # API method for API_ALIAS_RESOURCE_NAME
 echo
@@ -60,7 +77,6 @@ aws apigateway put-integration-response \
     --selection-pattern "-" \
     --output table
 
-
 # Adding permission for internal calls
 echo -e "$INFO API add-permission for internal calls." 
 aws lambda add-permission \
@@ -69,7 +85,6 @@ aws lambda add-permission \
     --principal apigateway.amazonaws.com \
     --statement-id api-lambda-permission-3 \
     --action lambda:InvokeFunction 
-
 
 # Adding permission for external calls
 echo -e "$INFO API add-permission for external calls." 
@@ -97,6 +112,7 @@ aws apigateway update-stage \
     --stage-name $API_STAGE \
     --patch-operations "op=replace,path=/description,value=${LAMBDA_FUNCTION_NAME}" \
     --output table
+
 
 # testing API alias resource
 echo
