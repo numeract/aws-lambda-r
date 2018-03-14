@@ -76,6 +76,35 @@ account (although familiarity with AWS helps a lot) and how to delete the setup 
 Variabless such as `PRJ_NAME`, `PRJ_BRANCH`, `AWS_REGION` and `EC2_DEFAULT_AMI_ID` from `settings_default.sh` should be overwritten accordingly in `setup_user.sh`.
 6. For automated AWS infrastructure setup run first `21_setup_vpc.sh`, `22_setup_custom_ami.sh`, `23_setu_s3.sh` and `24_setup_lambda.sh`, otherwise create them manually following the instructions found in documentation
 
+###  macOS additional steps
+
+Install the following packages, if not already installed:
+
+1. [**Homebrew**](https://brew.sh)
+
+`$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+
+2. [**Bash 4**](http://tldp.org/LDP/abs/html/bashver4.html)
+
+`$ brew update && brew install bash`
+
+3. Add **Bash 4** as the default shell:
+
+```
+$ sudo nano /etc/shells
+
+# add to last line
+$ /usr/local/bin/bash
+
+# save and quit via ctrl + x
+```
+
+4. **md5sum**:
+
+`$ brew install md5sha1sum`
+
+Load all the scripts via `sudo bash ./scripts/<script_name>.sh` instead of `.scripts/<script_name>.sh`.
+
 
 
 ### References

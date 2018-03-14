@@ -33,7 +33,7 @@ aws lambda create-function \
     --memory-size $LAMBDA_MEMORY_SIZE \
     --output table
 exit_status=$?
-if [[ $exit_status -eq 255 ]]; then
+if [[ $exit_status -eq 0 ]]; then
     # Extracting the lambda function ARN
     LAMBDA_ARN=$(aws lambda list-functions \
                  --region $AWS_REGION \
@@ -73,7 +73,7 @@ if [[ "$API_METHOD" == "$API_HTTP_METHOD" ]]; then
         --output table 
 fi
 exit_status=$?
-if [[ $exit_status -eq 255 ]]; then
+if [[ $exit_status -eq 0 ]]; then
     echo -e "$INFO Deleted previous  $(FC $API_METHOD) method."
 else
     echo -e "$ERROR Failed deleting the method. Exiting."
@@ -90,7 +90,7 @@ aws apigateway put-method \
     --authorizer-id $API_AUTHORIZER_ID \
     --output table
 exit_status=$?
-if [[ $exit_status -eq 255 ]]; then
+if [[ $exit_status -eq 0 ]]; then
     echo -e "$INFO Method $(FC $API_HTTP_METHOD) created."
 else
     echo -e "$ERROR Cannot create $(FC $API_HTTP_METHOD). Exiting."
@@ -107,7 +107,7 @@ aws apigateway put-integration \
     --uri "arn:aws:apigateway:${AWS_REGION}:lambda:path/2015-03-31/functions/${LAMBDA_ARN}/invocations" \
     --output table
 exit_status=$?
-if [[ $exit_status -eq 255 ]]; then
+if [[ $exit_status -eq 0 ]]; then
     echo -e "$INFO Successfully created API integration."
 else
     echo -e "$ERROR Cannot create API integration. Exiting."
@@ -123,7 +123,7 @@ aws apigateway put-method-response \
     --response-models '{"application/json": "Empty"}' \
     --output table
 exit_status=$?
-if [[ $exit_status -eq 255 ]]; then
+if [[ $exit_status -eq 0 ]]; then
     echo -e "$INFO Successfully created API method response."
 else
     echo -e "$ERROR Cannot create API method response. Exiting."
@@ -139,7 +139,7 @@ aws apigateway put-integration-response \
     --selection-pattern "-" \
     --output table
 exit_status=$?
-if [[ $exit_status -eq 255 ]]; then
+if [[ $exit_status -eq 0 ]]; then
     echo -e "$INFO Successfully created API integration response."
 else
     echo -e "$ERROR Cannot create API integration response. Exiting."
@@ -155,7 +155,7 @@ aws lambda add-permission \
     --statement-id api-lambda-permission-1 \
     --action lambda:InvokeFunction 
 exit_status=$?
-if [[ $exit_status -eq 255 ]]; then
+if [[ $exit_status -eq 0 ]]; then
     echo -e "$INFO Successfully added permission for internal calls."
 else
     echo -e "$ERROR Cannot add permission for internal calls. Exiting."
@@ -171,7 +171,7 @@ aws lambda add-permission \
     --statement-id api-lambda-permission-2 \
     --action lambda:InvokeFunction 
 exit_status=$?
-if [[ $exit_status -eq 255 ]]; then
+if [[ $exit_status -eq 0 ]]; then
     echo -e "$INFO Successfully added permission for external calls."
 else
     echo -e "$ERROR Cannot add permission for external calls. Exiting."
