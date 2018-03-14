@@ -41,8 +41,8 @@ echo -e "$INFO Changed permissions"
 # Organizing libraries for deployment package
 cp -r ${CP_VERBOSE} ~/library/* ~/${PRJ_NAME}/library
 cp ~/${PRJ_NAME}/bin/exec/R ~/${PRJ_NAME}
-cp /usr/lib64/libblas.so.3 ~/${PRJ_NAME}/lib
-cp /usr/lib64/liblapack.so.3 ~/${PRJ_NAME}/lib
+# cp /usr/lib64/libblas.so.3 ~/${PRJ_NAME}/lib
+# cp /usr/lib64/liblapack.so.3 ~/${PRJ_NAME}/lib
 
 cp ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.cpython-36m-x86_64-linux-gnu.so \
     ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.so
