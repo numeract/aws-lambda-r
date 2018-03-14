@@ -182,6 +182,19 @@ fi
 echo -e "$INFO Finished creating $(FC $API_HTTP_METHOD) under" \
     "$(FC $API_RESOURCE_NAME) resource" 
 
+echo -e "$INFO API create-deployment." 
+ aws apigateway create-deployment \
+    --rest-api-id $API_GATEWAY_ID \
+    --stage-name $API_STAGE \
+    --description $LAMBDA_FUNCTION_NAME \
+    --output table
+
+echo -e "$INFO API stage updating description."    
+aws apigateway update-stage \
+    --rest-api-id $API_GATEWAY_ID \
+    --stage-name $API_STAGE \
+    --patch-operations "op=replace,path=/description,value=${LAMBDA_FUNCTION_NAME}" \
+     --output table
 
 
 # testing
