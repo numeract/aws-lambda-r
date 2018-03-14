@@ -10,6 +10,8 @@
 
 echo -e "$INFO Creating VPC and Security Group......"
 
+set -e 
+
 #  Create a non-default VPC with an IPv4 CIDR block
 VPC_ID=$(aws $AWS_PRFL ec2 create-vpc \
     --cidr-block 10.0.0.0/16 \
