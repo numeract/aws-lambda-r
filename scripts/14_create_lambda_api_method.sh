@@ -56,7 +56,6 @@ API_METHOD=$(aws apigateway get-method \
     --query httpMethod \
     --output text)
 
-
 # Delete API method if already exists
 if [[ "$API_METHOD" == "$API_HTTP_METHOD" ]]; then
     echo -e "$INFO Deleting previous HTTP method"

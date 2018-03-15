@@ -60,10 +60,7 @@ if [[ "$R_PACK_INSTALL" == "''" ]]; then
     echo -e "$WARN No R packages found, not installing any R packages."
 else
     echo -e "$INFO Installing R packages: ${R_PACKAGES_INSTALL}"
-    sudo Rscript -e 'install.packages(c('${R_PACKAGES_INSTALL}'), \
-    lib="/home/ec2-user/library", \
-    repos="http://cran.us.r-project.org", \
-    quiet=TRUE)'
+    sudo Rscript -e 'install.packages(c('${R_PACKAGES_INSTALL}'), lib="/home/ec2-user/library", repos="http://cran.us.r-project.org", quiet=TRUE)'
 
     exit_status=$?
     if [ $exit_status -eq 0 ]; then
