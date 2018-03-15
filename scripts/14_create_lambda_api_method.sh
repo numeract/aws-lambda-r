@@ -31,7 +31,7 @@ aws lambda create-function \
     --timeout $LAMBDA_TIMEOUT \
     --memory-size $LAMBDA_MEMORY_SIZE \
     --output table
-    
+
 # Extracting the lambda function ARN
 LAMBDA_ARN=$(aws lambda list-functions \
             --region $AWS_REGION \
@@ -64,7 +64,7 @@ if [[ "$API_METHOD" == "$API_HTTP_METHOD" ]]; then
         --rest-api-id $API_GATEWAY_ID \
         --resource-id $API_RESOURCE_ID \
         --http-method $API_HTTP_METHOD \
-        --output table 
+        --output table
 fi
 
 # Creating API method under specified resource
@@ -112,28 +112,28 @@ aws lambda add-permission \
     --source-arn "${API_ARN}/*/${API_HTTP_METHOD}/${API_RESOURCE_NAME}" \
     --principal apigateway.amazonaws.com \
     --statement-id api-lambda-permission-1 \
-    --action lambda:InvokeFunction 
+    --action lambda:InvokeFunction
 
 # Adding permission for external calls
-echo -e "$INFO API add-permission for external calls." 
+echo -e "$INFO API add-permission for external calls."
 aws lambda add-permission \
     --function-name $LAMBDA_ARN \
     --source-arn "${API_ARN}/${API_STAGE}/${API_HTTP_METHOD}/${API_RESOURCE_NAME}" \
     --principal apigateway.amazonaws.com \
     --statement-id api-lambda-permission-2 \
-    --action lambda:InvokeFunction 
+    --action lambda:InvokeFunction
 
 echo -e "$INFO Finished creating $(FC $API_HTTP_METHOD) under" \
-    "$(FC $API_RESOURCE_NAME) resource" 
+    "$(FC $API_RESOURCE_NAME) resource"
 
-echo -e "$INFO API create-deployment." 
+echo -e "$INFO API create-deployment."
  aws apigateway create-deployment \
     --rest-api-id $API_GATEWAY_ID \
     --stage-name $API_STAGE \
     --description $LAMBDA_FUNCTION_NAME \
     --output table
 
-echo -e "$INFO API stage updating description."    
+echo -e "$INFO API stage updating description."
 aws apigateway update-stage \
     --rest-api-id $API_GATEWAY_ID \
     --stage-name $API_STAGE \

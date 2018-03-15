@@ -8,7 +8,7 @@ sudo chmod -R a+w ~/${PRJ_NAME}
 cd ~/${PRJ_NAME}
 echo -e "$INFO PWD: $(pwd)"
 
-# Python 3 packages transfer 
+# Python 3 packages transfer
 echo -e "$INFO Transfering Python3 packages to deployment package"
 source ~/env/bin/activate
 cd ~/${PRJ_NAME}
@@ -18,7 +18,7 @@ deactivate
 cp /usr/lib64/python3.6/lib-dynload/_sqlite3.cpython-36m-x86_64-linux-gnu.so \
     ~/${PRJ_NAME}
 
-# Copy R needed libraries into project directory    
+# Copy R needed libraries into project directory
 echo -e "$INFO Copy R libraries into project directory."
 ls /usr/lib64/R | \
     grep -v library | \

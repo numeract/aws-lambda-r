@@ -22,7 +22,7 @@ if [[ "$API_ALIAS_METHOD" == "$API_HTTP_METHOD" ]]; then
         --rest-api-id $API_GATEWAY_ID \
         --resource-id $API_ALIAS_RESOURCE_ID \
         --http-method $API_HTTP_METHOD \
-        --output table 
+        --output table
 fi
 
 # Creating API method under specified resource
@@ -45,7 +45,7 @@ aws apigateway put-integration \
     --uri "arn:aws:apigateway:${AWS_REGION}:lambda:path/2015-03-31/functions/${LAMBDA_ARN}/invocations" \
     --output table
 
-echo -e "$INFO API put-method-response."   
+echo -e "$INFO API put-method-response."
 aws apigateway put-method-response \
     --rest-api-id $API_GATEWAY_ID \
     --resource-id $API_ALIAS_RESOURCE_ID \
@@ -64,35 +64,35 @@ aws apigateway put-integration-response \
     --output table
 
 # Adding permission for internal calls
-echo -e "$INFO API add-permission for internal calls." 
+echo -e "$INFO API add-permission for internal calls."
 aws lambda add-permission \
     --function-name $LAMBDA_ARN \
     --source-arn "${API_ARN}/*/${API_HTTP_METHOD}/${API_ALIAS_RESOURCE_NAME}" \
     --principal apigateway.amazonaws.com \
     --statement-id api-lambda-permission-3 \
-    --action lambda:InvokeFunction 
+    --action lambda:InvokeFunction
 
 # Adding permission for external calls
-echo -e "$INFO API add-permission for external calls." 
+echo -e "$INFO API add-permission for external calls."
 aws lambda add-permission \
     --function-name $LAMBDA_ARN \
     --source-arn "${API_ARN}/${API_STAGE}/${API_HTTP_METHOD}/${API_ALIAS_RESOURCE_NAME}" \
     --principal apigateway.amazonaws.com \
     --statement-id api-lambda-permission-4 \
-    --action lambda:InvokeFunction 
+    --action lambda:InvokeFunction
 
 echo -e "$INFO Finished creating $(FC $API_HTTP_METHOD) under resource" \
-    "$(FC $API_ALIAS_RESOURCE_NAME)" 
- 
+    "$(FC $API_ALIAS_RESOURCE_NAME)"
 
-echo -e "$INFO API create-deployment." 
+
+echo -e "$INFO API create-deployment."
 aws apigateway create-deployment \
     --rest-api-id $API_GATEWAY_ID \
     --stage-name $API_STAGE \
     --description $LAMBDA_FUNCTION_NAME \
     --output table
 
-echo -e "$INFO API stage updating description."    
+echo -e "$INFO API stage updating description."
 aws apigateway update-stage \
     --rest-api-id $API_GATEWAY_ID \
     --stage-name $API_STAGE \
