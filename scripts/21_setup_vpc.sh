@@ -8,7 +8,28 @@
 [[ $PRJ_DIR ]] || source "$SCR_DIR/02_setup.sh"
 
 
-echo -e "$INFO Creating VPC and Security Group......"
+# check if subnet and security group already 
+# defined and existent, create new ones otherwise
+if [[ $EC2_SUBNET_ID != "subnet-$MISSING" && $EC2_SECURITY_GROUP_IDS != "sg-$MISSING" ]]; then
+    SUBNET=$(aws $AWS_PRFL ec2 describe-subnets \
+                    --subnet-ids $EC2_SUBNET_ID)
+    exit_status_subnet=$?
+    
+    SECURITY_GROUP=$(aws $AWS_PRFL ec2 describe-security-groups \
+                     --group-ids $EC2_SECURITY_GROUP_IDS)
+    exit_status_sg=$?
+    
+    if [[ $exit_status_subnet != 0 || $exit_status_sg != 0 ]]; then
+        echo -e "$INFO Subnet or Security Group defined not valid." \
+                 "Creating new VPC, Subnet and Security Group......"
+    else
+        echo -e "$INFO Subnet and Security Group already exist. Exiting."
+        exit 1
+    fi
+    
+else 
+     echo -e "$INFO Creating VPC, Subnet and Security Group......"
+fi
 
 set -e 
 
@@ -31,13 +52,6 @@ aws $AWS_PRFL ec2 modify-vpc-attribute \
 SUBNET1_ID=$(aws $AWS_PRFL ec2 create-subnet \
     --vpc-id ${VPC_ID} \
     --cidr-block 10.0.1.0/24 \
-    --query 'Subnet.SubnetId' \
-    --output text)
-
-# Create private subnet with a 10.0.0.0/24 CIDR block.
-SUBNET2_ID=$(aws $AWS_PRFL ec2 create-subnet \
-    --vpc-id ${VPC_ID} \
-    --cidr-block 10.0.0.0/24 \
     --query 'Subnet.SubnetId' \
     --output text)
 
