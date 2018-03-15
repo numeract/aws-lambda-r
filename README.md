@@ -73,8 +73,8 @@ account (although familiarity with AWS helps a lot) and how to delete the setup 
 3. Copy directories `lambda/`, `python/`, `scripts/`, `settings/` to your project directory
 4. Copy and rename `setup_auto_example.sh` and `setup_user_example.sh` to `setup_auto.sh` and `setup_user.sh` 
 5. Overwrite variables from `secrets_default.sh` and `setup_default` with personal secrets in `setup_user.sh`.
-Variabless such as `PRJ_NAME`, `PRJ_BRANCH`, `AWS_REGION` and `EC2_DEFAULT_AMI_ID` from `settings_default.sh` should be overwritten accordingly in `setup_user.sh`.
-6. For automated AWS infrastructure setup run first `21_setup_vpc.sh`, `22_setup_custom_ami.sh`, `23_setu_s3.sh` and `24_setup_lambda.sh`, otherwise create them manually following the instructions found in documentation
+Variables such as `PRJ_NAME`, `PRJ_BRANCH`, `AWS_REGION` and `EC2_DEFAULT_AMI_ID` from `settings_default.sh` should be overwritten accordingly in `setup_user.sh`.
+6. For automated AWS infrastructure setup run first `21_setup_vpc.sh`, `22_setup_custom_ami.sh`, `23_setup_s3.sh` and `24_setup_lambda.sh`, otherwise create them manually following the instructions found in documentation
 
 ###  macOS additional steps
 
@@ -94,7 +94,7 @@ Install the following packages, if not already installed:
 $ sudo nano /etc/shells
 
 # add to last line
-$ /usr/local/bin/bash
+/usr/local/bin/bash
 
 # save and quit via ctrl + x
 ```
