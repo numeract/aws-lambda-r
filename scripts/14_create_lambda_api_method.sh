@@ -5,6 +5,7 @@ echo -e "$INFO Uploading deployment package to S3"
 LAMBDA_ZIP_NAME="${LAMBDA_FUNCTION_NAME}.zip"
 aws s3 cp ~/${LAMBDA_ZIP_NAME} s3://${S3_BUCKET}/lambda/
 
+set +e
 
 # Delete lambda function if already exists
 LAMBDA_FUNCTION_NAME_OLD=$(aws lambda list-functions \
@@ -49,25 +50,33 @@ echo -e "$INFO API_ARN: $(FY $API_ARN)"
 # API method for API_RESOURCE_NAME
 echo -e "$INFO API method for Resource $(FC $API_RESOURCE_NAME)"
 
+# Check if identical HTTP method already
+# exists under resource
 API_METHOD=$(aws apigateway get-method \
     --rest-api-id $API_GATEWAY_ID \
     --resource-id $API_RESOURCE_ID \
     --http-method $API_HTTP_METHOD \
     --query httpMethod \
     --output text)
-
-# Delete API method if already exists
-if [[ "$API_METHOD" == "$API_HTTP_METHOD" ]]; then
-    echo -e "$INFO Deleting previous HTTP method"
-    aws apigateway delete-method \
-        --rest-api-id $API_GATEWAY_ID \
-        --resource-id $API_RESOURCE_ID \
-        --http-method $API_HTTP_METHOD \
-        --output table
+exit_status=$?
+if [[ $exit_status -eq 0 ]]; then
+    # Delete API method if already exists
+    if [[ "$API_METHOD" == "$API_HTTP_METHOD" ]]; then
+        echo -e "$INFO API method already exists. Deleting it..."
+        aws apigateway delete-method \
+            --rest-api-id $API_GATEWAY_ID \
+            --resource-id $API_RESOURCE_ID \
+            --http-method $API_HTTP_METHOD \
+            --output table
+        echo -e "$INFO Creating new ${API_HTTP_METHOD} under ${API_RESOURCE_NAME} resource"
+    fi
+else
+  echo -e "$INFO Creating ${API_HTTP_METHOD} under ${API_RESOURCE_NAME} resource"
 fi
 
+set -e
+
 # Creating API method under specified resource
-echo -e "$INFO Creating ${API_HTTP_METHOD} under ${API_RESOURCE_NAME} resource"
 aws apigateway put-method \
     --rest-api-id $API_GATEWAY_ID \
     --resource-id $API_RESOURCE_ID \
