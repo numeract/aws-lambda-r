@@ -8,22 +8,32 @@ fi
 echo
 echo -e "$INFO API method for Resource $(FC $API_ALIAS_RESOURCE_NAME)"
 
+set +e
+# Check if identical HTTP method already
+# exists under resource
 API_ALIAS_METHOD=$(aws apigateway get-method \
     --rest-api-id $API_GATEWAY_ID \
     --resource-id $API_ALIAS_RESOURCE_ID \
     --http-method $API_HTTP_METHOD \
     --query httpMethod \
     --output text)
-
-# Delete API method if already exists
-if [[ "$API_ALIAS_METHOD" == "$API_HTTP_METHOD" ]]; then
-   echo -e "$INFO  Deleting previous HTTP method"
-   aws apigateway delete-method \
-        --rest-api-id $API_GATEWAY_ID \
-        --resource-id $API_ALIAS_RESOURCE_ID \
-        --http-method $API_HTTP_METHOD \
-        --output table
+exit_status=$?
+if [[ $exit_status -eq 0 ]]; then
+    # Delete API method if already exists
+    if [[ "$API_ALIAS_METHOD" == "$API_HTTP_METHOD" ]]; then
+        echo -e "$INFO API method already exists. Deleting it..."
+        aws apigateway delete-method \
+            --rest-api-id $API_GATEWAY_ID \
+            --resource-id $API_ALIAS_RESOURCE_ID \
+            --http-method $API_HTTP_METHOD \
+            --output table
+        echo -e "$INFO Creating new ${API_HTTP_METHOD} under ${API_ALIAS_RESOURCE_NAME} resource"
+    fi
+else
+  echo -e "$INFO Creating ${API_HTTP_METHOD} under ${API_ALIAS_RESOURCE_NAME} resource"
 fi
+
+set -e
 
 # Creating API method under specified resource
 echo -e "$INFO Creating ${API_HTTP_METHOD} under ${API_ALIAS_RESOURCE_NAME} resource"
