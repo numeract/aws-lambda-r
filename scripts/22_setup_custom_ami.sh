@@ -8,11 +8,9 @@
 # always start from the default Amazon Linux AMI
 EC2_AMI_ID="$EC2_DEFAULT_AMI_ID"
 
-
 # create and update an instance
 source "$SCR_DIR/04_create_ec2.sh"
 source "$SCR_DIR/05_update_ec2.sh"
-
 
 # stop instance
 if [[ -z $EC2_INSTANCE_ID ]]; then
@@ -53,7 +51,6 @@ while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
     fi
 done
 
-
 # create a new custom AMI from the stopped instance, do not delete old AMI
 echo -e "$INFO Create custom AMI from Instance ID"
 EC2_CUSTOM_AMI_NAME="${PRJ_NAME}-ami_$(date -u '+%Y-%m-%d_%H-%M-%S_%Z')"
@@ -81,14 +78,13 @@ while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
     fi
 done
  
-
 # terminating the stopped instance
-source "$SCR_DIR/08_terminate_ec2.sh"
-
-
+    source "$SCR_DIR/08_terminate_ec2.sh"
+    
 # append to setup_auto.sh
 echo -e "$INFO Appending to $(FY $(basename $SETUP_AUTO_PATH)):"
 echo -en \
     "\n# Added on: $(date -u '+%Y-%m-%d %H:%M:%S %Z')\n" \
     "EC2_CUSTOM_AMI_ID=\"${EC2_CUSTOM_AMI_ID}\"\n" \
     | sed -e 's/^[ ]*//' | tee -a $SETUP_AUTO_PATH
+    

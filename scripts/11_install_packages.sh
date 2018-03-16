@@ -67,5 +67,6 @@ else
         echo -e "$INFO R Packages installation finished."
     else
         echo -e "$ERROR R Packages installation failed."
+        exit -1
     fi
 fi
