@@ -17,6 +17,8 @@ Use these instructions to manually delete AWS configurations created by scripts.
 
 6. Select "Delete VPC" option
 
+Note: Make sure that no instances that belong to the VPC are running before deleting it
+
 ### Subnet
 
 1. Go to AWS Console
@@ -28,6 +30,33 @@ Use these instructions to manually delete AWS configurations created by scripts.
 ![Delete Subnet](subnet-delete.PNG)
 
 6. Select "Delete Subnet" option
+
+Note: Follow the same steps in order to delete security group
+
+
+### EC2 Instance
+
+1. Go to AWS Console
+2. Select EC2 from Services menu
+3. Click on "Instances" option from the sidebar
+4. Select instance from the list of EC2 instances
+5. Click on "Actions" button and choose Instances, Terminate
+
+### AMI
+
+1. Go to Services, EC2
+2. From the sidebar menu, click on AMIs section
+3. Select AMI from the list of AMI's
+4. Click on "Actions" button and choose "Deregister"
+
+
+### Snapshot 
+
+1. Go to Services, EC2
+2. From the sidebar menu, click on Snapshots section
+3. Select snapshot from the list of snapshots
+4. Click on Actions button and choose Delete option
+
 
 ## Service Role
 1. Go to AWS Console
