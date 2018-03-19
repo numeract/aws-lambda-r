@@ -41,7 +41,7 @@ sudo ~/env/bin/pip3.6 install rpy2 -t ~/env/lib64/python3.6/site-packages
 exit_status=$?
 if [ $exit_status -ne 0 ]; then
     echo -e "$ERROR rpy2 installation failed."
-    exit -1
+    exit 1
 fi
 
 deactivate
@@ -67,6 +67,6 @@ else
         echo -e "$INFO R Packages installation finished."
     else
         echo -e "$ERROR R Packages installation failed."
-        exit -1
+        exit 1
     fi
 fi
