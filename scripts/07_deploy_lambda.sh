@@ -19,7 +19,7 @@ cat <(head -n 19 "${SCR_DIR}/02_setup.sh") \
         -T "${EC2_USERNAME}@${EC2_DNS_NAME}" \
         'bash -s'
 exit_status=$?
-if [[ $exit_status -eq 0 ]]; then
+if [ $exit_status -eq 0 ]; then
     echo -e "$INFO Finished creating Lambda package/function & API method."
 else
     echo -e "$ERROR Cannot create Lambda package/function & API method." \

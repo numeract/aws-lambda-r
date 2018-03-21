@@ -35,9 +35,9 @@ aws lambda create-function \
 
 # Extracting the lambda function ARN
 LAMBDA_ARN=$(aws lambda list-functions \
-            --region $AWS_REGION \
-            --query "Functions[?FunctionName==\`${LAMBDA_FUNCTION_NAME}\`].FunctionArn" \
-            --output text)
+    --region $AWS_REGION \
+    --query "Functions[?FunctionName==\`${LAMBDA_FUNCTION_NAME}\`].FunctionArn" \
+    --output text)
 
 
 # AWS CLI cannot return API Gateway ARN; construct it
@@ -59,7 +59,7 @@ API_METHOD=$(aws apigateway get-method \
     --query httpMethod \
     --output text)
 exit_status=$?
-if [[ $exit_status -eq 0 ]]; then
+if [ $exit_status -eq 0 ]; then
     # Delete API method if already exists
     if [[ "$API_METHOD" == "$API_HTTP_METHOD" ]]; then
         echo -e "$INFO API method already exists. Deleting it..."
@@ -146,7 +146,7 @@ aws apigateway update-stage \
     --rest-api-id $API_GATEWAY_ID \
     --stage-name $API_STAGE \
     --patch-operations "op=replace,path=/description,value=${LAMBDA_FUNCTION_NAME}" \
-     --output table
+    --output table
 
 
 # testing

@@ -58,8 +58,8 @@ fi
 
 if [[ $PRJ_DIR != $CURRENT_DIR ]]; then
     echo -e "$ERROR Expected current directory to be $(FY $PRJ_DIR)," \
-    "insted got $(FY $CURRENT_DIR)."  \
-    "Please change directory before running. Exiting."  
+        "instead got $(FY $CURRENT_DIR)."  \
+        "Please change directory before running. Exiting."  
     exit 1
 fi
 
@@ -115,7 +115,7 @@ AWS_ACCOUNT_ID="$(aws $AWS_PRFL sts get-caller-identity \
     --query "Account" \
     --output text)"
 exit_status=$?
-if [[ $exit_status -ne 0 ]]; then
+if [ $exit_status -ne 0 ]; then
     echo -e "$ERROR Failed to obtain AWS Account ID. Is AWS CLI configured?"
     exit 1
 fi

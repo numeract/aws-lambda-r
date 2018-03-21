@@ -19,7 +19,7 @@ else
         --instance-ids $EC2_INSTANCE_ID \
         --output table
     exit_status=$?
-    if [[ $exit_status -eq 0 ]]; then
+    if [ $exit_status -eq 0 ]; then
         echo -e "$INFO Instance $(FC $EC2_INSTANCE_ID) is being terminated ..."
     else
         echo -e "$ERROR Cannot terminate Instance ID $(FC $EC2_INSTANCE_ID)." \

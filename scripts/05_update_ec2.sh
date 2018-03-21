@@ -21,7 +21,7 @@ else
             -T "${EC2_USERNAME}@${EC2_DNS_NAME}" \
             'bash -s'
     exit_status=$?
-    if [[ $exit_status -eq 0 ]]; then
+    if [ $exit_status -eq 0 ]; then
         echo -e "$INFO Finished updating EC2 instance."
     else
         echo -e "$ERROR Cannot update EC2 instance $(FC $EC2_INSTANCE_ID)." \

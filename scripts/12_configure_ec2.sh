@@ -31,7 +31,7 @@ AWS_ACCOUNT_ID="$(aws sts get-caller-identity \
     --query "Account" \
     --output text)"
 exit_status=$?
-if [[ $exit_status -ne 0 ]]; then
+if [ $exit_status -ne 0 ]; then
     echo -e "$ERROR Failed to obtain AWS Account ID on EC2." \
         "Is AWS CLI configured? Exiting."
         exit 1

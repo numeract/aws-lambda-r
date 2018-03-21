@@ -20,11 +20,11 @@ do
     echo -e "$INFO Copy file: $i to "$(basename $LAMBDA_DIR)/""
     cp "$PRJ_DIR/$i" "$LAMBDA_DIR"
     exit_status=$?
-    if [[ $exit_status != 0 ]]; then
+    if [ $exit_status -ne 0 ]; then
         break
     fi
 done
-if [[ $exit_status != 0 ]]; then
+if [ $exit_status -ne 0 ]; then
     echo -e "$ERROR Failed to copy all files to $(FY "$(basename $LAMBDA_DIR)/")" \
         "Terminating end exiting ..."
     source "$SCR_DIR/08_terminate_ec2.sh"
@@ -46,7 +46,7 @@ scp -i "$EC2_KEY_FILE" \
     -r "$LAMBDA_DIR" \
     "${EC2_USERNAME}@${EC2_DNS_NAME}:~/${PRJ_NAME}"
 exit_status=$?
-if [[ $exit_status != 0 ]]; then
+if [ $exit_status -ne 0 ]; then
     echo -e "$ERROR Failed to copy $(FY "$(basename $LAMBDA_DIR)/") to EC2." \
         "Terminating end exiting ..."
     source "$SCR_DIR/08_terminate_ec2.sh"

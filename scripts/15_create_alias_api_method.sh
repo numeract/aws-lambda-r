@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ $API_ALIAS_RESOURCE_USE -eq "false" ]]; then
+if [[ $API_ALIAS_RESOURCE_USE == "false" ]]; then
 	exit 0
 fi
 
@@ -18,7 +18,7 @@ API_ALIAS_METHOD=$(aws apigateway get-method \
     --query httpMethod \
     --output text)
 exit_status=$?
-if [[ $exit_status -eq 0 ]]; then
+if [ $exit_status -eq 0 ]; then
     # Delete API method if already exists
     if [[ "$API_ALIAS_METHOD" == "$API_HTTP_METHOD" ]]; then
         echo -e "$INFO API method already exists. Deleting it..."

@@ -24,7 +24,7 @@ else
         --instance-ids $EC2_INSTANCE_ID \
         --output table
     exit_status=$?
-    if [[ $exit_status -eq 0 ]]; then
+    if [ $exit_status -eq 0 ]; then
         echo -e "$INFO Instance $(FC $EC2_INSTANCE_ID) is being stopped ..."
     else
         echo -e "$ERROR Cannot stop Instance ID $(FC $EC2_INSTANCE_ID)." \ 
@@ -37,7 +37,7 @@ fi
 echo -e "$INFO Waiting for the AWS EC2 Instance to stop ..."
 OVER=0
 TEST=0
-while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
+while [ $OVER -eq 0 ] && [ $TEST -lt $EC2_MAX_TESTS ]; do
     EC2_STATE_NAME=$(aws $AWS_PRFL ec2 describe-instances \
         --instance-ids $EC2_INSTANCE_ID \
         --query Reservations[0].Instances[0].State.Name \
@@ -64,7 +64,7 @@ EC2_MAX_TESTS=100
 echo -e "$INFO Waiting for AMI ID $(FC $EC2_CUSTOM_AMI_ID) to be available ..."
 OVER=0
 TEST=0
-while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
+while [ $OVER -eq 0 ] && [ $TEST -lt $EC2_MAX_TESTS ]; do
     AMI_STATE=$(aws $AWS_PRFL ec2 describe-images \
         --image-ids $EC2_CUSTOM_AMI_ID \
         --query Images[0].State \

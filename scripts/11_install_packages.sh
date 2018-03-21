@@ -36,8 +36,8 @@ sudo yum install -y blas lapack
 echo -e "$INFO Installing Python packages (rpy2) in a virtual env ..."
 virtualenv -p python3.6 ~/env
 source ~/env/bin/activate
-sudo ~/env/bin/pip3.6 install rpy2 -t ~/env/lib64/python3.6/site-packages
 
+sudo ~/env/bin/pip3.6 install rpy2 -t ~/env/lib64/python3.6/site-packages
 exit_status=$?
 if [ $exit_status -ne 0 ]; then
     echo -e "$ERROR rpy2 installation failed."
@@ -61,7 +61,6 @@ if [[ "$R_PACK_INSTALL" == "''" ]]; then
 else
     echo -e "$INFO Installing R packages: ${R_PACKAGES_INSTALL}"
     sudo Rscript -e 'install.packages(c('${R_PACKAGES_INSTALL}'), lib="/home/ec2-user/library", repos="http://cran.us.r-project.org", quiet=TRUE)'
-
     exit_status=$?
     if [ $exit_status -eq 0 ]; then
         echo -e "$INFO R Packages installation finished."

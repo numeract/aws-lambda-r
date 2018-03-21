@@ -20,7 +20,7 @@ EC2_INSTANCE_ID=$(aws $AWS_PRFL ec2 run-instances \
     --query 'Instances[0].InstanceId' \
     --output text)
 exit_status=$?
-if [[ $exit_status -eq 0 ]]; then
+if [ $exit_status -eq 0 ]; then
     echo -e "$INFO AWS EC2 Instance ID is: $(FC $EC2_INSTANCE_ID)"
 else
     echo -e "$ERROR Cannot create an AWS EC2 Instance. Exiting."
@@ -32,7 +32,7 @@ fi
 echo -e "$INFO Waiting for the AWS EC2 Instance to initialize ..."
 OVER=0
 TEST=0
-while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
+while [ $OVER -eq 0 ] && [ $TEST -lt $EC2_MAX_TESTS ]; do
     EC2_STATE_NAME=$(aws $AWS_PRFL ec2 describe-instances \
         --instance-ids $EC2_INSTANCE_ID \
         --query Reservations[0].Instances[0].State.Name \
@@ -55,7 +55,7 @@ while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
     fi
 done
 
-if [[ $TEST -lt $EC2_MAX_TESTS ]]; then
+if [ $TEST -lt $EC2_MAX_TESTS ]; then
     echo -e "$INFO Instance $(FC $EC2_INSTANCE_ID) is running," \
         "its address is $(FY $EC2_DNS_NAME)"
 else
@@ -69,7 +69,7 @@ fi
 # Wait until SSH server is ready
 echo -e "$INFO Waiting for the SSH Server to start ..."
 OVER=0
-while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
+while [ $OVER -eq 0 ] && [ $TEST -lt $EC2_MAX_TESTS ]; do
     
     # a short SSH command that cannot fail
     # since it is the first time we see this sever, store its fingerprint
@@ -78,7 +78,7 @@ while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
         -T $EC2_USERNAME@$EC2_DNS_NAME \
         'whoami'
     exit_status=$?
-    if [[ $exit_status -eq 0 ]]; then
+    if [ $exit_status -eq 0 ]; then
         OVER=1
     else
         TEST=$(( TEST+1 ))
@@ -87,7 +87,7 @@ while [[ $OVER -eq 0 ]] && [[ $TEST -lt $EC2_MAX_TESTS ]]; do
     fi
 done
 
-if [[ $TEST -lt $EC2_MAX_TESTS ]]; then
+if [ $TEST -lt $EC2_MAX_TESTS ]; then
     echo -e "$INFO Can connect to $(FY $EC2_DNS_NAME)"
 else
     echo -e "$ERROR Cannot connect to $(FY $EC2_DNS_NAME)." \
