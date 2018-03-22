@@ -111,6 +111,7 @@ aws apigateway update-stage \
 
 
 # testing API alias resource
+sleep 5
 echo
 echo -e "$INFO Testing $(FC ${API_STAGE}/${API_ALIAS_RESOURCE_NAME}) $(FY ${API_HTTP_METHOD}) call."
 if [[ $API_HTTP_METHOD == "GET" ]]; then

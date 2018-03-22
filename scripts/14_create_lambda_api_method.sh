@@ -102,7 +102,7 @@ if [[ $API_HTTP_METHOD == "GET" ]]; then
         --http-method $API_HTTP_METHOD \
         --type AWS \
         --integration-http-method POST \
-        --request-templates '{"application/json":"{\"request_id\":\"$input.params('request_id')\"}"}' \
+        --request-templates '{"application/json":"{\"request_id\":\"$input.params('\''request_id'\'')\"}"}' \
         --uri "arn:aws:apigateway:${AWS_REGION}:lambda:path/2015-03-31/functions/${LAMBDA_ARN}/invocations" \
         --output table
 
@@ -190,6 +190,7 @@ aws apigateway update-stage \
 
 
 # testing
+sleep 5
 echo
 echo -e "$INFO Testing $(FC ${API_STAGE}/${API_RESOURCE_NAME}) $(FY ${API_HTTP_METHOD}) call."
 if [[ $API_HTTP_METHOD == "GET" ]]; then

@@ -97,7 +97,7 @@ API_ALIAS_RESOURCE_USE="false"
 API_STAGE="alpha"
 
 # The type of request API is expecting 
-API_HTTP_METHOD="POST"
+API_HTTP_METHOD="GET"
 
 # The type of API gateway authorization. In order to secure API calls 
 API_AUTHORIZATION_TYPE="CUSTOM"

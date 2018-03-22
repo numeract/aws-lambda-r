@@ -21,7 +21,6 @@ aws_lambda_r = robjects.globalenv['aws_lambda_r']
 
 
 def handler_get(event, context):
-    data_json = {"request_id": event['request_id']}
-    input_json = json.dumps(data_json)
+    input_json = json.dumps(event)
     output_json = json.loads(str(aws_lambda_r(input_json)))
     return output_json

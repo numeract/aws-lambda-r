@@ -9,7 +9,7 @@ cd ~/${PRJ_NAME}
 echo -e "$INFO PWD: $(pwd)"
 
 # Python 3 packages transfer
-echo -e "$INFO Transferring Python 3 packages to the deployment package"
+echo -e "$INFO Transferring Python 3.6 packages to the deployment package"
 source ~/env/bin/activate
 cd ~/${PRJ_NAME}
 cp -r ${CP_VERBOSE} ~/env/lib64/python3.6/site-packages/* ~/${PRJ_NAME}
