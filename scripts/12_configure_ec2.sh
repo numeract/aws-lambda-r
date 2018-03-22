@@ -52,6 +52,18 @@ if [[ $LAMBDA_FUNCTION_NAME == "$MISSING" ]]; then
 fi
 echo -e "$INFO Lambda Function Name: $(FC $LAMBDA_FUNCTION_NAME)"
 
+
+# use the right lambda given api method
+# must match `02_setup.sh` definition
+if [[ $API_HTTP_METHOD == "GET" ]]; then
+    LAMBDA_PYTHON_HANDLER="$LAMBDA_PYTHON_HANDLER_GET"
+    LAMBDA_HANDLER_FUNCTION="$LAMBDA_HANDLER_FUNCTION_GET"
+fi
+if [[ $API_HTTP_METHOD == "POST" ]]; then
+    LAMBDA_PYTHON_HANDLER="$LAMBDA_PYTHON_HANDLER_POST"
+    LAMBDA_HANDLER_FUNCTION="$LAMBDA_HANDLER_FUNCTION_POST"
+fi
+
+
 # automatically stop script when a command fails
 set -e
-

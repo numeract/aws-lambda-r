@@ -132,6 +132,18 @@ if [[ $LAMBDA_FUNCTION_NAME == "$MISSING" ]]; then
 fi
 
 
+# use the right lambda given api method
+# must match `02_setup.sh` definition
+if [[ $API_HTTP_METHOD == "GET" ]]; then
+    LAMBDA_PYTHON_HANDLER="$LAMBDA_PYTHON_HANDLER_GET"
+    LAMBDA_HANDLER_FUNCTION="$LAMBDA_HANDLER_FUNCTION_GET"
+fi
+if [[ $API_HTTP_METHOD == "POST" ]]; then
+    LAMBDA_PYTHON_HANDLER="$LAMBDA_PYTHON_HANDLER_POST"
+    LAMBDA_HANDLER_FUNCTION="$LAMBDA_HANDLER_FUNCTION_POST"
+fi
+
+
 # settings to be pushed to the EC2 instance
 EC2_SET_1="$SETTINGS_DEFAULT_PATH"
 EC2_SET_2="$SECRETS_DEFAULT_PATH"

@@ -108,22 +108,14 @@ API_AUTHORIZATION_TYPE="CUSTOM"
 # The name of the python file which contains the lambda function (w/o extension)
 # AWS > Lambda > Functions > Configuration
 LAMBDA_PYTHON_HANDLER="$MISSING"
-if [[ $API_HTTP_METHOD == "GET" ]]; then
-    LAMBDA_PYTHON_HANDLER="lambda_get"
-fi
-if [[ $API_HTTP_METHOD == "POST" ]]; then
-    LAMBDA_PYTHON_HANDLER="lambda_post"
-fi
+LAMBDA_PYTHON_HANDLER_GET="lambda_get"
+LAMBDA_PYTHON_HANDLER_POST="lambda_post"
 
 # The name of the handler function within the LAMBDA_PYTHON_HANDLER 
 # AWS > Lambda > Functions > Configuration
 LAMBDA_HANDLER_FUNCTION="$MISSING"
-if [[ $API_HTTP_METHOD == "GET" ]]; then
-    LAMBDA_HANDLER_FUNCTION="handler_get"
-fi
-if [[ $API_HTTP_METHOD == "POST" ]]; then
-    LAMBDA_HANDLER_FUNCTION="handler_post"
-fi
+LAMBDA_HANDLER_FUNCTION_GET="handler_get"
+LAMBDA_HANDLER_FUNCTION_POST="handler_post"
 
 # The chosen runtime for lambda function (AWS>LAMBDA>RUNTIME)
 # AWS > Lambda > Functions > Configuration
