@@ -1,0 +1,27 @@
+/* Whole document: */
+body {
+  font-family: Source Sance Pro;
+  font-size: 16pt;
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+  font-family: Open Sance;
+  font-size: 24pt;
+}
+
+slides > slide {
+  color: #444444;
+}
+
+pre {
+  font-weight: 500;
+}
+
+.prettyprint {
+  background-color: #f0f0f0;
+}
+
+code {
+  font-weight: 500;
+}
