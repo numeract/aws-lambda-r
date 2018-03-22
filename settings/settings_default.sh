@@ -100,7 +100,9 @@ API_STAGE="alpha"
 API_HTTP_METHOD="GET"
 
 # The type of API gateway authorization. In order to secure API calls 
-API_AUTHORIZATION_TYPE="CUSTOM"
+# Use "NONE" not to use any Authorizer
+# Use "CUSTOM" to use the Lambda Authorizer
+API_AUTHORIZATION_TYPE="NONE"
 
 
 ## AWS Lambda ------------------------------------------------------------------
