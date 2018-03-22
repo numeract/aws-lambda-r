@@ -87,6 +87,22 @@ LAMBDA_AUTHORIZER_ARN="$MISSING"
 LAMBDA_AUTHORIZER_FILE="settings/lambda_authorizer.js"
 
 
+# AWS API Gateway --------------------------------------------------------------
+
+# Use / deploy to an Alias Resource?
+API_ALIAS_RESOURCE_USE="false"
+
+# A stage is a unique identifier for a version of a deployed API
+# Choices (suggested): alpha, beta, prod
+API_STAGE="alpha"
+
+# The type of request API is expecting 
+API_HTTP_METHOD="POST"
+
+# The type of API gateway authorization. In order to secure API calls 
+API_AUTHORIZATION_TYPE="CUSTOM"
+
+
 ## AWS Lambda ------------------------------------------------------------------
 
 # The name of the python file which contains the lambda function (w/o extension)
@@ -108,22 +124,6 @@ LAMBDA_TIMEOUT="59"
 # The amount of memory allocated to the lambda function (max memory --> max CPU)
 # AWS > Lambda > Functions > Configuration
 LAMBDA_MEMORY_SIZE="3008"
-
-
-# AWS API Gateway --------------------------------------------------------------
-
-# Use / deploy to an Alias Resource?
-API_ALIAS_RESOURCE_USE="false"
-
-# A stage is a unique identifier for a version of a deployed API
-# Choices (suggested): alpha, beta, prod
-API_STAGE="alpha"
-
-# The type of request API is expecting 
-API_HTTP_METHOD="POST"
-
-# The type of API gateway authorization. In order to secure API calls 
-API_AUTHORIZATION_TYPE="CUSTOM"
 
 
 # R ----------------------------------------------------------------------------
