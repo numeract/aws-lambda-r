@@ -77,15 +77,16 @@ fi
 set -e
 
 # Creating API method under specified resource
-aws apigateway put-method \
-    --rest-api-id $API_GATEWAY_ID \
-    --resource-id $API_RESOURCE_ID \
-    --http-method $API_HTTP_METHOD \
-    --authorization-type $API_AUTHORIZATION_TYPE \
-    --authorizer-id $API_AUTHORIZER_ID \
-    --output table
-
 if [[ $API_HTTP_METHOD == "GET" ]]; then
+    aws apigateway put-method \
+        --rest-api-id $API_GATEWAY_ID \
+        --resource-id $API_RESOURCE_ID \
+        --http-method $API_HTTP_METHOD \
+        --authorization-type $API_AUTHORIZATION_TYPE \
+        --authorizer-id $API_AUTHORIZER_ID \
+        --request-parameters method.request.querystring.request_id=false \
+        --output table
+
     echo -e "$INFO API put-method-response."
     aws apigateway put-method-response \
         --rest-api-id $API_GATEWAY_ID \
@@ -115,6 +116,14 @@ if [[ $API_HTTP_METHOD == "GET" ]]; then
         --output table
 fi
 if [[ $API_HTTP_METHOD == "POST" ]]; then
+    aws apigateway put-method \
+        --rest-api-id $API_GATEWAY_ID \
+        --resource-id $API_RESOURCE_ID \
+        --http-method $API_HTTP_METHOD \
+        --authorization-type $API_AUTHORIZATION_TYPE \
+        --authorizer-id $API_AUTHORIZER_ID \
+        --output table
+
     echo -e "$INFO API put-method-response."
     aws apigateway put-method-response \
         --rest-api-id $API_GATEWAY_ID \
