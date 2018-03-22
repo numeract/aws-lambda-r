@@ -85,33 +85,64 @@ aws apigateway put-method \
     --authorizer-id $API_AUTHORIZER_ID \
     --output table
 
-echo -e "$INFO API put-integration."
-aws apigateway put-integration \
-    --rest-api-id $API_GATEWAY_ID \
-    --resource-id $API_RESOURCE_ID \
-    --http-method $API_HTTP_METHOD \
-    --type AWS \
-    --integration-http-method $API_HTTP_METHOD \
-    --uri "arn:aws:apigateway:${AWS_REGION}:lambda:path/2015-03-31/functions/${LAMBDA_ARN}/invocations" \
-    --output table
+if [[ $API_HTTP_METHOD == "GET" ]]; then
+    echo -e "$INFO API put-method-response."
+    aws apigateway put-method-response \
+        --rest-api-id $API_GATEWAY_ID \
+        --resource-id $API_RESOURCE_ID \
+        --http-method $API_HTTP_METHOD \
+        --status-code 200 \
+        --output table
 
-echo -e "$INFO API put-method-response."
-aws apigateway put-method-response \
-    --rest-api-id $API_GATEWAY_ID \
-    --resource-id $API_RESOURCE_ID \
-    --http-method $API_HTTP_METHOD \
-    --status-code 200 \
-    --response-models '{"application/json": "Empty"}' \
-    --output table
+    echo -e "$INFO API put-integration."
+    aws apigateway put-integration \
+        --rest-api-id $API_GATEWAY_ID \
+        --resource-id $API_RESOURCE_ID \
+        --http-method $API_HTTP_METHOD \
+        --type AWS \
+        --integration-http-method POST \
+        --request-templates '{"application/json":"{\"request_id\":\"$input.params('request_id')\"}"}' \
+        --uri "arn:aws:apigateway:${AWS_REGION}:lambda:path/2015-03-31/functions/${LAMBDA_ARN}/invocations" \
+        --output table
 
-echo -e "$INFO API put-integration-response." 
-aws apigateway put-integration-response \
-    --rest-api-id $API_GATEWAY_ID \
-    --resource-id $API_RESOURCE_ID \
-    --http-method $API_HTTP_METHOD \
-    --status-code 200 \
-    --selection-pattern "-" \
-    --output table
+    echo -e "$INFO API put-integration-response." 
+    aws apigateway put-integration-response \
+        --rest-api-id $API_GATEWAY_ID \
+        --resource-id $API_RESOURCE_ID \
+        --http-method $API_HTTP_METHOD \
+        --status-code 200 \
+        --selection-pattern "" \
+        --output table
+fi
+if [[ $API_HTTP_METHOD == "POST" ]]; then
+    echo -e "$INFO API put-method-response."
+    aws apigateway put-method-response \
+        --rest-api-id $API_GATEWAY_ID \
+        --resource-id $API_RESOURCE_ID \
+        --http-method $API_HTTP_METHOD \
+        --status-code 200 \
+        --response-models '{"application/json": "Empty"}' \
+        --output table
+
+    echo -e "$INFO API put-integration."
+    aws apigateway put-integration \
+        --rest-api-id $API_GATEWAY_ID \
+        --resource-id $API_RESOURCE_ID \
+        --http-method $API_HTTP_METHOD \
+        --type AWS \
+        --integration-http-method $API_HTTP_METHOD \
+        --uri "arn:aws:apigateway:${AWS_REGION}:lambda:path/2015-03-31/functions/${LAMBDA_ARN}/invocations" \
+        --output table
+
+    echo -e "$INFO API put-integration-response." 
+    aws apigateway put-integration-response \
+        --rest-api-id $API_GATEWAY_ID \
+        --resource-id $API_RESOURCE_ID \
+        --http-method $API_HTTP_METHOD \
+        --status-code 200 \
+        --selection-pattern "-" \
+        --output table
+fi
 
 # Adding permission for internal calls
 echo -e "$INFO API add-permission for internal calls." 
