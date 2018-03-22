@@ -152,6 +152,13 @@ aws apigateway update-stage \
 # testing
 echo
 echo -e "$INFO Testing $(FC ${API_STAGE}/${API_RESOURCE_NAME}) $(FY ${API_HTTP_METHOD}) call."
+if [[ $API_HTTP_METHOD == "GET" ]]; then
+    HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_RESOURCE_NAME}?request_id=${REQUEST_ID}"
+    echo -e "$INFO $(FY ${HTTPS})"
+    CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
+        -X ${API_HTTP_METHOD} \
+        ${HTTPS})
+fi
 if [[ $API_HTTP_METHOD == "POST" ]]; then
     HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_RESOURCE_NAME}"
     echo -e "$INFO $(FY ${HTTPS})"

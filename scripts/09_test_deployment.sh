@@ -12,6 +12,13 @@
 API_STAGE="alpha"
 echo
 echo -e "$INFO Testing $(FC ${API_STAGE}/${API_RESOURCE_NAME}) $(FY ${API_HTTP_METHOD}) call."
+if [[ $API_HTTP_METHOD == "GET" ]]; then
+    HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_RESOURCE_NAME}?request_id=${REQUEST_ID}"
+    echo -e "$INFO $(FY ${HTTPS})"
+    CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
+        -X ${API_HTTP_METHOD} \
+        ${HTTPS})
+fi
 if [[ $API_HTTP_METHOD == "POST" ]]; then
     HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_RESOURCE_NAME}"
     echo -e "$INFO $(FY ${HTTPS})"
@@ -28,6 +35,13 @@ echo -e "$INFO Result (md5) of $(FC ${API_STAGE}/${API_RESOURCE_NAME})" \
 if [[ $API_ALIAS_RESOURCE_USE != "false" ]]; then
     echo
     echo -e "$INFO Testing $(FC ${API_STAGE}/${API_ALIAS_RESOURCE_NAME}) $(FY ${API_HTTP_METHOD}) call."
+    if [[ $API_HTTP_METHOD == "GET" ]]; then
+        HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_ALIAS_RESOURCE_NAME}?request_id=${REQUEST_ID}"
+        echo -e "$INFO $(FY ${HTTPS})"
+        CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
+            -X ${API_HTTP_METHOD} \
+            ${HTTPS})
+    fi
     if [[ $API_HTTP_METHOD == "POST" ]]; then
         HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_ALIAS_RESOURCE_NAME}"
         echo -e "$INFO $(FY ${HTTPS})"
@@ -46,6 +60,13 @@ fi
 API_STAGE="beta"
 echo
 echo -e "$INFO Testing $(FC ${API_STAGE}/${API_RESOURCE_NAME}) $(FY ${API_HTTP_METHOD}) call."
+if [[ $API_HTTP_METHOD == "GET" ]]; then
+    HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_RESOURCE_NAME}?request_id=${REQUEST_ID}"
+    echo -e "$INFO $(FY ${HTTPS})"
+    CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
+        -X ${API_HTTP_METHOD} \
+        ${HTTPS})
+fi
 if [[ $API_HTTP_METHOD == "POST" ]]; then
     HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_RESOURCE_NAME}"
     echo -e "$INFO $(FY ${HTTPS})"
@@ -62,6 +83,13 @@ echo -e "$INFO Result (md5) of $(FC ${API_STAGE}/${API_RESOURCE_NAME})" \
 if [[ $API_ALIAS_RESOURCE_USE != "false" ]]; then
     echo
     echo -e "$INFO Testing $(FC ${API_STAGE}/${API_ALIAS_RESOURCE_NAME}) $(FY ${API_HTTP_METHOD}) call."
+    if [[ $API_HTTP_METHOD == "GET" ]]; then
+        HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_ALIAS_RESOURCE_NAME}?request_id=${REQUEST_ID}"
+        echo -e "$INFO $(FY ${HTTPS})"
+        CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
+            -X ${API_HTTP_METHOD} \
+            ${HTTPS})
+    fi
     if [[ $API_HTTP_METHOD == "POST" ]]; then
         HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_ALIAS_RESOURCE_NAME}"
         echo -e "$INFO $(FY ${HTTPS})"
@@ -80,6 +108,13 @@ fi
 API_STAGE="prod"
 echo
 echo -e "$INFO Testing $(FC ${API_STAGE}/${API_RESOURCE_NAME}) $(FY ${API_HTTP_METHOD}) call."
+if [[ $API_HTTP_METHOD == "GET" ]]; then
+    HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_RESOURCE_NAME}?request_id=${REQUEST_ID}"
+    echo -e "$INFO $(FY ${HTTPS})"
+    CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
+        -X ${API_HTTP_METHOD} \
+        ${HTTPS})
+fi
 if [[ $API_HTTP_METHOD == "POST" ]]; then
     HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_RESOURCE_NAME}"
     echo -e "$INFO $(FY ${HTTPS})"
@@ -96,6 +131,13 @@ echo -e "$INFO Result (md5) of $(FC ${API_STAGE}/${API_RESOURCE_NAME})" \
 if [[ $API_ALIAS_RESOURCE_USE != "false" ]]; then
     echo
     echo -e "$INFO Testing $(FC ${API_STAGE}/${API_ALIAS_RESOURCE_NAME}) $(FY ${API_HTTP_METHOD}) call."
+    if [[ $API_HTTP_METHOD == "GET" ]]; then
+        HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_ALIAS_RESOURCE_NAME}?request_id=${REQUEST_ID}"
+        echo -e "$INFO $(FY ${HTTPS})"
+        CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
+            -X ${API_HTTP_METHOD} \
+            ${HTTPS})
+    fi
     if [[ $API_HTTP_METHOD == "POST" ]]; then
         HTTPS="https://${API_GATEWAY_ID}.execute-api.${AWS_REGION}.amazonaws.com/${API_STAGE}/${API_ALIAS_RESOURCE_NAME}"
         echo -e "$INFO $(FY ${HTTPS})"
