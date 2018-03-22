@@ -118,6 +118,6 @@ echo -e "$INFO $(FY ${HTTPS})"
 CURL_OUT=$(curl -H "Auth: ${API_TOKEN}" \
     -H  "Content-Type: application/json" \
     -X ${API_HTTP_METHOD} \
-    -d '{"request_id": 1111}' \
+    -d '{"request_id": '${REQUEST_ID}'}' \
     ${HTTPS})
 [[ ${#CURL_OUT} -gt 1000 ]] || echo "$CURL_OUT"

@@ -132,6 +132,9 @@ API_AUTHORIZATION_TYPE="CUSTOM"
 # do not use commas or quotes, leave spaces before and after each package name
 R_PACKAGES=( jsonlite )
 
+# The request id sent to R, for example purposes only
+# For new applications, please update all tests that use curl and REQUEST_ID
+REQUEST_ID=1111
 
 # testing ----------------------------------------------------------------------
 
