@@ -107,11 +107,23 @@ API_AUTHORIZATION_TYPE="CUSTOM"
 
 # The name of the python file which contains the lambda function (w/o extension)
 # AWS > Lambda > Functions > Configuration
-LAMBDA_PYTHON_HANDLER="lambda_post"
+LAMBDA_PYTHON_HANDLER="$MISSING"
+if [[ $API_HTTP_METHOD == "GET" ]]; then
+    LAMBDA_PYTHON_HANDLER="lambda_get"
+fi
+if [[ $API_HTTP_METHOD == "POST" ]]; then
+    LAMBDA_PYTHON_HANDLER="lambda_post"
+fi
 
 # The name of the handler function within the LAMBDA_PYTHON_HANDLER 
 # AWS > Lambda > Functions > Configuration
-LAMBDA_HANDLER_FUNCTION="handler_post"
+LAMBDA_HANDLER_FUNCTION="$MISSING"
+if [[ $API_HTTP_METHOD == "GET" ]]; then
+    LAMBDA_HANDLER_FUNCTION="handler_get"
+fi
+if [[ $API_HTTP_METHOD == "POST" ]]; then
+    LAMBDA_HANDLER_FUNCTION="handler_post"
+fi
 
 # The chosen runtime for lambda function (AWS>LAMBDA>RUNTIME)
 # AWS > Lambda > Functions > Configuration
@@ -135,6 +147,7 @@ R_PACKAGES=( jsonlite )
 # The request id sent to R, for example purposes only
 # For new applications, please update all tests that use curl and REQUEST_ID
 REQUEST_ID=1111
+
 
 # testing ----------------------------------------------------------------------
 
