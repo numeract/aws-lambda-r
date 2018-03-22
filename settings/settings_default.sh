@@ -87,15 +87,37 @@ LAMBDA_AUTHORIZER_ARN="$MISSING"
 LAMBDA_AUTHORIZER_FILE="settings/lambda_authorizer.js"
 
 
+# AWS API Gateway --------------------------------------------------------------
+
+# Use / deploy to an Alias Resource?
+API_ALIAS_RESOURCE_USE="false"
+
+# A stage is a unique identifier for a version of a deployed API
+# Choices (suggested): alpha, beta, prod
+API_STAGE="alpha"
+
+# The type of request API is expecting 
+API_HTTP_METHOD="GET"
+
+# The type of API gateway authorization. In order to secure API calls 
+# Use "NONE" not to use any Authorizer
+# Use "CUSTOM" to use the Lambda Authorizer
+API_AUTHORIZATION_TYPE="NONE"
+
+
 ## AWS Lambda ------------------------------------------------------------------
 
 # The name of the python file which contains the lambda function (w/o extension)
 # AWS > Lambda > Functions > Configuration
-LAMBDA_PYTHON_HANDLER="lambda_post"
+LAMBDA_PYTHON_HANDLER="$MISSING"
+LAMBDA_PYTHON_HANDLER_GET="lambda_get"
+LAMBDA_PYTHON_HANDLER_POST="lambda_post"
 
 # The name of the handler function within the LAMBDA_PYTHON_HANDLER 
 # AWS > Lambda > Functions > Configuration
-LAMBDA_HANDLER_FUNCTION="handler_post"
+LAMBDA_HANDLER_FUNCTION="$MISSING"
+LAMBDA_HANDLER_FUNCTION_GET="handler_get"
+LAMBDA_HANDLER_FUNCTION_POST="handler_post"
 
 # The chosen runtime for lambda function (AWS>LAMBDA>RUNTIME)
 # AWS > Lambda > Functions > Configuration
@@ -110,27 +132,15 @@ LAMBDA_TIMEOUT="59"
 LAMBDA_MEMORY_SIZE="3008"
 
 
-# AWS API Gateway --------------------------------------------------------------
-
-# Use / deploy to an Alias Resource?
-API_ALIAS_RESOURCE_USE="false"
-
-# A stage is a unique identifier for a version of a deployed API
-# Choices (suggested): alpha, beta, prod
-API_STAGE="alpha"
-
-# The type of request API is expecting 
-API_HTTP_METHOD="POST"
-
-# The type of API gateway authorization. In order to secure API calls 
-API_AUTHORIZATION_TYPE="CUSTOM"
-
-
 # R ----------------------------------------------------------------------------
 
 # List of R packages to be installed and used by the Lambda function
 # do not use commas or quotes, leave spaces before and after each package name
 R_PACKAGES=( jsonlite )
+
+# The request id sent to R, for example purposes only
+# For new applications, please update all tests that use curl and REQUEST_ID
+REQUEST_ID=1111
 
 
 # testing ----------------------------------------------------------------------

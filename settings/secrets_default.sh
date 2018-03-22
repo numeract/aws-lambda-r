@@ -46,14 +46,6 @@ EC2_SECURITY_GROUP_IDS="sg-$MISSING"
 S3_BUCKET="$MISSING"
 
 
-## AWS Lambda ------------------------------------------------------------------
-
-# The AWS name of the Lambda function (in Python, calling R)
-# If missing, "${PRJ_NAME}-${PRJ_BRANCH}-${API_STAGE}-${API_RESOURCE_NAME}"
-# AWS > Lambda > Functions
-LAMBDA_FUNCTION_NAME="$MISSING"
-
-
 # AWS API Gateway --------------------------------------------------------------
 
 # The AWS name of the API Gateway on which the http calls are made 
@@ -98,3 +90,11 @@ API_AUTHORIZER_ID="$MISSING"
 # Must match API_TOKEN in lambda_authorizer.js
 # AWS> LAMBDA > see code within the lambda authorization function
 API_TOKEN="aws-lambda-r-api-token"
+
+
+## AWS Lambda ------------------------------------------------------------------
+
+# The AWS name of the Lambda function (in Python, calling R)
+# If missing, "${PRJ_NAME}-${PRJ_BRANCH}-${API_STAGE}-${API_RESOURCE_NAME}"
+# AWS > Lambda > Functions
+LAMBDA_FUNCTION_NAME="$MISSING"

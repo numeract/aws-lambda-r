@@ -70,7 +70,7 @@ IAM_LAMBDA_ROLE_ARN="$(aws $AWS_PRFL iam get-role \
     --query Role.Arn \
     --output text)"
 exit_status=$?
-if [[ $exit_status -eq 0 ]]; then
+if [ $exit_status -eq 0 ]; then
     echo -e "$INFO IAM Lambda Role ARN: $(FC $IAM_LAMBDA_ROLE_ARN)"
 else
     echo -e "$ERROR Failed to obtain ARN of IAM Lambda Role" \
@@ -110,7 +110,7 @@ LAMBDA_AUTHORIZER_ARN="$(aws $AWS_PRFL lambda get-function-configuration \
     --query FunctionArn \
     --output text)"
 exit_status=$?
-if [[ $exit_status -eq 0 ]]; then
+if [ $exit_status -eq 0 ]; then
     echo -e "$INFO Lambda Authorizer Function ARN: $(FC $LAMBDA_AUTHORIZER_ARN)"
 else
     echo -e "$ERROR Failed to obtain ARN of Lambda Authorizer Function" \
@@ -138,7 +138,7 @@ API_GATEWAY_ID="$(aws $AWS_PRFL apigateway get-rest-apis \
     --query "items[?name==\`${API_GATEWAY_NAME}\`].id" \
     --output text)"
 exit_status=$?
-if [[ $exit_status -eq 0 ]]; then
+if [ $exit_status -eq 0 ]; then
     echo -e "$INFO API Gateway ID: $(FC $API_GATEWAY_ID)"
 else
     echo -e "$ERROR Failed to obtain ID of API Gateway" \
@@ -153,7 +153,7 @@ ROOT_RESOURCE_ID="$(aws $AWS_PRFL apigateway get-resources \
     --query "items[?path==\`/\`].id" \
     --output text)"
 exit_status=$?
-if [[ $exit_status -eq 0 ]]; then
+if [ $exit_status -eq 0 ]; then
     echo -e "$INFO API Gateway Root Resource ID: $(FC $ROOT_RESOURCE_ID)"
 else
     echo -e "$ERROR Failed to obtain API Gateway Root Resource ID for" \
@@ -188,7 +188,7 @@ API_RESOURCE_ID="$(aws $AWS_PRFL apigateway get-resources \
     --query "items[?path==\`/${API_RESOURCE_NAME}\`].id" \
     --output text)"
 exit_status=$?
-if [[ $exit_status -eq 0 ]]; then
+if [ $exit_status -eq 0 ]; then
     echo -e "$INFO API Gateway Resource ID: $(FC $API_RESOURCE_ID)"
 else
     echo -e "$ERROR Failed to obtain API Gateway Resource ID for" \
@@ -224,7 +224,7 @@ if [[ ! $API_ALIAS_RESOURCE_USE == "false" ]]; then
         --query "items[?path==\`/${API_ALIAS_RESOURCE_NAME}\`].id" \
         --output text)"
     exit_status=$?
-    if [[ $exit_status -eq 0 ]]; then
+    if [ $exit_status -eq 0 ]; then
         echo -e "$INFO API Gateway Alias Resource ID:" \
             "$(FC $API_ALIAS_RESOURCE_ID)"
     else
@@ -270,7 +270,7 @@ API_AUTHORIZER_ID="$(aws $AWS_PRFL apigateway get-authorizers \
     --query "items[?name==\`${API_AUTHORIZER_NAME}\`].id" \
     --output text)"  
 exit_status=$?
-if [[ $exit_status -eq 0 ]]; then
+if [ $exit_status -eq 0 ]; then
     echo -e "$INFO API Gateway Authorizer ID: $(FC $API_AUTHORIZER_ID)"
 else
     echo -e "$ERROR Failed to obtain API Gateway Authorizer ID for" \

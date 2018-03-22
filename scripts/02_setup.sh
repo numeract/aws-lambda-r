@@ -20,12 +20,12 @@ BY () { echo -e "\e[43m\e[30m$1\e[39m\e[49m"; }         # Background Yellow
 # expanded path of the parent dir where this file is located
 # since we are sourcing, avoid redefining it (maybe current dir has changed)
 echo -e "$INFO Checking project directories"
+CURRENT_DIR="$(pwd)"
 [[ $SCR_DIR ]] || SCR_DIR="$(cd "$(dirname "$0")/."; pwd)"
 PRJ_DIR="$(cd "${SCR_DIR}/.."; pwd)"
 SET_DIR="${PRJ_DIR}/settings"
 PYTHON_DIR="${PRJ_DIR}/python"
 LAMBDA_DIR="${PRJ_DIR}/lambda"
-
 # git related
 GIT_DIR="$(cd "$(git rev-parse --show-toplevel)"; pwd)"
 GIT_NAME="$(basename $GIT_DIR)"
@@ -56,6 +56,12 @@ if [[ ! -d "$LAMBDA_DIR" ]]; then
     exit 1
 fi
 
+if [[ $PRJ_DIR != $CURRENT_DIR ]]; then
+    echo -e "$ERROR Expected current directory to be $(FY $PRJ_DIR)," \
+        "instead got $(FY $CURRENT_DIR)."  \
+        "Please change directory before running. Exiting."  
+    exit 1
+fi
 
 # source default settings and secrets
 echo -e "$INFO Loading default settings and secrets"
@@ -109,7 +115,7 @@ AWS_ACCOUNT_ID="$(aws $AWS_PRFL sts get-caller-identity \
     --query "Account" \
     --output text)"
 exit_status=$?
-if [[ $exit_status -ne 0 ]]; then
+if [ $exit_status -ne 0 ]; then
     echo -e "$ERROR Failed to obtain AWS Account ID. Is AWS CLI configured?"
     exit 1
 fi
@@ -121,6 +127,20 @@ if [[ $LAMBDA_FUNCTION_NAME == "$MISSING" ]]; then
     LAMBDA_FUNCTION_NAME="${PRJ_NAME}-${PRJ_BRANCH}"
     LAMBDA_FUNCTION_NAME="${LAMBDA_FUNCTION_NAME}-${API_STAGE}"
     LAMBDA_FUNCTION_NAME="${LAMBDA_FUNCTION_NAME}-${API_RESOURCE_NAME}"
+    LAMBDA_FUNCTION_NAME="${LAMBDA_FUNCTION_NAME}-${API_HTTP_METHOD}"
+    LAMBDA_FUNCTION_NAME="$(echo ${LAMBDA_FUNCTION_NAME} | tr '[A-Z]' '[a-z]')"
+fi
+
+
+# use the right lambda given api method
+# must match `02_setup.sh` definition
+if [[ $API_HTTP_METHOD == "GET" ]]; then
+    LAMBDA_PYTHON_HANDLER="$LAMBDA_PYTHON_HANDLER_GET"
+    LAMBDA_HANDLER_FUNCTION="$LAMBDA_HANDLER_FUNCTION_GET"
+fi
+if [[ $API_HTTP_METHOD == "POST" ]]; then
+    LAMBDA_PYTHON_HANDLER="$LAMBDA_PYTHON_HANDLER_POST"
+    LAMBDA_HANDLER_FUNCTION="$LAMBDA_HANDLER_FUNCTION_POST"
 fi
 
 
@@ -137,3 +157,4 @@ EC2_SCR_11="${SCR_DIR}/11_install_packages.sh"
 EC2_SCR_12="${SCR_DIR}/12_configure_ec2.sh"
 EC2_SCR_13="${SCR_DIR}/13_create_deployment_package.sh"
 EC2_SCR_14="${SCR_DIR}/14_create_lambda_api_method.sh"
+EC2_SCR_15="${SCR_DIR}/15_create_alias_api_method.sh"

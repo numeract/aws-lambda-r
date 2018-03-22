@@ -23,7 +23,7 @@ if [[ "$LAMBDA_AUTHORIZER_NAME_OLD" == "$LAMBDA_AUTHORIZER_NAME" ]]; then
         --region $AWS_REGION \
         --function-name $LAMBDA_AUTHORIZER_NAME
     exit_status=$?
-    if [[ $exit_status -ne 0 ]]; then
+    if [ $exit_status -ne 0 ]; then
         echo -e "$ERROR Cannot delete Lambda Authorizer Function" \
             "$(FC $LAMBDA_AUTHORIZER_NAME). Exiting."
         exit 1
@@ -44,7 +44,7 @@ if [[ "$IAM_LAMBDA_ROLE_NAME_OLD" == "$IAM_LAMBDA_ROLE_NAME" ]]; then
         --role-name $IAM_LAMBDA_ROLE_NAME  \
         --policy-name $IAM_LAMBDA_ROLE_POLICY_NAME
     exit_status=$?
-    if [[ $exit_status -ne 0 ]]; then
+    if [ $exit_status -ne 0 ]; then
         echo -e "$WARN Cannot delete old Lambda Role Policy" \
             "$(FC $IAM_LAMBDA_ROLE_POLICY_NAME). Attempting to delete Lambda Role ..."
     fi
@@ -53,7 +53,7 @@ if [[ "$IAM_LAMBDA_ROLE_NAME_OLD" == "$IAM_LAMBDA_ROLE_NAME" ]]; then
     aws $AWS_PRFL iam delete-role \
         --role-name $IAM_LAMBDA_ROLE_NAME
     exit_status=$?
-    if [[ $exit_status -ne 0 ]]; then
+    if [ $exit_status -ne 0 ]; then
         echo -e "$ERROR Cannot delete Lambda Role $(FC $IAM_LAMBDA_ROLE_NAME)." \
             "Exiting."
         exit 1

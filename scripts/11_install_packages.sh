@@ -24,7 +24,10 @@ echo -e "$INFO Installing other Linux packages ..."
 # sudo yum install -y git-all
 # sudo yum install -y wget
 sudo yum install -y blas lapack
-sudo yum install -y mysql-devel
+
+# uncomment the following line in case mysql is needed 
+# sudo yum install -y mysql-devel
+
 # add other Linux packages as needed by R packages
 # be sure to check their size
 
@@ -33,16 +36,21 @@ sudo yum install -y mysql-devel
 echo -e "$INFO Installing Python packages (rpy2) in a virtual env ..."
 virtualenv -p python3.6 ~/env
 source ~/env/bin/activate
-sudo ~/env/bin/pip3.6 install rpy2 -t ~/env/lib64/python3.6/site-packages
-deactivate
 
+sudo ~/env/bin/pip3.6 install rpy2 -t ~/env/lib64/python3.6/site-packages
+exit_status=$?
+if [ $exit_status -ne 0 ]; then
+    echo -e "$ERROR rpy2 installation failed."
+    exit 1
+fi
+
+deactivate
 
 # install R packages
 echo -e "$INFO Creating the R library directory and setting permissions ..."
 cd ~/
 sudo mkdir library
 sudo chmod -R a+w ~/library
-
 
 function join_by { local IFS="$1"; shift; echo "$*"; }
 
@@ -53,5 +61,11 @@ if [[ "$R_PACK_INSTALL" == "''" ]]; then
 else
     echo -e "$INFO Installing R packages: ${R_PACKAGES_INSTALL}"
     sudo Rscript -e 'install.packages(c('${R_PACKAGES_INSTALL}'), lib="/home/ec2-user/library", repos="http://cran.us.r-project.org", quiet=TRUE)'
-    echo -e "$INFO R Packages installation finished."
+    exit_status=$?
+    if [ $exit_status -eq 0 ]; then
+        echo -e "$INFO R Packages installation finished."
+    else
+        echo -e "$ERROR R Packages installation failed."
+        exit 1
+    fi
 fi

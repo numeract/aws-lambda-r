@@ -31,7 +31,7 @@ AWS_ACCOUNT_ID="$(aws sts get-caller-identity \
     --query "Account" \
     --output text)"
 exit_status=$?
-if [[ $exit_status -ne 0 ]]; then
+if [ $exit_status -ne 0 ]; then
     echo -e "$ERROR Failed to obtain AWS Account ID on EC2." \
         "Is AWS CLI configured? Exiting."
         exit 1
@@ -47,5 +47,23 @@ if [[ $LAMBDA_FUNCTION_NAME == "$MISSING" ]]; then
     LAMBDA_FUNCTION_NAME="${PRJ_NAME}-${PRJ_BRANCH}"
     LAMBDA_FUNCTION_NAME="${LAMBDA_FUNCTION_NAME}-${API_STAGE}"
     LAMBDA_FUNCTION_NAME="${LAMBDA_FUNCTION_NAME}-${API_RESOURCE_NAME}"
+    LAMBDA_FUNCTION_NAME="${LAMBDA_FUNCTION_NAME}-${API_HTTP_METHOD}"
+    LAMBDA_FUNCTION_NAME="$(echo ${LAMBDA_FUNCTION_NAME} | tr '[A-Z]' '[a-z]')"
 fi
 echo -e "$INFO Lambda Function Name: $(FC $LAMBDA_FUNCTION_NAME)"
+
+
+# use the right lambda given api method
+# must match `02_setup.sh` definition
+if [[ $API_HTTP_METHOD == "GET" ]]; then
+    LAMBDA_PYTHON_HANDLER="$LAMBDA_PYTHON_HANDLER_GET"
+    LAMBDA_HANDLER_FUNCTION="$LAMBDA_HANDLER_FUNCTION_GET"
+fi
+if [[ $API_HTTP_METHOD == "POST" ]]; then
+    LAMBDA_PYTHON_HANDLER="$LAMBDA_PYTHON_HANDLER_POST"
+    LAMBDA_HANDLER_FUNCTION="$LAMBDA_HANDLER_FUNCTION_POST"
+fi
+
+
+# automatically stop script when a command fails
+set -e
