@@ -61,10 +61,8 @@ size=$(du -sm | awk '{ print $1 }')
      exit 1
 fi
 
-echo -e "$INFO Lambda function name is: ${LAMBDA_FUNCTION_NAME}."
 echo -e "$INFO Zipping the deployment package ..."
 LAMBDA_ZIP_NAME="${LAMBDA_FUNCTION_NAME}.zip"
-echo -e "$INFO Name of the zip: ${LAMBDA_ZIP_NAME}"
 zip -qr9 ~/${LAMBDA_ZIP_NAME} *
 echo -e "$INFO Finished zipping the deployment package to" \
     "$(FC $LAMBDA_ZIP_NAME)"
