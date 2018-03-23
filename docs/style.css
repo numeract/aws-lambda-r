@@ -25,3 +25,24 @@ pre {
 code {
   font-weight: 500;
 }
+
+
+/* No Logo on title page */
+.gdbar img {
+  width: 0px !important;
+  height: 0px !important;
+  margin: 0px 0px;
+}
+
+.gdbar {
+  width: 0px !important;
+  height: 0px !important;
+}
+
+
+/*background picture as logo on title page*/
+slides > slide.title-slide {
+    background-image: url(Numeract_Logo_Tag.png);
+    background-repeat: no-repeat;
+}
+

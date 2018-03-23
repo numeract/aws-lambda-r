@@ -1,0 +1,67 @@
+---
+title: "Of R and APIs: Running R in Amazon Lambda"
+author: "Mike Badescu, PhD"
+date: "March 24, 2018"
+output:
+  ioslides_presentation:
+    css: style.css
+    highlight: pygments
+    transition: faster
+    logo: Numeract_Icon.png
+    widescreen: yes
+    fig_caption: false
+  slidy_presentation:
+    css: style.css
+---
+
+## Of R and APIs: Running R in Amazon Lambda
+
+- Slides: <https://numeract.github.io/aws-lambda-r/>  
+
+- Code: <https://github.com/numeract/aws-lambda-r>  
+- Demo: <https://github.com/numeract/aws-lambda-r-demo>  
+<br>
+
+**Mike Badescu, PhD**  
+
+- [*mike*.*badescu@numeract*.*com*](*mike*.*badescu@numeract*.*com*)  
+- @[MikeBadescu](https://twitter.com/MikeBadescu)  
+<br>
+
+**Dallas R Users Group**  
+*March 24, 2018*
+
+
+## About
+
+**[Numeract LLC:](http://numeract.com/)**
+
+- Data Science and Economics / Finance consulting services  
+- Technology Stack: (Postgre)SQL, R, Python, Spark, Docker, AWS
+
+<br>
+
+**Code Authors and Contributors:**
+
+- [Mike Badescu](https://www.linkedin.com/in/mikebadescu)
+    + PhD Economics, Lehigh University
+    + Experience: Economics, Finance, Statistics, Machine Learning
+- Ana Niculescu
+- Teodor Ciuraru
+
+
+## Summary 
+
+TBD
+
+
+
+## References {.smaller}
+
+- TBD
+
+## sessionInfo() {.smaller}
+
+```{r, echo=FALSE}
+sessionInfo()
+```
