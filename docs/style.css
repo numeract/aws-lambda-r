@@ -46,3 +46,12 @@ slides > slide.title-slide {
     background-repeat: no-repeat;
 }
 
+
+/*slide picture*/
+slides > slide[data-slide-num= "14"]
+{
+    background-image: url(plumber.png);
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 15%;
+}
