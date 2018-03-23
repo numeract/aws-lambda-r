@@ -136,7 +136,7 @@ LAMBDA_MEMORY_SIZE="3008"
 
 # List of R packages to be installed and used by the Lambda function
 # do not use commas or quotes, leave spaces before and after each package name
-R_PACKAGES=( jsonlite )
+R_PACKAGES=( jsonlite base64enc )
 
 # The request id sent to R, for example purposes only
 # For new applications, please update all tests that use curl and REQUEST_ID
