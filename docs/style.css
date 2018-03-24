@@ -44,6 +44,8 @@ code {
 slides > slide.title-slide {
     background-image: url(Numeract_Logo_Tag.png);
     background-repeat: no-repeat;
+    background-position: left top;
+    background-size: 75%;
 }
 
 
@@ -54,4 +56,29 @@ slides > slide[data-slide-num= "14"]
     background-repeat: no-repeat;
     background-position: right top;
     background-size: 15%;
+}
+
+slides > slide[data-slide-num= "17"]
+{
+    background-image: url(plumber_png.png);
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    background-size: 40%;
+}
+
+slides > slide[data-slide-num= "20"]
+{
+    background-image: url(rstudio.png), url(docker.png);
+    background-repeat: no-repeat;
+    background-position: right 65%, right 90%;
+    background-size: 15%;
+}
+
+
+slides > slide[data-slide-num= "21"]
+{
+    background-image: url(opencpu.jpg);
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size: 20%;
 }
