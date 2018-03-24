@@ -16,6 +16,7 @@ else
     echo -e "$INFO Attempting to terminate EC2 Instance ID" \
         "$(FC $EC2_INSTANCE_ID) ..."
     aws $AWS_PRFL ec2 terminate-instances \
+        --region $AWS_REGION \
         --instance-ids $EC2_INSTANCE_ID \
         --output table
     exit_status=$?

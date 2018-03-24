@@ -21,6 +21,7 @@ else
     echo -e "$INFO Attempting to stop EC2 Instance ID" \
         "$(FC $EC2_INSTANCE_ID) ..."
     aws $AWS_PRFL ec2 stop-instances \
+        --region $AWS_REGION \
         --instance-ids $EC2_INSTANCE_ID \
         --output table
     exit_status=$?
@@ -39,6 +40,7 @@ OVER=0
 TEST=0
 while [ $OVER -eq 0 ] && [ $TEST -lt $EC2_MAX_TESTS ]; do
     EC2_STATE_NAME=$(aws $AWS_PRFL ec2 describe-instances \
+        --region $AWS_REGION \
         --instance-ids $EC2_INSTANCE_ID \
         --query Reservations[0].Instances[0].State.Name \
         --output text)
@@ -55,6 +57,7 @@ done
 echo -e "$INFO Create custom AMI from Instance ID"
 EC2_CUSTOM_AMI_NAME="${PRJ_NAME}-ami_$(date -u '+%Y-%m-%d_%H-%M-%S_%Z')"
 EC2_CUSTOM_AMI_ID=$(aws $AWS_PRFL ec2 create-image \
+    --region $AWS_REGION \
     --instance-id $EC2_INSTANCE_ID \
     --name "$EC2_CUSTOM_AMI_NAME" \
     --output text)
@@ -66,6 +69,7 @@ OVER=0
 TEST=0
 while [ $OVER -eq 0 ] && [ $TEST -lt $EC2_MAX_TESTS ]; do
     AMI_STATE=$(aws $AWS_PRFL ec2 describe-images \
+        --region $AWS_REGION \
         --image-ids $EC2_CUSTOM_AMI_ID \
         --query Images[0].State \
         --output text)

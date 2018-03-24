@@ -34,6 +34,7 @@ fi
 
 # Delete old Role
 IAM_LAMBDA_ROLE_NAME_OLD="$(aws $AWS_PRFL iam list-roles \
+    --region $AWS_REGION \
     --query Roles[?RoleName==\`${IAM_LAMBDA_ROLE_NAME}\`].RoleName \
     --output text)"
 if [[ "$IAM_LAMBDA_ROLE_NAME_OLD" == "$IAM_LAMBDA_ROLE_NAME" ]]; then
@@ -41,6 +42,7 @@ if [[ "$IAM_LAMBDA_ROLE_NAME_OLD" == "$IAM_LAMBDA_ROLE_NAME" ]]; then
     echo -e "$INFO Deleting old Lambda Role Policy" \
         "$(FC $IAM_LAMBDA_ROLE_POLICY_NAME) ..."
     aws $AWS_PRFL iam delete-role-policy \
+        --region $AWS_REGION \
         --role-name $IAM_LAMBDA_ROLE_NAME  \
         --policy-name $IAM_LAMBDA_ROLE_POLICY_NAME
     exit_status=$?

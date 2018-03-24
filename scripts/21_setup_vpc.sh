@@ -12,14 +12,18 @@
 # defined and existent, create new ones otherwise
 if [[ $EC2_SUBNET_ID != "subnet-$MISSING" ]] && [[ $EC2_SECURITY_GROUP_IDS != "sg-$MISSING" ]]; then
     SUBNET=$(aws $AWS_PRFL ec2 describe-subnets \
-        --subnet-ids $EC2_SUBNET_ID)
+        --region $AWS_REGION \
+        --subnet-ids $EC2_SUBNET_ID \
+        --output text)
     exit_status_subnet=$?
     
     SECURITY_GROUP=$(aws $AWS_PRFL ec2 describe-security-groups \
-        --group-ids $EC2_SECURITY_GROUP_IDS)
+        --region $AWS_REGION \
+        --group-ids $EC2_SECURITY_GROUP_IDS \
+        --output text)
     exit_status_sg=$?
 
-    if [ $exit_status_subnet != 0 -o $exit_status_sg != 0 ]; then
+    if [ $exit_status_subnet != 0 ] || [ $exit_status_sg != 0 ]; then
         echo -e "$INFO Subnet or Security Group defined not valid." \
             "Creating new VPC, Subnet and Security Group ..."
     else
@@ -35,21 +39,25 @@ set -e
 
 #  Create a non-default VPC with an IPv4 CIDR block
 VPC_ID=$(aws $AWS_PRFL ec2 create-vpc \
+    --region $AWS_REGION \
     --cidr-block 10.0.0.0/16 \
     --query 'Vpc.VpcId' \
     --output text)
 
 # Enable public DNS host names for VPC instances
 aws $AWS_PRFL ec2 modify-vpc-attribute \
+    --region $AWS_REGION \
     --vpc-id ${VPC_ID} \
     --enable-dns-support "{\"Value\":true}"
 
 aws $AWS_PRFL ec2 modify-vpc-attribute \
+    --region $AWS_REGION \
     --vpc-id ${VPC_ID} \
     --enable-dns-hostnames "{\"Value\":true}"
 
 # Create public subnet with a 10.0.1.0/24 CIDR block.  
 SUBNET1_ID=$(aws $AWS_PRFL ec2 create-subnet \
+    --region $AWS_REGION \
     --vpc-id ${VPC_ID} \
     --cidr-block 10.0.1.0/24 \
     --query 'Subnet.SubnetId' \
@@ -57,16 +65,19 @@ SUBNET1_ID=$(aws $AWS_PRFL ec2 create-subnet \
 
  # Create an Internet gateway for public subnet
 GATEWAY_ID=$(aws $AWS_PRFL ec2 create-internet-gateway \
+    --region $AWS_REGION \
     --query 'InternetGateway.InternetGatewayId' \
     --output text)
 
 # Making subnet public by attaching an Internet gateway to VPC
 aws $AWS_PRFL ec2 attach-internet-gateway \
+    --region $AWS_REGION \
     --vpc-id ${VPC_ID} \
     --internet-gateway-id ${GATEWAY_ID}
 
 # Create a custom route table for VPC
 ROUTE_TABLE_ID=$(aws $AWS_PRFL ec2 create-route-table \
+    --region $AWS_REGION \
     --vpc-id ${VPC_ID}\
     --query 'RouteTable.RouteTableId'\
     --output text)
@@ -74,6 +85,7 @@ ROUTE_TABLE_ID=$(aws $AWS_PRFL ec2 create-route-table \
 # Create a route in the route table that points
 # all traffic (0.0.0.0/0) to the Internet gateway
 aws $AWS_PRFL ec2 create-route \
+    --region $AWS_REGION \
     --route-table-id ${ROUTE_TABLE_ID} \
     --destination-cidr-block 0.0.0.0/0 \
     --gateway-id ${GATEWAY_ID}
@@ -81,6 +93,7 @@ aws $AWS_PRFL ec2 create-route \
 # Associate subnet with custom route table
 # in order to make it public       
 ASSOCIATION_ID=$(aws $AWS_PRFL ec2 associate-route-table \
+    --region $AWS_REGION \
     --subnet-id ${SUBNET1_ID} \
     --route-table-id ${ROUTE_TABLE_ID} \
     --query 'AssociationId' \
@@ -89,12 +102,14 @@ ASSOCIATION_ID=$(aws $AWS_PRFL ec2 associate-route-table \
 # Modify the public IP addressing behavior of subnet
 # so that subnet automatically receives a public IP address
 aws $AWS_PRFL ec2 modify-subnet-attribute \
+    --region $AWS_REGION \
     --subnet-id ${SUBNET1_ID} \
     --map-public-ip-on-launch 
 
 # Create a security group in VPC       
 # TODO: proper group-name, description (cannot be modified later)
 SECURITY_GROUP_ID=$(aws $AWS_PRFL ec2 create-security-group \
+    --region $AWS_REGION \
     --group-name EC2access \
     --description "Security group for SSH access" \
     --vpc ${VPC_ID} \
@@ -103,6 +118,7 @@ SECURITY_GROUP_ID=$(aws $AWS_PRFL ec2 create-security-group \
 
  # Add a rule that allows SSH access from anywhere
 aws $AWS_PRFL ec2 authorize-security-group-ingress \
+    --region $AWS_REGION \
     --group-id ${SECURITY_GROUP_ID} \
     --protocol tcp \
     --port 22 \
