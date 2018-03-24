@@ -70,7 +70,7 @@ slides > slide[data-slide-num= "20"]
 {
     background-image: url(rstudio.png), url(docker.png);
     background-repeat: no-repeat;
-    background-position: right 65%, right 90%;
+    background-position: right 55%, right 80%;
     background-size: 15%;
 }
 

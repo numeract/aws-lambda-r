@@ -38,7 +38,7 @@ output:
 
 <br>
 
-**Code Authors and Contributors:**
+**Authors and Contributors:**
 
 - [Mike Badescu](https://www.linkedin.com/in/mikebadescu)
     + PhD Economics, Lehigh University
@@ -50,12 +50,12 @@ output:
 ## Summary 
 
 1. Motivation
-
-2. Plumber
-
-3. OpenCPU
-
-4. R on Amazon Lambda
+2. APIs
+3. Plumber
+4. OpenCPU
+5. Web Server / Docker vs FaaS
+6. R on Amazon Lambda
+7. Ideal Setup
 
 
 ## Motivation
@@ -69,7 +69,7 @@ output:
     + R Markdown report
 3. Stakeholder Engagement and Validation
     + Shiny App
-    + Iterate steps 1-3 as needed
+    + iterate steps 1-3 as needed
 
 
 ## Motivation
@@ -83,14 +83,14 @@ output:
 
 <br>
 
-- Rewriting the code in other programming language is not efficient
+- Rewriting the code in another programming language is not efficient
 - Certain algorithms are not available in other programming languages
 
 
 ## Solutions
 
 - Install R on the same machine as the production server
-    + Increases chases on failure, maintenance issues
+    + Increases chances of failure, maintenance issues
     + Security issues
 - R running inside of a VM next to other VMs
     + _How do we connect to it?_
@@ -107,11 +107,11 @@ output:
 - Common concept: programmers know how to work with APIs
 - Common "data language": **JSON** (but not the only one)
 - REST API
-    + stateless --> pure functions
+    + stateless ==> pure functions
     + over HTTP, browsable
 - Over HTTP, two main methods:
     + **GET**: sends a request to a server and waits for data
-    + **POST**: sends data to the server and wait for an answer
+    + **POST**: sends data to the server and waits for an answer
 
 
 ## API Example
@@ -125,7 +125,7 @@ output:
   "by" : "dhouston",
   "descendants" : 71,
   "id" : 8863,
-  "kids" : [ 9224, 8952, 8917, 8884, 8887, 8943, 8869, 8940, 8958, 9005, 9671, 9067, 8908, 9055, 8865, 8881, 8872, 8873, 8955, 10403, 8903, 8928, 9125, 8998, 8901, 8902, 8907, 8894, 8870, 8878, 8980, 8934, 8876 ],
+  "kids" : [ 9224, 8952, 8917, 8884, 8887, 8943, 8869, 8940, 8958, ... ],
   "score" : 104,
   "time" : 1175714200,
   "title" : "My YC app: Dropbox - Throw away your USB drive",
@@ -145,7 +145,7 @@ output:
    "data": {
       "height": 50,
       "is_silhouette": false,
-      "url": "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/12006203_10154088276211729_2432197377106462187_n.png?_nc_cat=0&oh=1bed18a469fcbdacc40cd0563d606bef&oe=5B3AF323",
+      "url": "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/12006203_ ...",
       "width": 50
    }
 }
@@ -156,9 +156,9 @@ output:
 
 Main Tool: **[curl](https://curl.haxx.se/)**
 
-- free and open source
-- can handle: FTP, FTPS, HTTP, HTTPS, IMAP, SCP, etc.
-- deals with SSL certificates, cookies, HTTP headers, etc.
+- Free and open source
+- Can handle: FTP, FTPS, HTTP, HTTPS, IMAP, SCP, etc.
+- Deals with SSL certificates, cookies, HTTP headers, etc.
 - R packages:
     + [curl](https://cran.r-project.org/package=curl) by Jeroen Ooms
     + [RCurl](https://cran.r-project.org/package=RCurl) by Duncan Temple Lang and the CRAN team
@@ -166,7 +166,7 @@ Main Tool: **[curl](https://curl.haxx.se/)**
 
 ## API Example
 
-Facebook Graph API: using curl from [Git Bash](https://gitforwindows.org/)
+Facebook Graph API: using **curl** from [Git Bash](https://gitforwindows.org/)
 
 ![](curl.png)
 
@@ -175,32 +175,33 @@ Facebook Graph API: using curl from [Git Bash](https://gitforwindows.org/)
 
 **Can we serve API requests from R?**
 
-- not directly, as R is not a web server
-- we need a wrapper / server that:
-    + receives requests and handles them to R
+- Not directly, as R is not a web server
+- We need a wrapper / server that:
+    + receives requests and hands them to R
     + passes any response from R to the client
 
 **Approaches**
 
-- web server / container: 
+- Web server / container: 
     + plumber and OpenCPU
-- serverless: wrap R functions inside FasS (Function as a Service)
+- Serverless: wrap R functions inside FasS (Function as a Service)
     + running R on AWS Lambda
+
 
 ## plumber
 
 _An R package that generates a web API from the R code you already have._
 
-- main author: Jeff Allen
-- package website: <https://www.rplumber.io/>
-- usage:
+- Main author: Jeff Allen
+- Package website: <https://www.rplumber.io/>
+- Usage:
     + use function decorators, similar to `roxygen2`
     + call `plumb()` on the `.R` file 
     + access local server, similar to `shiny`
-- quick, interactive loop: code <==> local server => prod server
-- has its own web server to deploy in production
-- very good documentation and examples
-    + source of following examples
+- Quick, interactive loop: code <==> local server => prod server
+- Has its own web server to deploy in production
+- Very good documentation and examples
+    + source of the following examples
 
 
 ## plumber
@@ -263,8 +264,8 @@ function(){
 
 **Filters**
 
-- pipeline of handling requests
-- can be used as authenticators (similar to AWS Lambda functions)
+- Pipeline of handling requests
+- Can be used as authorizers (similar to AWS Lambda functions)
 
 ```{r, eval=FALSE}
 #* @filter checkAuth
@@ -312,14 +313,14 @@ function(id) {
 
 _A reliable and interoperable HTTP API for data analysis based on R._
 
-- author: Jeroen Ooms
-- package website: <https://www.opencpu.org/>
-- usage on local machine:
+- Author: Jeroen Ooms
+- Package website: <https://www.opencpu.org/>
+- Usage on local machine:
     + write functions ==> deploy within a package
     + start server, call API (`tmp` key for extra info)
-- testing new code on the local server takes longer
-- JavaScript Client
-- web server with more features
+- Testing new code on the local server takes longer
+- JavaScript client
+- Web server with more features
 
 
 ## OpenCPU
@@ -348,12 +349,12 @@ JavaScript Client on jsfiddle: <http://jsfiddle.net/user/opencpu/>
 
 **Features**
 
-- The `tmp` key exposes: the input(command), the code, the output
+- The `tmp` key exposes: the input, the R command, the code, the output
 - Linux OpenCPU Server for production deployment
     + support for parallel/async request ==> get a large server
     + AppArmor for App security within Linux
     + Docker container
-    + Authentication through apache2 / nginx authentication modules
+    + authentication through apache2 / nginx authentication modules
 
 **Deployment**
 
@@ -364,13 +365,13 @@ JavaScript Client on jsfiddle: <http://jsfiddle.net/user/opencpu/>
 
 **Web Server / Docker**
 
-- common linux layer
-- application specific containers
+- Common Linux layer
+- Application specific containers
     + flexible memory and CPU resources
-- if only one container (_**0 to 1 issue**_)
+- If only one container (_**0 to 1 issue**_)
     + always running
     + not scalable
-- more than one container (_**1 to N issue**_)
+- More than one container (_**1 to N issue**_)
     + minimum framework needed: cache, load balancing 
     + auto-scaling up to a **given N** containers
 
@@ -385,9 +386,9 @@ JavaScript Client on jsfiddle: <http://jsfiddle.net/user/opencpu/>
 - Horizontally Scalable
 - "Smaller Containers": usually resources are limited
 - Programming languages:
-    + Initially: Java, JavaScript, C#, GO
-    + Now Python is being added by more providers
-    + Docker containers are becoming more popular
+    + initially: Java, JavaScript, C#, GO
+    + now Python is being added by more providers
+    + docker containers are becoming more popular
 
 
 ## Web Server / Docker vs FaaS
@@ -400,7 +401,7 @@ JavaScript Client on jsfiddle: <http://jsfiddle.net/user/opencpu/>
     + Node.js
 - Microsoft: [Azure Functions](https://azure.microsoft.com/en-us/services/functions/)
     + Node.js, Java, C#, F# 
-    + Python and other experimental
+    + Python and others are experimental
 
 
 ## Web Server / Docker vs FaaS
@@ -422,16 +423,16 @@ JavaScript Client on jsfiddle: <http://jsfiddle.net/user/opencpu/>
 **Common concerns**
 
 - How to authenticate the client?
-    + HTTP Headers, tokens, etc,
+    + HTTP Headers, tokens, etc.
 - How to encrypt communication with the client?
     + HTTPS
 - How to limit the resources?
     + Limits on CPU run time, memory and disk
     + Careful not to [DDOS](https://www.rplumber.io/docs/security.html#dos) yourself!
 - How fast to scale horizontally?
-    + How easy/fast is to go from **0 to 1** calls?
-    + How easy/fast is to go from **1 to N (small)** calls?
-    + How easy/fast is to go to **N (large)** calls?
+    + How easy/fast is it to go from **0 to 1** calls?
+    + How easy/fast is it to go from **1 to N (small)** calls?
+    + How easy/fast is it to go to **N (large)** calls?
 
 
 ## R on FaaS
@@ -439,7 +440,7 @@ JavaScript Client on jsfiddle: <http://jsfiddle.net/user/opencpu/>
 **Previous Work**
 
 - [Analyzing Genomics Data at Scale using R, AWS Lambda, and Amazon API Gateway](https://aws.amazon.com/blogs/compute/analyzing-genomics-data-at-scale-using-r-aws-lambda-and-amazon-api-gateway/) by Anish Kejariwal, July 2016
-    + the inspiration source for our project
+    + the inspiration for our project
     + trick: use Python package `rpy2` to call R from Python
 - [Go serverless with R Scripts on Azure Function](https://azure.microsoft.com/en-us/blog/azure-function-r/),
 by Thomas Delteil, July 2017
@@ -467,9 +468,9 @@ by Thomas Delteil, July 2017
 ## aws-lambda-r
 
 - **Solution: R on AWS Lambda**
-    + excited about **0 to N (large)** scalability
+    + **0 to N (large)** scalability
     + very low costs
-    + allows us to change the implementaion details (Python?) later
+    + allows us to change the implementation details (Python?) later
 - **[numeract/aws-lambda-r](https://github.com/numeract/aws-lambda-r)** on GitHub
     + not an R package
     + a series of Bash scripts 
@@ -498,6 +499,7 @@ by Thomas Delteil, July 2017
     + configure API Gateway
     + configure AWS Lambda
 
+
 ## aws-lambda-r - Details
 
 - **Deploy R function on AWS Lambda**
@@ -509,7 +511,7 @@ by Thomas Delteil, July 2017
 - **Configure access to AWS Lambda**
     + configure API Gateway
         + create API resources and HTTP methods
-        + create another Lambda function to use as authorizer
+        + create another Lambda function to use as an authorizer
     + configure AWS Lambda
         + size, permissions
 
@@ -529,7 +531,7 @@ by Thomas Delteil, July 2017
     + configure API Gateway
         + create API resources and HTTP methods
             + account for API versioning
-        + create another Lambda function to use as authorizer
+        + create another Lambda function to use as an authorizer
     + configure AWS Lambda
         + size, permissions
 
@@ -625,7 +627,7 @@ def handler_get(event, context):
     + setup a new VPC in a AWS zone indicated in settings
 - `22_setup_custom_ami.sh`
     + new AMI = AWS Lambda Linux + updates + Python + R + packages
-    + calls [`11_install_packages.sh`](../scripts/11_install_packages.sh)
+    + calls [`11_install_packages.sh`](https://github.com/numeract/aws-lambda-r/blob/master/scripts/11_install_packages.sh)
 - `23_setup_s3.sh`
     + creates an AWS S3 bucket if not already present
 - `24_setup_lambda.sh`
@@ -637,16 +639,16 @@ def handler_get(event, context):
 
 **Local Scripts**
 
-- `01_main.sh`: calls all other local scripts
-- `02_setup.sh`: loads all settings
-- `03_check_settings.sh`: checks and print outs
-- `04_create_ec2.sh`: new EC2 instance
-- `05_update_ec2.sh`: update EC2 if no custom AMI found
-- `06_copy_files.sh`: copy files from local to EC2
+- `01_main.sh` - calls all other local scripts
+- `02_setup.sh` - loads all settings
+- `03_check_settings.sh` - checks and print outs
+- `04_create_ec2.sh` - new EC2 instance
+- `05_update_ec2.sh` - update EC2 if no custom AMI found
+- `06_copy_files.sh` - copy files from local to EC2
     + list files to copy in `settings/lambda_files.txt`
-- `07_deploy_lambda.sh`: calls remote scripts
-- `08_terminate_ec2.sh`: terminate EC2 instance
-- `09_test_deployment.sh`: curl deployment tests
+- `07_deploy_lambda.sh` - calls remote scripts
+- `08_terminate_ec2.sh` - terminate EC2 instance
+- `09_test_deployment.sh` - curl deployment tests
 
 
 ## Bash scripts - `scripts/`
@@ -655,40 +657,85 @@ def handler_get(event, context):
 
 - `12_configure_ec2.sh`
     + remote configuration (loads all settings)
-- [`13_create_deployment_package.sh`](../scripts/13_create_deployment_package.sh)
+- [`13_create_deployment_package.sh`](https://github.com/numeract/aws-lambda-r/blob/master/scripts/13_create_deployment_package.sh)
     + creates the `.zip` deployment package
-- [`14_create_lambda_api_method.sh`](../scripts/14_create_lambda_api_method.sh)
+- [`14_create_lambda_api_method.sh`](https://github.com/numeract/aws-lambda-r/blob/master/scripts/14_create_lambda_api_method.sh)
     + configures API Gateway & Lambda
 - `15_create_alias_api_method.sh`
     + optional, configures a mirror API (e.g. most recent version)
 
 
-##  aws-lambda-r - Demo
+## aws-lambda-r - Demo
 
-Deployment in AWS region `us-east-1` (N. Virginia)
+Deployment to AWS region `us-east-1` (N. Virginia)
 
 - Prepare
-    + Check user settings
-    + Create VPC
-    + Create AMI
-    + Setup AWS S3
-    + Setup AWS Lambda and API Gateway
+    + check user settings
+    + create VPC
+    + create AMI
+    + setup AWS S3
+    + setup AWS Lambda and API Gateway
 - **Deploy / Run the main script**
 
 
-##  aws-lambda-r - Demo
+## aws-lambda-r - Demo
 
 ![](aws-lambda-r-04.png)
 
 
-##  aws-lambda-r - Demo
+## aws-lambda-r - Demo
 
 ![](aws-lambda-r-09.png)
 
 
-## References {.smaller}
+## aws-lambda-r - Evaluation
 
-- Trestle Technology, LLC. 2017. [_Plumber: An API Generator for R._](https://www.rplumber.io/)
+- **Excellent performance in production!**
+    + running for almost 6 months without a problem
+- [Limitations](https://docs.aws.amazon.com/lambda/latest/dg/limits.html)
+    + **size for the deployment package: 250MB unzipped**
+    + problem getting `tideverse`, `DBI` packages installed
+    + max run time for 5 min for Lambda / 30 sec for API Gateway
+- Installing R on Amazon Linux
+    + get the right Linux packages for R packages
+    + get the right files to copy to the deployment package
+- Too many options to configure API Gateway and AWS Lambda
+    + alternative is to lock down (limit) the implementation
+
+
+## aws-lambda-r - TODO List
+
+- Other HTMP responses, e.g. PNG, JPEG
+- Use the `/tmp` disk space (500MB) for large packages (e.g., `BH`)
+- Install R packages from GitHub
+- Configure in settings which Linux and Python packages to install
+- Option for AWS Lambda only (without API Gateway)
+
+
+## Ideal Setup
+
+- Docker container
+    + set our own limits for disk, memory and run time
+    + no need for Python wrapper
+    + install R and packages ourselves (the alternative is a locked down R)
+- FaaS infrastructure
+    + load balancing, auto scaling
+    + multiple authentication methods
+    + VPN for increase security
+    + monitoring and notification
+- Easy configuration (yaml)
+    + reproducible configuration (not using a web console)
+
+
+## Conclusion
+
+- Deploying R in production is a "good problem to have"
+- Diverse approaches towards API
+- Competitive FaaS providers
+
+
+### Thank You!
+
 
 ## sessionInfo() {.smaller}
 
