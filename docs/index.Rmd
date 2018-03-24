@@ -536,6 +536,13 @@ by Thomas Delteil, July 2017
         + size, permissions
 
 
+## aws-lambda-r - Security
+
+![](custom-auth-workflow.png)
+
+source: [_Use API Gateway Custom Authorizers_](https://aws.amazon.com/blogs/compute/introducing-custom-authorizers-in-amazon-api-gateway/)
+
+
 ## example.R
 
 ```{r, eval=FALSE}
