@@ -455,7 +455,7 @@ by Thomas Delteil, July 2017
 
 - Proof of concept validated by client (Shiny rocks!)
 - App engine tasks:
-    + get a request id, 
+    + get a request id
     + get data from a database DB
     + process data for 5-20 sec
 - **Q:** How to use this code in production?
@@ -468,7 +468,7 @@ by Thomas Delteil, July 2017
 ## aws-lambda-r
 
 - **Solution: R on AWS Lambda**
-    + **0 to N (large)** scalability
+    + **0 to 10,000** scalability
     + very low costs
     + allows us to change the implementation details (Python?) later
 - **[numeract/aws-lambda-r](https://github.com/numeract/aws-lambda-r)** on GitHub
@@ -482,55 +482,55 @@ by Thomas Delteil, July 2017
 
 ## aws-lambda-r - Details
 
-**Top view**
+Top view
+
+- **Deploy R function on AWS Lambda**
+- **Configure access to AWS Lambda**
+
+*How hard can it be?*
+
+
+## aws-lambda-r - Details
 
 - Deploy R function on AWS Lambda
+    + **needs to be called from Python**
+    + **create a temporary `.zip` deployment package and store it on S3**
 - Configure access to AWS Lambda
-
-**How hard can it be?**
-
-
-## aws-lambda-r - Details
-
-- **Deploy R function on AWS Lambda**
-    + needs to be called from Python
-    + create a temporary `.zip` deployment package and store it on S3
-- **Configure access to AWS Lambda**
-    + configure API Gateway
-    + configure AWS Lambda
+    + **configure API Gateway**
+    + **configure AWS Lambda**
 
 
 ## aws-lambda-r - Details
 
-- **Deploy R function on AWS Lambda**
+- Deploy R function on AWS Lambda
     + needs to be called from Python
-        + temporary EC2 instance
-        + install Python, R + packages
-        + copy R files to EC2
+        + **temporary EC2 instance**
+        + **install Python, R + packages**
+        + **copy R files to EC2**
     + create a temporary `.zip` deployment package and store it on S3
-- **Configure access to AWS Lambda**
+- Configure access to AWS Lambda
     + configure API Gateway
-        + create API resources and HTTP methods
-        + create another Lambda function to use as an authorizer
+        + **create API resources and HTTP methods**
+        + **create another Lambda function to use as an authorizer**
     + configure AWS Lambda
-        + size, permissions
+        + **size, permissions**
 
 
 ## aws-lambda-r - Details {.smaller}
 
-- **Deploy R function on AWS Lambda**
+- Deploy R function on AWS Lambda
     + needs to be called from Python
         + temporary EC2 instance
-            + create IAM roles, VPC, security groups, etc.
+            + **create IAM roles, VPC, security groups, etc.**
         + install Python, R + packages
-            + figure out what other Linux packages are needed + a Python wrapper
+            + **figure out what other Linux packages are needed + a Python wrapper**
         + copy R files to EC2
     + create a temporary `.zip` deployment package and store it on S3
-        + figure out what files to copy
-- **Configure access to AWS Lambda**
+        + **figure out what files to copy**
+- Configure access to AWS Lambda
     + configure API Gateway
         + create API resources and HTTP methods
-            + account for API versioning
+            + **account for API versioning**
         + create another Lambda function to use as an authorizer
     + configure AWS Lambda
         + size, permissions
@@ -599,7 +599,7 @@ def handler_get(event, context):
 
 **What we need**
 
-- AWS account
+- An AWS account
 - AWS CLI installed and configured on the local machine
     + look for a `~/.aws/` directory with two files
     + get a SSH key from AWS and place it in  `~/.ssh/`directory
@@ -652,7 +652,7 @@ def handler_get(event, context):
 - `04_create_ec2.sh` - new EC2 instance
 - `05_update_ec2.sh` - update EC2 if no custom AMI found
 - `06_copy_files.sh` - copy files from local to EC2
-    + list files to copy in `settings/lambda_files.txt`
+    + indicate which files to copy in `settings/lambda_files.txt`
 - `07_deploy_lambda.sh` - calls remote scripts
 - `08_terminate_ec2.sh` - terminate EC2 instance
 - `09_test_deployment.sh` - curl deployment tests
@@ -677,11 +677,11 @@ def handler_get(event, context):
 Deployment to AWS region `us-east-1` (N. Virginia)
 
 - Prepare
-    + check user settings
+    + **check user settings**
     + create VPC
     + create AMI
     + setup AWS S3
-    + setup AWS Lambda and API Gateway
+    + **setup AWS Lambda and API Gateway**
 - **Deploy / Run the main script**
 
 
@@ -699,7 +699,7 @@ Deployment to AWS region `us-east-1` (N. Virginia)
 
 - **Excellent performance in production!**
     + running for almost 6 months without a problem
-- [Limitations](https://docs.aws.amazon.com/lambda/latest/dg/limits.html)
+- [AWS Lambda Limitations](https://docs.aws.amazon.com/lambda/latest/dg/limits.html)
     + **size for the deployment package: 250MB unzipped**
     + problem getting `tideverse`, `DBI` packages installed
     + max run time for 5 min for Lambda / 30 sec for API Gateway
@@ -712,9 +712,11 @@ Deployment to AWS region `us-east-1` (N. Virginia)
 
 ## aws-lambda-r - TODO List
 
-- Other HTMP responses, e.g. PNG, JPEG
+- Update documentation
+- Other HTTP responses, e.g. PNG, JPEG
 - Use the `/tmp` disk space (500MB) for large packages (e.g., `BH`)
-- Install R packages from GitHub
+- Create a package to simplify deployment(?)
+- Allow for installing R packages from GitHub
 - Configure in settings which Linux and Python packages to install
 - Option for AWS Lambda only (without API Gateway)
 
@@ -723,12 +725,13 @@ Deployment to AWS region `us-east-1` (N. Virginia)
 
 - Docker container
     + set our own limits for disk, memory and run time
-    + no need for Python wrapper
+    + no need for a Python wrapper
     + install R and packages ourselves (the alternative is a locked down R)
 - FaaS infrastructure
     + load balancing, auto scaling
     + multiple authentication methods
     + VPN for increase security
+    + versioning and multiple stages (e.g., _alpha_, _beta_, _prod_)
     + monitoring and notification
 - Easy configuration (yaml)
     + reproducible configuration (not using a web console)
@@ -736,13 +739,13 @@ Deployment to AWS region `us-east-1` (N. Virginia)
 
 ## Conclusion
 
-- Deploying R in production is a "good problem to have"
-- Diverse approaches towards API
-- Competitive FaaS providers
-
+- Deploying R in production is not very easy but it is a _good problem to have_
+- Diverse approaches towards creating API
+- FaaS Provider space is getting competitive
 
 ### Thank You!
 
+### Questions?
 
 ## sessionInfo() {.smaller}
 

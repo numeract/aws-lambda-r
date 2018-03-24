@@ -82,3 +82,11 @@ slides > slide[data-slide-num= "21"]
     background-position: right top;
     background-size: 20%;
 }
+
+slides > slide[data-slide-num= "50"]
+{
+    background-image: url(Numeract_Logo_Tag.png);
+    background-repeat: no-repeat;
+    background-position: center 85%;
+    background-size: 50%;
+}
