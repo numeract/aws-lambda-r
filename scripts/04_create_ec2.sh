@@ -12,6 +12,7 @@
 echo -e "$INFO Starting an AWS $EC2_INSTANCE_TYPE Instance" \
     "from AMI ID $(FC $EC2_AMI_ID) ..."
 EC2_INSTANCE_ID=$(aws $AWS_PRFL ec2 run-instances \
+    --region $AWS_REGION \
     --image-id $EC2_AMI_ID \
     --instance-type $EC2_INSTANCE_TYPE \
     --key-name $EC2_KEY_NAME \
@@ -34,10 +35,12 @@ OVER=0
 TEST=0
 while [ $OVER -eq 0 ] && [ $TEST -lt $EC2_MAX_TESTS ]; do
     EC2_STATE_NAME=$(aws $AWS_PRFL ec2 describe-instances \
+        --region $AWS_REGION \
         --instance-ids $EC2_INSTANCE_ID \
         --query Reservations[0].Instances[0].State.Name \
         --output text)
     EC2_DNS_NAME=$(aws $AWS_PRFL ec2 describe-instances \
+        --region $AWS_REGION \
         --instance-ids $EC2_INSTANCE_ID \
         --query Reservations[0].Instances[0].PublicDnsName \
         --output text)

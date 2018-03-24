@@ -41,6 +41,7 @@ fi
 
 # Do not create a new Role if already present
 IAM_LAMBDA_ROLE_NAME_OLD="$(aws $AWS_PRFL iam list-roles \
+    --region $AWS_REGION \
     --query Roles[?RoleName==\`${IAM_LAMBDA_ROLE_NAME}\`].RoleName \
     --output text)"
 if [[ "$IAM_LAMBDA_ROLE_NAME_OLD" == "$IAM_LAMBDA_ROLE_NAME" ]]; then
@@ -49,6 +50,7 @@ else
     # Create a role; Lambda will be allowed to assume this role
     echo -e "$INFO Creating Lambda Role ..."
     aws $AWS_PRFL iam create-role \
+        --region $AWS_REGION \
         --role-name $IAM_LAMBDA_ROLE_NAME \
         --assume-role-policy-document file://${IAM_LAMBDA_ROLE_TRUST_FILE} \
         --description "${PRJ_NAME} Role for Lambda Authorizer and Functions" \
@@ -57,6 +59,7 @@ else
     IAM_LAMBDA_ROLE_POLICY_NAME="${PRJ_NAME}-lambda-role-policy"
     # Attach inline policy to role (what Lambda is allowed to do)
     aws $AWS_PRFL iam put-role-policy \
+        --region $AWS_REGION \
         --role-name $IAM_LAMBDA_ROLE_NAME  \
         --policy-name $IAM_LAMBDA_ROLE_POLICY_NAME \
         --policy-document file://${IAM_LAMBDA_ROLE_POLICY_FILE}
@@ -66,6 +69,7 @@ fi
 
 # Get the ARN of the IAM Lambda Role, to pass it to the Lambda Authorizer Function
 IAM_LAMBDA_ROLE_ARN="$(aws $AWS_PRFL iam get-role \
+    --region $AWS_REGION \
     --role-name $IAM_LAMBDA_ROLE_NAME \
     --query Role.Arn \
     --output text)"
@@ -121,6 +125,7 @@ fi
 
 # Do not create a new API if one with the same name already present
 API_GATEWAY_NAME_OLD="$(aws $AWS_PRFL apigateway get-rest-apis \
+    --region $AWS_REGION \
     --query "items[?name==\`${API_GATEWAY_NAME}\`].name" \
     --output text)"
 if [[ "$API_GATEWAY_NAME_OLD" == "$API_GATEWAY_NAME" ]]; then
@@ -129,12 +134,14 @@ else
     # Creating API
     echo -e "$INFO Creating API Gateway ..."
     aws $AWS_PRFL apigateway create-rest-api \
+        --region $AWS_REGION \
         --name $API_GATEWAY_NAME \
         --output table
 fi
 
 # Getting API ID
 API_GATEWAY_ID="$(aws $AWS_PRFL apigateway get-rest-apis \
+    --region $AWS_REGION \
     --query "items[?name==\`${API_GATEWAY_NAME}\`].id" \
     --output text)"
 exit_status=$?
@@ -149,6 +156,7 @@ fi
 
 # Get API root resource id, use to construct API Gateway resources
 ROOT_RESOURCE_ID="$(aws $AWS_PRFL apigateway get-resources \
+    --region $AWS_REGION \
     --rest-api-id $API_GATEWAY_ID \
     --query "items[?path==\`/\`].id" \
     --output text)"
@@ -164,6 +172,7 @@ fi
 
 # Do not recreate the Resource if already present
 API_RESOURCE_NAME_OLD="$(aws $AWS_PRFL apigateway get-resources \
+    --region $AWS_REGION \
     --rest-api-id $API_GATEWAY_ID \
     --query "items[?path==\`/${API_RESOURCE_NAME}\`].pathPart" \
     --output text)"
@@ -174,6 +183,7 @@ else
     # Creating API Resource
     echo -e "$INFO Creating API Gateway Resource ..."
     aws $AWS_PRFL apigateway create-resource \
+        --region $AWS_REGION \
         --rest-api-id $API_GATEWAY_ID \
         --parent-id $ROOT_RESOURCE_ID \
         --path-part $API_RESOURCE_NAME \
@@ -184,6 +194,7 @@ fi
 
 # Get ID of API Resource
 API_RESOURCE_ID="$(aws $AWS_PRFL apigateway get-resources \
+    --region $AWS_REGION \
     --rest-api-id $API_GATEWAY_ID \
     --query "items[?path==\`/${API_RESOURCE_NAME}\`].id" \
     --output text)"
@@ -200,6 +211,7 @@ fi
 # Do not recreate the Alias Resource if already present
 if [[ ! $API_ALIAS_RESOURCE_USE == "false" ]]; then
     API_ALIAS_RESOURCE_NAME_OLD="$(aws $AWS_PRFL apigateway get-resources \
+        --region $AWS_REGION \
         --rest-api-id $API_GATEWAY_ID \
         --query "items[?path==\`/${API_ALIAS_RESOURCE_NAME}\`].pathPart" \
         --output text)"
@@ -210,6 +222,7 @@ if [[ ! $API_ALIAS_RESOURCE_USE == "false" ]]; then
         # Creating API Alias Resource
         echo -e "$INFO Creating API Gateway Alias Resource ..."
         aws $AWS_PRFL apigateway create-resource \
+            --region $AWS_REGION \
             --rest-api-id $API_GATEWAY_ID \
             --parent-id $ROOT_RESOURCE_ID \
             --path-part $API_ALIAS_RESOURCE_NAME \
@@ -220,6 +233,7 @@ if [[ ! $API_ALIAS_RESOURCE_USE == "false" ]]; then
 
     # Get ID of API Alias Resource
     API_ALIAS_RESOURCE_ID="$(aws $AWS_PRFL apigateway get-resources \
+        --region $AWS_REGION \
         --rest-api-id $API_GATEWAY_ID \
         --query "items[?path==\`/${API_ALIAS_RESOURCE_NAME}\`].id" \
         --output text)"
@@ -237,6 +251,7 @@ fi
 
 # Do not create an API Gateway Authorizer if already present
 API_AUTHORIZER_NAME_OLD="$(aws $AWS_PRFL apigateway get-authorizers \
+    --region $AWS_REGION \
     --rest-api-id $API_GATEWAY_ID \
     --query "items[?name==\`${API_AUTHORIZER_NAME}\`].name" \
     --output text)"
@@ -266,6 +281,7 @@ fi
 
 # Get ID of API Authorizer
 API_AUTHORIZER_ID="$(aws $AWS_PRFL apigateway get-authorizers \
+    --region $AWS_REGION \
     --rest-api-id $API_GATEWAY_ID \
     --query "items[?name==\`${API_AUTHORIZER_NAME}\`].id" \
     --output text)"  

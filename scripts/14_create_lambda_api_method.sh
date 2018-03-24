@@ -9,7 +9,6 @@ set +e
 
 # Delete lambda function if already exists
 LAMBDA_FUNCTION_NAME_OLD=$(aws lambda list-functions \
-    --region $AWS_REGION \
     --query "Functions[?FunctionName==\`${LAMBDA_FUNCTION_NAME}\`].FunctionName" \
     --output text)
 if [[ "$LAMBDA_FUNCTION_NAME_OLD" == "$LAMBDA_FUNCTION_NAME" ]]; then
