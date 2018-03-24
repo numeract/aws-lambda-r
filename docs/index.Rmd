@@ -31,14 +31,14 @@ output:
 
 ## About
 
-**[Numeract LLC:](http://numeract.com/)**
+**[Numeract LLC](http://numeract.com/)**
 
 - Data Science and Economics / Finance consulting services  
 - Technology Stack: (Postgre)SQL, R, Python, Spark, Docker, AWS
 
 <br>
 
-**Authors and Contributors:**
+**Authors and Contributors**
 
 - [Mike Badescu](https://www.linkedin.com/in/mikebadescu)
     + PhD Economics, Lehigh University
