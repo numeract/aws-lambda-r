@@ -1,0 +1,14 @@
+# Ignore everything in this directory
+*
+# Except files below
+!.gitignore
+!aws-lambda-r-04.png
+!aws-lambda-r-09.png
+!curl.png
+!custom-auth-workflow.png
+!index.html
+!index.Rmd
+!opencpu_demo.R
+!plumber_demo.R
+!plumber_functions.R
+!style.css
