@@ -122,8 +122,6 @@ Load all the scripts via `sudo bash ./scripts/<script_name>.sh` instead of
 - [Lambda Execution Environment and Available Libraries](https://docs.aws.amazon.com/lambda/latest/dg/current-supported-versions.html)
 - [AWS Lambda limits](https://docs.aws.amazon.com/lambda/latest/dg/limits.html)
 
-[TODO]
-
 
 ### TODO
 
