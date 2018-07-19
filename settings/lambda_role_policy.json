@@ -4,6 +4,7 @@
         {
             "Effect": "Allow",
             "Action": [
+				"sts:AssumeRole",
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents"
