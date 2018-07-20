@@ -64,7 +64,7 @@ else
         --policy-name $IAM_LAMBDA_ROLE_POLICY_NAME \
         --policy-document file://${IAM_LAMBDA_ROLE_POLICY_FILE}
     # need to wait for ARN to become available
-    sleep 5
+    sleep 10
 fi
 
 # Get the ARN of the IAM Lambda Role, to pass it to the Lambda Authorizer Function
