@@ -103,7 +103,7 @@ else
         --zip-file fileb://${LAMBDA_AUTHORIZER_FILE}.zip \
         --role $IAM_LAMBDA_ROLE_ARN \
         --handler ${JS_MODULE_NAME}.handler \
-        --runtime nodejs6.10 \
+        --runtime nodejs12.x \
         --output table
 fi
 
