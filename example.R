@@ -25,7 +25,7 @@ to_json <- function(lst) {
 
 
 # pure function (preferable), receives a json and returns a json
-aws_lambda_r <- function(input_json) {
+aws_lambda_r <- function(request_id) {
     
     # generic default error message
     # defined only to illustrate how the function works
@@ -33,8 +33,8 @@ aws_lambda_r <- function(input_json) {
     
     # possible implementation: catch all errors 
     tryCatch({
-        input_lst <- from_json(input_json)
-        request_id <- input_lst$request_id[1]
+    #    input_lst <- from_json(input_json)
+     #   request_id <- input_lst$request_id[1]
         print(request_id)
         output_lst <- list(
             result_id = request_id,
