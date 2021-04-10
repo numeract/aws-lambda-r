@@ -19,6 +19,8 @@ if [[ "$LAMBDA_FUNCTION_NAME_OLD" == "$LAMBDA_FUNCTION_NAME" ]]; then
 fi
 
 # Create lambda function
+    # --handler "${LAMBDA_PYTHON_HANDLER}.${LAMBDA_HANDLER_FUNCTION}" \
+    # --runtime $LAMBDA_RUNTIME \
 echo -e "$INFO Creating Lambda Function $(FC $LAMBDA_FUNCTION_NAME)"
 aws lambda create-function \
     --region $AWS_REGION \
@@ -26,10 +28,8 @@ aws lambda create-function \
     --code "S3Bucket=${S3_BUCKET},S3Key=lambda/${LAMBDA_ZIP_NAME}" \
     --role $IAM_LAMBDA_ROLE_ARN \
     --handler example.aws_lambda_r \
-    # --handler "${LAMBDA_PYTHON_HANDLER}.${LAMBDA_HANDLER_FUNCTION}" \
-    # --runtime $LAMBDA_RUNTIME \
-      --layers arn:aws:lambda:eu-west-3:131329294410:layer:r-runtime-3_6_0:13 \
     --runtime provided \
+    --layers arn:aws:lambda:eu-west-3:131329294410:layer:r-runtime-3_6_0:13 \
     --environment Variables="{R_HOME=/var/task/bin,R_LIBS=/lib/}" \
     --timeout $LAMBDA_TIMEOUT \
     --memory-size $LAMBDA_MEMORY_SIZE \
