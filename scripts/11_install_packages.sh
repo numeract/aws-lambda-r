@@ -10,7 +10,7 @@ INFO="\e[32mINFO :\e[39m"                               # Green
 echo -e "$INFO Making sure everything is up-to-date ..."
 sudo yum -y update
 sudo yum -y upgrade
-
+sudo yum install epel-release
 
 # install Linux packages
 # TODO: install python 3.7
@@ -19,8 +19,7 @@ sudo yum install -y \
     gcc gcc-c++ \
     readline-devel libgfortran.x86_64 \
     python36-devel.x86_64 python36-virtualenv.noarch \
-    R.x86_64 \
-    r-base
+    R.x86_64 
 
 echo -e "$INFO Installing other Linux packages ..."
 # sudo yum install -y git-all
