@@ -35,19 +35,18 @@ sudo yum install -y blas lapack
 
 # install Python packages
 # TODO: carefully remove python related packages to run R directly from custom environment
-echo -e "$INFO Installing Python packages (rpy2) in a virtual env ..."
-python3 -m venv ~/env
-source ~/env/bin/activate
+# echo -e "$INFO Installing Python packages (rpy2) in a virtual env ..."
+# python3 -m venv ~/env
+# source ~/env/bin/activate
 
-ls ~/env/bin/
-sudo ~/env/bin/pip3.7 install rpy2 -t ~/env/lib64/python3.6/site-packages
-exit_status=$?
-if [ $exit_status -ne 0 ]; then
-    echo -e "$ERROR rpy2 installation failed."
-    exit 1
-fi
+# sudo ~/env/bin/pip3.7 install rpy2 -t ~/env/lib64/python3.6/site-packages
+# exit_status=$?
+# if [ $exit_status -ne 0 ]; then
+#     echo -e "$ERROR rpy2 installation failed."
+#     exit 1
+# fi
 
-deactivate
+# deactivate
 
 # install R packages
 echo -e "$INFO Creating the R library directory and setting permissions ..."
