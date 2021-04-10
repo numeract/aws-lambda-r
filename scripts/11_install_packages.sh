@@ -10,7 +10,7 @@ INFO="\e[32mINFO :\e[39m"                               # Green
 echo -e "$INFO Making sure everything is up-to-date ..."
 sudo yum -y update
 sudo yum -y upgrade
-sudo yum install epel-release
+yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 # install Linux packages
 # TODO: install python 3.7
@@ -18,7 +18,7 @@ echo -e "$INFO Installing gcc, python36 and R ..."
 sudo yum install -y \
     gcc gcc-c++ \
     readline-devel libgfortran.x86_64 \
-    python36-devel.x86_64 python36-virtualenv.noarch \
+    python3-3.7.9-1.amzn2.0.2.x86_64 \
     R.x86_64 
 
 echo -e "$INFO Installing other Linux packages ..."
