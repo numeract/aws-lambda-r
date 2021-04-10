@@ -13,6 +13,7 @@ sudo yum -y upgrade
 
 
 # install Linux packages
+# TODO: install python 3.7
 echo -e "$INFO Installing gcc, python36 and R ..."
 sudo yum install -y \
     gcc gcc-c++ \
@@ -33,12 +34,13 @@ sudo yum install -y blas lapack
 
 
 # install Python packages
+# TODO: carefully remove python related packages to run R directly from custom environment
 echo -e "$INFO Installing Python packages (rpy2) in a virtual env ..."
 python3 -m venv ~/env
 source ~/env/bin/activate
 
 ls ~/env/bin/
-sudo ~/env/bin/pip3.6 install rpy2 -t ~/env/lib64/python3.6/site-packages
+sudo ~/env/bin/pip3.7 install rpy2 -t ~/env/lib64/python3.6/site-packages
 exit_status=$?
 if [ $exit_status -ne 0 ]; then
     echo -e "$ERROR rpy2 installation failed."
