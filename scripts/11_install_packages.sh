@@ -37,6 +37,7 @@ echo -e "$INFO Installing Python packages (rpy2) in a virtual env ..."
 python3 -m venv ~/env
 source ~/env/bin/activate
 
+ls ~/env/bin/
 sudo ~/env/bin/pip3.6 install rpy2 -t ~/env/lib64/python3.6/site-packages
 exit_status=$?
 if [ $exit_status -ne 0 ]; then
