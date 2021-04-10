@@ -19,7 +19,8 @@ sudo yum install -y \
     gcc gcc-c++ \
     readline-devel libgfortran.x86_64 \
     python36-devel.x86_64 python36-virtualenv.noarch \
-    R.x86_64
+    R.x86_64 \
+    r-base
 
 echo -e "$INFO Installing other Linux packages ..."
 # sudo yum install -y git-all
