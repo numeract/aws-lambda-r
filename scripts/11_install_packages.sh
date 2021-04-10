@@ -10,7 +10,7 @@ INFO="\e[32mINFO :\e[39m"                               # Green
 echo -e "$INFO Making sure everything is up-to-date ..."
 sudo yum -y update
 sudo yum -y upgrade
-yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+sudo yum -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 
 # install Linux packages
 # TODO: install python 3.7
