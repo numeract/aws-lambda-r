@@ -34,8 +34,8 @@ sudo yum install -y blas lapack
 
 # install Python packages
 echo -e "$INFO Installing Python packages (rpy2) in a virtual env ..."
-virtualenv -p python3.6 ~/env
-source ~/env/bin/activate
+python3 -m venv ~/env
+source ~/env/Scripts/activate
 
 sudo ~/env/bin/pip3.6 install rpy2 -t ~/env/lib64/python3.6/site-packages
 exit_status=$?
