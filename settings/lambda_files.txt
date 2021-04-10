@@ -1,3 +1,1 @@
-python/lambda_get.py
-python/lambda_post.py
 example.R
