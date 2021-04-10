@@ -55,6 +55,7 @@ sudo mkdir library
 sudo chmod -R a+w ~/library
 
 function join_by { local IFS="$1"; shift; echo "$*"; }
+echo $(which Rscript)
 
 R_PACKAGES_Q=$(printf "'%s' " "${R_PACKAGES[@]}")
 R_PACKAGES_INSTALL=$(join_by , $R_PACKAGES_Q)
