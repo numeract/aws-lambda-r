@@ -9,14 +9,14 @@ cd ~/${PRJ_NAME}
 echo -e "$INFO PWD: $(pwd)"
 
 # Python 3 packages transfer
-echo -e "$INFO Transferring Python 3.6 packages to the deployment package"
-source ~/env/bin/activate
-cd ~/${PRJ_NAME}
-cp -r ${CP_VERBOSE} ~/env/lib64/python3.6/site-packages/* ~/${PRJ_NAME}
-deactivate
+# echo -e "$INFO Transferring Python 3.6 packages to the deployment package"
+# source ~/env/bin/activate
+# cd ~/${PRJ_NAME}
+# cp -r ${CP_VERBOSE} ~/env/lib64/python3.6/site-packages/* ~/${PRJ_NAME}
+# deactivate
 
-cp /usr/lib64/python3.6/lib-dynload/_sqlite3.cpython-36m-x86_64-linux-gnu.so \
-    ~/${PRJ_NAME}
+# cp /usr/lib64/python3.6/lib-dynload/_sqlite3.cpython-36m-x86_64-linux-gnu.so \
+#     ~/${PRJ_NAME}
 
 # Copy R needed libraries into project directory
 echo -e "$INFO Copy R libraries into project directory."
@@ -44,8 +44,8 @@ cp ~/${PRJ_NAME}/bin/exec/R ~/${PRJ_NAME}
 cp /usr/lib64/libblas.so.3 ~/${PRJ_NAME}/lib
 cp /usr/lib64/liblapack.so.3 ~/${PRJ_NAME}/lib
 
-cp ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.cpython-36m-x86_64-linux-gnu.so \
-    ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.so
+# cp ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.cpython-36m-x86_64-linux-gnu.so \
+#     ~/${PRJ_NAME}/rpy2/rinterface/_rinterface.so
 
 mkdir ~/${PRJ_NAME}/lib/external
 
