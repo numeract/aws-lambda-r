@@ -27,9 +27,9 @@ aws lambda create-function \
     --function-name $LAMBDA_FUNCTION_NAME \
     --code "S3Bucket=${S3_BUCKET},S3Key=lambda/${LAMBDA_ZIP_NAME}" \
     --role $IAM_LAMBDA_ROLE_ARN \
-    --handler example.aws_lambda_r \
-    --runtime provided \
-    --layers arn:aws:lambda:eu-west-3:131329294410:layer:r-runtime-3_6_0:13 \
+    --handler "${LAMBDA_PYTHON_HANDLER}.${LAMBDA_HANDLER_FUNCTION}" \
+    --runtime $LAMBDA_RUNTIME \
+    --layers $LAMBDA_LAYER \
     --environment Variables="{R_HOME=/var/task/bin,R_LIBS=/lib/}" \
     --timeout $LAMBDA_TIMEOUT \
     --memory-size $LAMBDA_MEMORY_SIZE \
