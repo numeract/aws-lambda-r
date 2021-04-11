@@ -19,9 +19,9 @@ if [[ "$LAMBDA_FUNCTION_NAME_OLD" == "$LAMBDA_FUNCTION_NAME" ]]; then
 fi
 
 # Create lambda function
-    # --handler "${LAMBDA_PYTHON_HANDLER}.${LAMBDA_HANDLER_FUNCTION}" \
-    # --runtime $LAMBDA_RUNTIME \
 echo -e "$INFO Creating Lambda Function $(FC $LAMBDA_FUNCTION_NAME)"
+echo -e "${LAMBDA_PYTHON_HANDLER}.${LAMBDA_HANDLER_FUNCTION}"
+echo -e $LAMBDA_LAYER
 aws lambda create-function \
     --region $AWS_REGION \
     --function-name $LAMBDA_FUNCTION_NAME \
