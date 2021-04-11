@@ -121,7 +121,12 @@ LAMBDA_HANDLER_FUNCTION_POST="handler_post"
 
 # The chosen runtime for lambda function (AWS>LAMBDA>RUNTIME)
 # AWS > Lambda > Functions > Configuration
-LAMBDA_RUNTIME="python3.6"
+LAMBDA_RUNTIME="provided"
+
+# The ARN of the custom execution layer. It has to correspond to 
+# the chosen region. R execution layers
+# pre-defined R runtimes: https://github.com/bakdata/aws-lambda-r-runtime
+LAMBDA_LAYER="$MISSING"
 
 # The time limit (in seconds) for the lambda function to run
 # AWS > Lambda > Functions > Configuration
