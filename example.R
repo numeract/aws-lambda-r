@@ -33,16 +33,15 @@ aws_lambda_r <- function(request_id) {
     
     # possible implementation: catch all errors 
     tryCatch({
-    #    input_lst <- from_json(input_json)
-     #   request_id <- input_lst$request_id[1]
-        print(request_id)
+        # perform any operations you want
+        # put the results in a list
         output_lst <- list(
             result_id = request_id,
             result_lst = list(a = 1, b = 2:4),
             result_dbl = 1:10 / 2,
             message = NULL
         )
-        
+        # wrap the results up in a json
         output_json <- to_json(output_lst)
         
     }, error = function(e) {
@@ -52,5 +51,3 @@ aws_lambda_r <- function(request_id) {
     output_json
 }
 
-#x <- aws_lambda_r('{"request_id" : 1111}')
-#str(x)
