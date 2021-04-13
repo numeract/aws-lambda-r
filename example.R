@@ -24,7 +24,7 @@ to_json <- function(lst) {
 }
 
 
-# pure function (preferable), receives a json and returns a json
+# pure function (preferable), receives parameters and returns a json
 aws_lambda_r <- function(request_id) {
     
     # generic default error message
