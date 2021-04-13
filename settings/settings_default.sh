@@ -109,11 +109,11 @@ API_AUTHORIZATION_TYPE="NONE"
 
 # The name of the python file which contains the lambda function (w/o extension)
 # AWS > Lambda > Functions > Configuration
-LAMBDA_PYTHON_HANDLER="$MISSING"
-LAMBDA_PYTHON_HANDLER_GET="lambda_get"
-LAMBDA_PYTHON_HANDLER_POST="lambda_post"
+LAMBDA_HANDLER="$MISSING"
+LAMBDA_HANDLER_GET="lambda_get"
+LAMBDA_HANDLER_POST="lambda_post"
 
-# The name of the handler function within the LAMBDA_PYTHON_HANDLER 
+# The name of the handler function within the LAMBDA_HANDLER 
 # AWS > Lambda > Functions > Configuration
 LAMBDA_HANDLER_FUNCTION="$MISSING"
 LAMBDA_HANDLER_FUNCTION_GET="handler_get"

@@ -24,7 +24,6 @@ CURRENT_DIR="$(pwd)"
 [[ $SCR_DIR ]] || SCR_DIR="$(cd "$(dirname "$0")/."; pwd)"
 PRJ_DIR="$(cd "${SCR_DIR}/.."; pwd)"
 SET_DIR="${PRJ_DIR}/settings"
-PYTHON_DIR="${PRJ_DIR}/python"
 LAMBDA_DIR="${PRJ_DIR}/lambda"
 # git related
 GIT_DIR="$(cd "$(git rev-parse --show-toplevel)"; pwd)"
@@ -47,8 +46,8 @@ if [[ ! -d "$SET_DIR" ]]; then
     echo -e "$ERROR Dir $(FY $SET_DIR), does not exist. Exiting."
     exit 1
 fi
-if [[ ! -d "$PYTHON_DIR" ]]; then
-    echo -e "$ERROR Dir $(FY $PYTHON_DIR), does not exist. Exiting."
+if [[ ! -d "$PRJ_DIR" ]]; then
+    echo -e "$ERROR Dir $(FY $PRJ_DIR), does not exist. Exiting."
     exit 1
 fi
 if [[ ! -d "$LAMBDA_DIR" ]]; then
@@ -136,11 +135,11 @@ fi
 # use the right lambda given api method
 # must match `02_setup.sh` definition
 if [[ $API_HTTP_METHOD == "GET" ]]; then
-    LAMBDA_PYTHON_HANDLER="$LAMBDA_PYTHON_HANDLER_GET"
+    LAMBDA_HANDLER="$LAMBDA_HANDLER_GET"
     LAMBDA_HANDLER_FUNCTION="$LAMBDA_HANDLER_FUNCTION_GET"
 fi
 if [[ $API_HTTP_METHOD == "POST" ]]; then
-    LAMBDA_PYTHON_HANDLER="$LAMBDA_PYTHON_HANDLER_POST"
+    LAMBDA_HANDLER="$LAMBDA_HANDLER_POST"
     LAMBDA_HANDLER_FUNCTION="$LAMBDA_HANDLER_FUNCTION_POST"
 fi
 
